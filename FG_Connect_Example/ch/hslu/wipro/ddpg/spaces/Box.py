@@ -1,8 +1,9 @@
 import numpy as np
-import gym
+from ch.hslu.wipro.ddpg.Environment import Space
 
 
-class Box(gym.Space):
+
+class Box(Space):
     """
     A box in R^n.
     I.e., each coordinate is bounded.
@@ -32,10 +33,10 @@ class Box(gym.Space):
             # logger.warn("gym.spaces.Box autodetected dtype as %s. Please provide explicit dtype." % dtype)
         self.low = low.astype(dtype)
         self.high = high.astype(dtype)
-        gym.Space.__init__(self, shape, dtype)
+        Space.__init__(self, shape, dtype)
 
     def sample(self):
-        return gym.spaces.np_random.uniform(low=self.low, high=self.high + (0 if self.dtype.kind == 'f' else 1),
+        return np.random.uniform(low=self.low, high=self.high + (0 if self.dtype.kind == 'f' else 1),
                                             size=self.low.shape).astype(self.dtype)
 
     def contains(self, x):

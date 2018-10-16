@@ -1,9 +1,10 @@
-from queue import Queue
+import threading
 
 
 class FGIOHandler:
     OUTPUT = None
     INPUT = None
+    LOCK = threading.Lock()
 
     @staticmethod
     def write(data):
@@ -11,4 +12,8 @@ class FGIOHandler:
 
     @staticmethod
     def read():
-        return FGIOHandler.INPUT
+        FGIOHandler.LOCK.acquire()
+        input_data = str(FGIOHandler.INPUT)
+        FGIOHandler.INPUT = None
+        FGIOHandler.LOCK.release()
+        return str(input_data)

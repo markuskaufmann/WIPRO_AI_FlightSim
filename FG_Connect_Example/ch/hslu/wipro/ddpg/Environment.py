@@ -1,4 +1,5 @@
 # Env-related abstractions
+from ch.hslu.wipro.ddpg.spaces.dict_space import Dict
 
 
 class Env(object):
@@ -155,7 +156,7 @@ class GoalEnv(Env):
 
     def reset(self):
         # Enforce that each GoalEnv uses a Goal-compatible observation space.
-        if not isinstance(self.observation_space, gym.spaces.Dict):
+        if not isinstance(self.observation_space, Dict):
             raise Exception('GoalEnv requires an observation space of type gym.spaces.Dict')
         result = super(GoalEnv, self).reset()
         for key in ['observation', 'achieved_goal', 'desired_goal']:

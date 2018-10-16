@@ -15,4 +15,5 @@ class FGClientWrite(FGClient):
                 continue
             self.lock.acquire()
             self.socket.send(bytes(data, encoding='utf-8'))
+            FGIOHandler.OUTPUT = None
             self.lock.release()
