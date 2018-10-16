@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <comment>
+  <![CDATA[
+	Usage: [Commands] --generic=socket,in,0.5,127.0.0.1,9880,tcp,fg_write_gear
+  ]]>
+ </comment>
+ <generic>
+  <input>
+   <line_separator>\r\n</line_separator>
+   <var_separator>,</var_separator>
+
+   <!-- Gear -->
+   <chunk>
+	<name>brake-left</name>
+	<type>float</type>
+	<node>/controls/gear/brake-left</node>
+   </chunk>
+
+   <chunk>
+	<name>brake-right</name>
+	<type>float</type>
+	<node>/controls/gear/brake-right</node>
+   </chunk>
+
+   <chunk>
+	<name>brake-parking</name>
+	<type>float</type>
+	<node>/controls/gear/brake-parking</node>
+   </chunk>
+  </input>
+ </generic>
+</PropertyList>

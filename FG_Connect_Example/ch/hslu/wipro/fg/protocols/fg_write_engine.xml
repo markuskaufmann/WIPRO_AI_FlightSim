@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <comment>
+  <![CDATA[
+	Usage: [Commands] --generic=socket,in,0.5,127.0.0.1,9879,tcp,fg_write_engine
+  ]]>
+ </comment>
+ <generic>
+  <input>
+   <line_separator>\r\n</line_separator>
+   <var_separator>,</var_separator>
+
+   <!-- Engines -->
+   <chunk>
+	<name>throttle</name>
+	<type>float</type>
+	<node>/controls/engines/current-engine/throttle</node>
+   </chunk>
+
+   <chunk>
+	<name>mixture</name>
+	<type>float</type>
+	<node>/controls/engines/current-engine/mixture</node>
+   </chunk>
+  </input>
+ </generic>
+</PropertyList>
