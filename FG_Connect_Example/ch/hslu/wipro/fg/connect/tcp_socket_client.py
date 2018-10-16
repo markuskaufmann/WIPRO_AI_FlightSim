@@ -8,7 +8,7 @@ class TCPSocketClient:
     def __init__(self, port):
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.settimeout(20)
+        self.socket.settimeout(None)
         self.t_connect = Thread(target=self.connect)
 
     def start(self):

@@ -8,7 +8,7 @@ from ch.hslu.wipro.ddpg.spaces import dict_space
 from ch.hslu.wipro.ddpg.spaces.Box import Box
 from ch.hslu.wipro.ddpg.utility import Seeding
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
-from ch.hslu.wipro.fg.calc.dist_lookup import DistLookup
+from ch.hslu.wipro.fg.const.dist_lookup import DistLookup
 from ch.hslu.wipro.fg.properties.fg_property_reader import FGPropertyReader
 
 class FlightGearEnv(GoalEnv, ABC):

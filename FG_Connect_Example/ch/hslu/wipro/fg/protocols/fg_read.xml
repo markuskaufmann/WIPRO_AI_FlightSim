@@ -124,14 +124,14 @@
    <chunk>
 	<name>roll-deg</name>
 	<type>float</type>
-	<format>roll=%f</format>
+	<format>roll-deg=%f</format>
 	<node>/orientation/roll-deg</node>
    </chunk>
 
    <chunk>
 	<name>pitch-deg</name>
 	<type>float</type>
-	<format>pitch=%f</format>
+	<format>pitch-deg=%f</format>
 	<node>/orientation/pitch-deg</node>
    </chunk>
 

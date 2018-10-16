@@ -1,4 +1,4 @@
-from ch.hslu.wipro.fg.io.fg_io_handler import FGIOHandler
+from ch.hslu.wipro.fg.data.fg_data_input import FGDataInput
 
 
 class FGPropertyReader:
@@ -7,9 +7,9 @@ class FGPropertyReader:
 
     @staticmethod
     def get_properties():
-        data = FGIOHandler.read()
+        data = None
         while data is None or len(str(data).strip()) == 0 or data == 'None':
-            continue
+            data = FGDataInput.get()
         props = dict()
         if data is not None:
             values = data.split(FGPropertyReader.VAR_SEPARATOR)

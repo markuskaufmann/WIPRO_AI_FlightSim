@@ -1,4 +1,4 @@
-from ch.hslu.wipro.fg.calc.dist_lookup import DistLookup
+from ch.hslu.wipro.fg.const.dist_lookup import DistLookup
 import math
 
 from ch.hslu.wipro.fg.calc.distance_vector import DistanceVector
@@ -7,7 +7,10 @@ from ch.hslu.wipro.fg.calc.distance_vector import DistanceVector
 class DistCalc:
 
     @staticmethod
-    def process_distance_vector(plane_lat_deg: float, plane_lon_deg: float, plane_alt_ft: float) -> DistanceVector:
+    def process_distance_vector(properties: dict) -> DistanceVector:
+        plane_lat_deg = float(properties['latitude-deg'])
+        plane_lon_deg = float(properties['longitude-deg'])
+        plane_alt_ft = float(properties['altitude-ft'])
         alt_m = DistCalc.feet_to_meters(plane_alt_ft)
         plane_lat_rad = math.radians(plane_lat_deg)
         plane_lon_rad = math.radians(plane_lon_deg)

@@ -14,7 +14,6 @@ import pprint as pp
 
 import numpy as np
 import tensorflow as tf
-from gym import wrappers
 
 from ch.hslu.wipro.ddpg.FlightGearEnv import FlightGearEnv
 from ch.hslu.wipro.ddpg.networks.ActorNetwork import ActorNetwork

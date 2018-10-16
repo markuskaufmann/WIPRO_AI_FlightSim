@@ -44,13 +44,15 @@ class FGLaunch:
                        + FG_CMD_PROTOCOL_WRITE_ENGINE \
                        + FG_CMD_PROTOCOL_WRITE_GEAR
 
-    def __init__(self):
-        Thread(target=self.start).start()
+    @staticmethod
+    def start_process():
+        Thread(target=FGLaunch._start).start()
 
-    def start(self):
+    @staticmethod
+    def _start():
         print(FGLaunch.FG_LAUNCH_STRING)
         os.system("start cmd /c {0}".format(FGLaunch.FG_LAUNCH_STRING))
 
 
 if __name__ == '__main__':
-    FGLaunch()
+    FGLaunch.start_process()
