@@ -22,7 +22,7 @@ from ch.hslu.wipro.ddpg.utility.OrnsteinUhlenbeckActionNoise import OrnsteinUhle
 from ch.hslu.wipro.ddpg.utility.replay_buffer import ReplayBuffer
 
 
-# ===========================
+# ==========================
 #   Tensorflow Summary Ops
 # ===========================
 
@@ -71,7 +71,8 @@ def train(sess, env, args, actor, critic, actor_noise):
         for j in range(int(args['max_episode_len'])):
 
             # Added exploration noise
-            # a = actor.predict(np.reshape(s, (1, 3))) + (1. / (1. + i))
+
+            # TODO: Predict has to return a dictionary with the action!
             a = actor.predict(np.reshape(s, (1, actor.s_dim))) + actor_noise()
 
             s2, r, terminal, info = env.step(a[0])
@@ -107,7 +108,7 @@ def train(sess, env, args, actor, critic, actor_noise):
                 grads = critic.action_gradients(s_batch, a_outs)
                 actor.train(s_batch, grads[0])
 
-                # Update target networks
+                # Update target networks (not updating the networks directly so the alg is more stable
                 actor.update_target_network()
                 critic.update_target_network()
 
@@ -117,14 +118,14 @@ def train(sess, env, args, actor, critic, actor_noise):
             if terminal:
                 summary_str = sess.run(summary_ops, feed_dict={
                     summary_vars[0]: ep_reward,
-                    summary_vars[1]: ep_ave_max_q / float(j)
+                    summary_vars[1]: ep_ave_max_q / float(j+1)
                 })
 
                 writer.add_summary(summary_str, i)
                 writer.flush()
 
                 print('| Reward: {:d} | Episode: {:d} | Qmax: {:.4f}'.format(int(ep_reward), i,
-                                                                             (ep_ave_max_q / float(j))))
+                                                                             (ep_ave_max_q / float(j+1))))
                 break
 
 
@@ -136,11 +137,11 @@ def _start_learning(args):
         tf.set_random_seed(int(args['random_seed']))
         env.seed(int(args['random_seed']))
 
-        state_dim = env.observation_space.shape[0]
-        action_dim = env.action_space.shape[0]
+        state_dim = len(env.observation_space.spaces)
+        action_dim = len(env.action_space.spaces)
 
         # TODO: Check for problems
-        action_bound = env.action_space.high
+        action_bound = 1
 
         # Ensure action bound is symmetric TODO: Check if has to be symmetric
         # assert (env.action_space.high == -env.action_space.low)
@@ -186,10 +187,10 @@ def start_reinforcement_learning():
     # parser.add_argument('--env', help='choose the gym env- tested on {Pendulum-v0}', default='Pendulum-v0')
     parser.add_argument('--random-seed', help='random seed for repeatability', default=1234)
     parser.add_argument('--max-episodes', help='max num of episodes to do while training', default=50000)
-    parser.add_argument('--max-episode-len', help='max length of 1 episode', default=1000)
+    parser.add_argument('--max-episode-len', help='max length of 1 episode', default=20)
     # parser.add_argument('--render-env', help='render the gym env', action='store_true')
     # parser.add_argument('--use-gym-monitor', help='record gym results', action='store_true')
-    parser.add_argument('--monitor-dir', help='directory for storing gym results', default='./results/gym_ddpg')
+    parser.add_argument('--monitor-dir', help='directory for storing gym results', default='./results/FG_ddpg')
     parser.add_argument('--summary-dir', help='directory for storing tensorboard info', default='./results/tf_ddpg')
 
     # parser.set_defaults(render_env=True)
@@ -200,3 +201,7 @@ def start_reinforcement_learning():
     pp.pprint(args)
 
     _start_learning(args)
+
+
+if __name__ == '__main__':
+    start_reinforcement_learning()

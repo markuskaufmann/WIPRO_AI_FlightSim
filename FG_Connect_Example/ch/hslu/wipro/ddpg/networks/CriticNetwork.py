@@ -1,6 +1,7 @@
 import tflearn
 import tensorflow as tf
 
+
 class CriticNetwork(object):
     """
     Input to the network is the state and action, output is Q(s,a).
@@ -9,9 +10,14 @@ class CriticNetwork(object):
     """
 
     def __init__(self, sess, state_dim, action_dim, learning_rate, tau, gamma, num_actor_vars):
+        # Tensorflow Session
         self.sess = sess
+
         self.s_dim = state_dim
+
         self.a_dim = action_dim
+
+        # Hyperparameters
         self.learning_rate = learning_rate
         self.tau = tau
         self.gamma = gamma

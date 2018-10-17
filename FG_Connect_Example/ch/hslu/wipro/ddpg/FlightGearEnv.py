@@ -3,14 +3,14 @@
 from abc import ABC
 
 import numpy as np
-
 from ch.hslu.wipro.ddpg.Environment import GoalEnv
 from ch.hslu.wipro.ddpg.FlightGearUtility import FlightGearUtility
 from ch.hslu.wipro.ddpg.spaces import dict_space
 from ch.hslu.wipro.ddpg.spaces.Box import Box
 from ch.hslu.wipro.ddpg.utility import Seeding
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
-from ch.hslu.wipro.fg.properties.fg_property_reader import FGPropertyReader
+from ch.hslu.wipro.fg.fakeproperties.fake_fg_property_reader import FakeFGPropertyReader
+from ch.hslu.wipro.fg.fakeproperties.fake_fg_property_writer import FakeFGPropertyWriter
 
 
 class FlightGearEnv(GoalEnv, ABC):
@@ -20,57 +20,41 @@ class FlightGearEnv(GoalEnv, ABC):
         self.utility = FlightGearUtility()
         self.initialize_action_space()
         self.initialize_observation_space()
-        self.desired_goal = np.array([0.0, 0.0, 0.0])
 
         # Why?
         self.seed()
 
     def seed(self, seed=None):
         # Probably ok like this
-        self.np_random, seed = Seeding.seeding.np_random(seed)
+        self.np_random, seed = Seeding.np_random(seed)
         return [seed]
 
     def step(self, u):
-        # TODO: Make Action
-        # TODO: Evaluate Cost
-        # TODO: Get Observation
-        # TODO: Return observation, cost, if the episode is done and maybe an info
+        FakeFGPropertyWriter.write_action(u)
 
-        observation, achieved_goal = self._get_obs()
+        dist_vector, observation = self._get_obs()
 
-        self.compute_reward(achieved_goal, self.desired_goal)
+        reward = self.compute_reward(dist_vector, None)
 
-        """
-        th, thdot = self.state  # th := theta
-        
+        return observation, reward, True, {}
 
-        g = 10.
-        m = 1.
-        l = 1.
-        dt = self.dt
-
-        u = np.clip(u, -self.max_torque, self.max_torque)[0]
-        self.last_u = u # for rendering
-        costs = angle_normalize(th)**2 + .1*thdot**2 + .001*(u**2)
-
-        newthdot = thdot + (-3*g/(2*l) * np.sin(th + np.pi) + 3./(m*l**2)*u) * dt
-        newth = th + newthdot*dt
-        newthdot = np.clip(newthdot, -self.max_speed, self.max_speed) #pylint: disable=E1111
-
-        self.state = np.array([newth, newthdot])
-        return self._get_obs(), -costs, False, {}
-        """
-        raise NotImplementedError
 
     def reset(self):
         # TODO: Put plane in the specific position with the defined speed etc, RETURN OBSERVATION
-
-        self.utility.reset_plane()
+        print("plane reset")
+        dist_vector, observation = self._get_obs()
+        return observation
+        # self.utility.reset_plane()
 
     def _get_obs(self):
-        props = FGPropertyReader.get_properties()
+        # TODO: remove fakes
+        props = FakeFGPropertyReader.get_properties()
         dist_vector = DistCalc.process_distance_vector(props)
-        observation = np.array(props['aileron'], props['rudder'], props['elevator'])
+
+        # TODO: fix observation
+        x = props['aileron']
+        observation = np.array([props['aileron'], props['rudder'], props['elevator']])
+
         return dist_vector, observation
 
     def render(self, mode='human'):
@@ -120,8 +104,6 @@ class FlightGearEnv(GoalEnv, ABC):
 
         """
 
-    def compute_reward(self, achieved_goal: np.ndarray, desired_goal: np.ndarray, info=None):
-        diff = np.abs(achieved_goal - desired_goal)
-        diff_t = np.transpose(diff)
-        reward = (-1) * np.sqrt(diff_t[1]**2 + diff_t[2]**2)
-        return reward
+    # For the first stage no desired goal has to be set yet
+    def compute_reward(self, achieved_goal, desired_goal, info=None):
+        return -achieved_goal.dist_m

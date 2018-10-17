@@ -1,5 +1,7 @@
 from collections import OrderedDict
-from ch.hslu.wipro.ddpg.Environment import Space
+
+from ch.hslu.wipro.ddpg.spaces.Space import Space
+
 
 class Dict(Space):
     """
