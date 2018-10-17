@@ -1,15 +1,17 @@
 # from gym import spaces
 # from gym.utils import seeding
 from abc import ABC
+
 import numpy as np
+
 from ch.hslu.wipro.ddpg.Environment import GoalEnv
 from ch.hslu.wipro.ddpg.FlightGearUtility import FlightGearUtility
 from ch.hslu.wipro.ddpg.spaces import dict_space
 from ch.hslu.wipro.ddpg.spaces.Box import Box
 from ch.hslu.wipro.ddpg.utility import Seeding
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
-from ch.hslu.wipro.fg.const.dist_lookup import DistLookup
 from ch.hslu.wipro.fg.properties.fg_property_reader import FGPropertyReader
+
 
 class FlightGearEnv(GoalEnv, ABC):
 
@@ -18,7 +20,7 @@ class FlightGearEnv(GoalEnv, ABC):
         self.utility = FlightGearUtility()
         self.initialize_action_space()
         self.initialize_observation_space()
-        self.desired_goal = np.array([DistLookup.RWY_BEARING_DEG, 0.0, 0.0])
+        self.desired_goal = np.array([0.0, 0.0, 0.0])
 
         # Why?
         self.seed()
@@ -66,11 +68,9 @@ class FlightGearEnv(GoalEnv, ABC):
         self.utility.reset_plane()
 
     def _get_obs(self):
-        dict = FGPropertyReader.get_properties()
-
-        dist_vector = DistCalc.process_distance_vector(dict['latitude-deg'], dict['longitude-deg'], dict['altitude-ft'])
-        observation = np.array(dict['aileron'], dict['rudder'], dict['elevator'])
-
+        props = FGPropertyReader.get_properties()
+        dist_vector = DistCalc.process_distance_vector(props)
+        observation = np.array(props['aileron'], props['rudder'], props['elevator'])
         return dist_vector, observation
 
     def render(self, mode='human'):
@@ -123,5 +123,5 @@ class FlightGearEnv(GoalEnv, ABC):
     def compute_reward(self, achieved_goal: np.ndarray, desired_goal: np.ndarray, info=None):
         diff = np.abs(achieved_goal - desired_goal)
         diff_t = np.transpose(diff)
-        reward = -np.sqrt(diff_t[1]**2 + diff_t[2]**2)
+        reward = (-1) * np.sqrt(diff_t[1]**2 + diff_t[2]**2)
         return reward

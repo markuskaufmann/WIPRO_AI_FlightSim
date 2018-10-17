@@ -33,15 +33,15 @@ class FGPropertyWriter:
         FGPropertyWriter._write_to_output(FGPropertyType.WRITE_GEAR, brake_left, brake_right, brake_parking)
 
     @staticmethod
-    def _write_to_output(property_type: FGPropertyType, aileron=None, aileron_trim=None, elevator=None,
+    def _write_to_output(fg_property_type: FGPropertyType, aileron=None, aileron_trim=None, elevator=None,
                          elevator_trim=None, rudder=None, rudder_trim=None, flaps=None, throttle=None, mixture=None,
                          brake_left=None, brake_right=None, brake_parking=None, latitude_deg=None, longitude_deg=None,
                          altitude_ft=None, airspeed_kt=None):
-        prop_type_keys = FGPropertyType.TYPE_PROP_MAP[property_type]
+        prop_type_keys = FGPropertyType.TYPE_PROP_MAP[fg_property_type]
         frame = inspect.currentframe()
         args, _, _, values = inspect.getargvalues(frame)
         values.pop('frame')
-        values.pop('property_type')
+        values.pop('fg_property_type')
         output = ""
         for prop_key in prop_type_keys:
             val = values[prop_key]
@@ -49,4 +49,4 @@ class FGPropertyWriter:
             if val is not None:
                 s = str(val) + s
             output += s
-        FGDataOutput.set(output[:-1] + FGPropertyWriter.LINE_SEPARATOR)
+        FGDataOutput.set((fg_property_type, output[:-1] + FGPropertyWriter.LINE_SEPARATOR))

@@ -1,12 +1,15 @@
 import socket
 from threading import Thread
 
+from ch.hslu.wipro.fg.properties.fg_property_type import FGPropertyType
+
 
 class TCPSocketServer:
     HOST = "127.0.0.1"
 
-    def __init__(self, port, backlog=1):
-        self.port = port
+    def __init__(self, fg_property_type: FGPropertyType, backlog=1):
+        self.fg_property_type = fg_property_type
+        self.port = FGPropertyType.TYPE_CONNECTION_MAP[self.fg_property_type][0]
         self.backlog = backlog
         self.closed = False
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -19,7 +22,9 @@ class TCPSocketServer:
         try:
             self.socket.bind((TCPSocketServer.HOST, self.port))
             self.socket.listen(self.backlog)
-            print("socket server listening on: {0}:{1}".format(TCPSocketServer.HOST, self.port))
+            print("socket server listening on: {0}:{1} ({2})".format(TCPSocketServer.HOST, self.port,
+                                                                     self.fg_property_type))
+            FGPropertyType.add_socket_to_connection_map(self.fg_property_type, self.socket)
             while not self.closed:
                 (client_socket, address) = self.socket.accept()
                 self.threaded_method(client_socket, address)

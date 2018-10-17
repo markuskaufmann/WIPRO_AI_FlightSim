@@ -15,10 +15,15 @@ class FGPropertyType:
         WRITE_GEAR: ['brake_left', 'brake_right', 'brake_parking']
     }
 
-    TYPE_PORT_MAP = {
-        READ: 9876,
-        WRITE_RESET: 9877,
-        WRITE_CONTROL: 9878,
-        WRITE_ENGINE: 9879,
-        WRITE_GEAR: 9880
+    TYPE_CONNECTION_MAP = {
+        READ: [9876],
+        WRITE_RESET: [9877],
+        WRITE_CONTROL: [9878],
+        WRITE_ENGINE: [9879],
+        WRITE_GEAR: [9880]
     }
+
+    @staticmethod
+    def add_socket_to_connection_map(fg_property_type, socket):
+        values = FGPropertyType.TYPE_CONNECTION_MAP[fg_property_type]
+        values.append(socket)
