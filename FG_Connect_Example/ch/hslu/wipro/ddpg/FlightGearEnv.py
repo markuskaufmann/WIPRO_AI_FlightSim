@@ -1,6 +1,7 @@
 # from gym import spaces
 # from gym.utils import seeding
 from abc import ABC
+from time import sleep
 
 import numpy as np
 from ch.hslu.wipro.ddpg.Environment import GoalEnv
@@ -9,6 +10,9 @@ from ch.hslu.wipro.ddpg.spaces import dict_space
 from ch.hslu.wipro.ddpg.spaces.Box import Box
 from ch.hslu.wipro.ddpg.utility import Seeding
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
+from ch.hslu.wipro.fg.properties.fg_property_reader import FGPropertyReader
+from ch.hslu.wipro.fg.properties.fg_property_writer import FGPropertyWriter
+
 from ch.hslu.wipro.fg.fakeproperties.fake_fg_property_reader import FakeFGPropertyReader
 from ch.hslu.wipro.fg.fakeproperties.fake_fg_property_writer import FakeFGPropertyWriter
 
@@ -30,29 +34,28 @@ class FlightGearEnv(GoalEnv, ABC):
         return [seed]
 
     def step(self, u):
-        FakeFGPropertyWriter.write_action(u)
-
+        FGPropertyWriter.write_action(u)
+        sleep(0.7)
         dist_vector, observation = self._get_obs()
 
         reward = self.compute_reward(dist_vector, None)
-
-        return observation, reward, True, {}
+        print("Step done")
+        return observation, reward, False, {}
 
 
     def reset(self):
         # TODO: Put plane in the specific position with the defined speed etc, RETURN OBSERVATION
-        print("plane reset")
+        FGPropertyWriter.reset_checkpoint2()
+        sleep(3)
         dist_vector, observation = self._get_obs()
         return observation
-        # self.utility.reset_plane()
 
     def _get_obs(self):
         # TODO: remove fakes
-        props = FakeFGPropertyReader.get_properties()
+        props = FGPropertyReader.get_properties()
         dist_vector = DistCalc.process_distance_vector(props)
 
         # TODO: fix observation
-        x = props['aileron']
         observation = np.array([props['aileron'], props['rudder'], props['elevator']])
 
         return dist_vector, observation
@@ -65,9 +68,8 @@ class FlightGearEnv(GoalEnv, ABC):
 
     def initialize_action_space(self):
         self.action_space = dict_space.Dict({
-            'aileron': Box(low=-1, high=1, shape=(1,), dtype=np.float32),
-            'rudder': Box(low=-1, high=1, shape=(1,), dtype=np.float32),
-            'elevator': Box(low=-1, high=1, shape=(1,), dtype=np.float32)
+            'throttle': Box(low=-1, high=1, shape=(1,), dtype=np.float32),
+            'mixture': Box(low=-1, high=1, shape=(1,), dtype=np.float32)
         })
 
     #   self.action_space = Box(low=-self.max_torque, high=self.max_torque, shape=(1,), dtype=np.float32)
