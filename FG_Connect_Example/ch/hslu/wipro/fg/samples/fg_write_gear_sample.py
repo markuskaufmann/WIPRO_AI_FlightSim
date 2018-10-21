@@ -18,9 +18,9 @@ class FGWriteGearSample(FGObserver):
     def write(self):
         sleep(5)
         while self.running:
-            FGPropertyWriter.write_gear(brake_left=np.random.choice([-1, 0, 1]),
-                                        brake_right=np.random.choice([-1, 0, 1]),
-                                        brake_parking=np.random.choice([0, 1]))
+            FGPropertyWriter._write_gear(brake_left=np.random.choice([-1, 0, 1]),
+                                         brake_right=np.random.choice([-1, 0, 1]),
+                                         brake_parking=np.random.choice([0, 1]))
             sleep(10)
 
     def stop(self):

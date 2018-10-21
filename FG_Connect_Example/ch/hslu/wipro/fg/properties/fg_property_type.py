@@ -9,7 +9,8 @@ class FGPropertyType:
     TYPE_PROP_MAP = {
         WRITE_RESET: ['aileron', 'aileron_trim', 'elevator', 'elevator_trim', 'rudder', 'rudder_trim', 'flaps',
                       'throttle', 'mixture', 'brake_left', 'brake_right', 'brake_parking',
-                      'latitude_deg', 'longitude_deg', 'altitude_ft', 'airspeed_kt'],
+                      'latitude_deg', 'longitude_deg', 'altitude_ft', 'airspeed_kt', 'damage', 'pitch_deg',
+                      'roll_deg', 'heading_deg'],
         WRITE_CONTROL: ['aileron', 'aileron_trim', 'elevator', 'elevator_trim', 'rudder', 'rudder_trim', 'flaps'],
         WRITE_ENGINE: ['throttle', 'mixture'],
         WRITE_GEAR: ['brake_left', 'brake_right', 'brake_parking']

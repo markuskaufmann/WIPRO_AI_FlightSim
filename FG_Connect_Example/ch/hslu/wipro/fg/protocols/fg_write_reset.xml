@@ -102,7 +102,7 @@
    <chunk>
 	<name>altitude-ft</name>
 	<type>float</type>
-	<node>/position/altitude-agl-ft</node>
+	<node>/position/altitude-ft</node>
    </chunk>
 
    <!-- Velocities -->
@@ -110,6 +110,32 @@
     <name>airspeed-kt</name>
     <type>float</type>
     <node>/velocities/airspeed-kt</node>
+   </chunk>
+
+   <!-- Damage -->
+   <chunk>
+    <name>damage</name>
+    <type>string</type>
+    <node>/fdm/jsbsim/settings/damage</node>
+   </chunk>
+
+   <!-- Orientation -->
+   <chunk>
+	<name>roll-deg</name>
+	<type>float</type>
+	<node>/orientation/roll-deg</node>
+   </chunk>
+
+   <chunk>
+	<name>pitch-deg</name>
+	<type>float</type>
+	<node>/orientation/pitch-deg</node>
+   </chunk>
+
+   <chunk>
+	<name>heading-deg</name>
+	<type>float</type>
+	<node>/orientation/heading-deg</node>
    </chunk>
   </input>
  </generic>

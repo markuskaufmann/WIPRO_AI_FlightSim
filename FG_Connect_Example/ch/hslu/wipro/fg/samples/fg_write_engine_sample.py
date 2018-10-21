@@ -18,8 +18,8 @@ class FGWriteEngineSample(FGObserver):
     def write(self):
         sleep(5)
         while self.running:
-            FGPropertyWriter.write_engine(throttle=np.random.choice([0, 1]),
-                                          mixture=np.random.choice([0, 1]))
+            FGPropertyWriter._write_engine(throttle=np.random.choice([0, 1]),
+                                           mixture=np.random.choice([0, 1]))
             sleep(10)
 
     def stop(self):
