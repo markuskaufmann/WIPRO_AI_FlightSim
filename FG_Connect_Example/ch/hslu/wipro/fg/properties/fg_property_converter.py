@@ -13,12 +13,12 @@ class FGPropertyConverter:
     }
 
     _CONVERSION_MAP = {
-        'aileron': (0.1, -1, 1),
-        'elevator': (0.1, -1, 1),
-        'rudder': (0.1, -1, 1),
-        'flaps': (0.1, -1, 1),
-        'throttle': (0.05, 0, 1),
-        'mixture': (0.05, 0, 1)
+        'aileron': {'fact': 0.1, 'val_range_alg': [-1, 1], 'val_range_fg': [-1, 1]},
+        'elevator': {'fact': 0.1, 'val_range_alg': [-1, 1], 'val_range_fg': [-1, 1]},
+        'rudder': {'fact': 0.1, 'val_range_alg': [-1, 1], 'val_range_fg': [-1, 1]},
+        'flaps': {'fact': 0.1, 'val_range_alg': [-1, 1], 'val_range_fg': [0, 1]},
+        'throttle': {'fact': 0.05, 'val_range_alg': [-1, 1], 'val_range_fg': [0, 1]},
+        'mixture': {'fact': 0.05, 'val_range_alg': [-1, 1], 'val_range_fg': [0, 1]}
     }
 
     @staticmethod
@@ -30,12 +30,18 @@ class FGPropertyConverter:
         properties = FGPropertyReader.get_properties()
         for i in range(0, len(actions)):
             action = FGPropertyConverter._ACTION_MAP[i]
-            conversion = FGPropertyConverter._CONVERSION_MAP[action]
-            converted_value = properties[action] + (conversion[0] * actions[i])
-            if converted_value < conversion[1]:
-                converted_value = conversion[1]
-            elif converted_value > conversion[2]:
-                converted_value = conversion[2]
-            result[action] = converted_value
+            conversion_map = FGPropertyConverter._CONVERSION_MAP[action]
+            alg_action = FGPropertyConverter._check_val_in_range(conversion_map['val_range_alg'], actions[i])
+            converted_value = properties[action] + (conversion_map['fact'] * alg_action)
+            fg_action = FGPropertyConverter._check_val_in_range(conversion_map['val_range_fg'], converted_value)
+            result[action] = fg_action
         print(result)
         return result
+
+    @staticmethod
+    def _check_val_in_range(arr_range, val):
+        if val < arr_range[0]:
+            val = arr_range[0]
+        elif val > arr_range[1]:
+            val = arr_range[1]
+        return val
