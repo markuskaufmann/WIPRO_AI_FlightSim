@@ -22,7 +22,8 @@ class FGReadWriteSample(FGObserver):
         while self.running:
             props = FGPropertyReader.get_properties()
             distance_vector = DistCalc.process_distance_vector(props)
-            print(props)
+
+            print('input: ', props)
             distance_vector.print()
             sleep(0.5)
 

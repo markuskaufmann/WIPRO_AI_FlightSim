@@ -68,7 +68,8 @@ def train(sess, env, args, actor, critic, actor_noise):
 
         ep_reward = 0
         ep_ave_max_q = 0
-        for j in range(int(args['max_episode_len'])):
+
+        for j in range(int(args['max_episode_len'])-(int(280-i/5))):
             # Added exploration noise
 
             # TODO: Predict has to return a dictionary with the action!
@@ -124,6 +125,9 @@ def train(sess, env, args, actor, critic, actor_noise):
 
             print('| Reward: {:d} | Episode: {:d} | Qmax: {:.4f}'.format(int(ep_reward), j,
                                                                          (ep_ave_max_q / float(j+1))))
+
+            if terminal:
+                break
 
 
 def _start_learning(args):
@@ -184,7 +188,7 @@ def start_reinforcement_learning():
     # parser.add_argument('--env', help='choose the gym env- tested on {Pendulum-v0}', default='Pendulum-v0')
     parser.add_argument('--random-seed', help='random seed for repeatability', default=1234)
     parser.add_argument('--max-episodes', help='max num of episodes to do while training', default=50000)
-    parser.add_argument('--max_episode_len', help='max length of 1 episode', default=5)
+    parser.add_argument('--max_episode_len', help='max length of 1 episode', default=300)
     # parser.add_argument('--render-env', help='render the gym env', action='store_true')
     # parser.add_argument('--use-gym-monitor', help='record gym results', action='store_true')
     parser.add_argument('--monitor-dir', help='directory for storing gym results', default='./results/FG_ddpg')

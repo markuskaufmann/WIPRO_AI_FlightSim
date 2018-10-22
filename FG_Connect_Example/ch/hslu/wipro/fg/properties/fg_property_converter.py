@@ -23,7 +23,7 @@ class FGPropertyConverter:
 
     @staticmethod
     def process_actions(actions) -> dict:
-        print(actions)
+        print('actions befor processed', actions)
         result = dict()
         if actions is None or len(actions) == 0:
             return result
@@ -35,7 +35,7 @@ class FGPropertyConverter:
             converted_value = properties[action] + (conversion_map['fact'] * alg_action)
             fg_action = FGPropertyConverter._check_val_in_range(conversion_map['val_range_fg'], converted_value)
             result[action] = fg_action
-        print(result)
+        print('actions after processed', result)
         return result
 
     @staticmethod
