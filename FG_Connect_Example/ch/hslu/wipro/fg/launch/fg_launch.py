@@ -3,7 +3,6 @@ from threading import Thread
 
 
 class FGLaunch:
-
     # FG Location
     FG_DIR = "C:\\Users\\MK\\Documents\\FlightGear_Root\\FlightGear 2018.2.2"
     # FG_DIR = "C:\\Program Files\\FlightGear 2018.2.2"
@@ -22,11 +21,11 @@ class FGLaunch:
     FG_CMD_OBJECTS = " --disable-random-objects --disable-ai-models --disable-ai-traffic"
     FG_CMD_SOUND = " --disable-sound"
     FG_CMD_WEATHER = " --turbulence=0.0 --disable-clouds --disable-clouds3d --fog-disable --disable-real-weather-fetch"
-    FG_CMD_PROTOCOL_READ = " --generic=socket,out,0.5,127.0.0.1,9876,tcp,fg_read"
-    FG_CMD_PROTOCOL_WRITE_RESET = " --generic=socket,in,0.5,127.0.0.1,9877,tcp,fg_write_reset"
-    FG_CMD_PROTOCOL_WRITE_CONTROL = " --generic=socket,in,0.5,127.0.0.1,9878,tcp,fg_write_control"
-    FG_CMD_PROTOCOL_WRITE_ENGINE = " --generic=socket,in,0.5,127.0.0.1,9879,tcp,fg_write_engine"
-    FG_CMD_PROTOCOL_WRITE_GEAR = " --generic=socket,in,0.5,127.0.0.1,9880,tcp,fg_write_gear"
+    FG_CMD_PROTOCOL_READ = " --generic=socket,out,5,127.0.0.1,9876,tcp,fg_read"
+    FG_CMD_PROTOCOL_WRITE_RESET = " --generic=socket,in,5,127.0.0.1,9877,tcp,fg_write_reset"
+    FG_CMD_PROTOCOL_WRITE_CONTROL = " --generic=socket,in,5,127.0.0.1,9878,tcp,fg_write_control"
+    # FG_CMD_PROTOCOL_WRITE_ENGINE = " --generic=socket,in,0.5,127.0.0.1,9879,tcp,fg_write_engine"
+    # FG_CMD_PROTOCOL_WRITE_GEAR = " --generic=socket,in,0.5,127.0.0.1,9880,tcp,fg_write_gear"
 
     # Launch string
     FG_LAUNCH_STRING = "\"" + FG_EXECUTABLE + "\"" \
@@ -41,9 +40,9 @@ class FGLaunch:
                        + FG_CMD_WEATHER \
                        + FG_CMD_PROTOCOL_READ \
                        + FG_CMD_PROTOCOL_WRITE_RESET \
-                       + FG_CMD_PROTOCOL_WRITE_CONTROL \
-                       + FG_CMD_PROTOCOL_WRITE_ENGINE \
-                       + FG_CMD_PROTOCOL_WRITE_GEAR
+                       + FG_CMD_PROTOCOL_WRITE_CONTROL
+    # + FG_CMD_PROTOCOL_WRITE_ENGINE \
+    # + FG_CMD_PROTOCOL_WRITE_GEAR
 
     @staticmethod
     def start_process():

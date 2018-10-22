@@ -8,3 +8,6 @@ dist
 # Python specific stuff
 **/*.pyc
 *.MBOOK
+**/__pycache__/
+**/.cache
+**/results

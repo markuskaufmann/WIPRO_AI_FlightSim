@@ -11,7 +11,6 @@ class FGMain(FGObserver):
         self.fg_observable = observable
         self.fg_observable.add_observer(self)
         self.fg_observable.add_observer(DDPGLauncher())
-        self.fg_ready_fired = False
 
     def on_update(self, observable, event):
         # init write socket clients

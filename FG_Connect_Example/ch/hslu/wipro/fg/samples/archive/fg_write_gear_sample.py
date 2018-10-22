@@ -1,7 +1,7 @@
+import numpy as np
+
 from threading import Thread
 from time import sleep
-
-import numpy as np
 
 from ch.hslu.wipro.fg.events.fg_observer import FGObserver
 from ch.hslu.wipro.fg.main.fg_main import FGMain
@@ -9,7 +9,7 @@ from ch.hslu.wipro.fg.main.fg_ready_observable import FGReadyObservable
 from ch.hslu.wipro.fg.properties.fg_property_writer import FGPropertyWriter
 
 
-class FGWriteEngineSample(FGObserver):
+class FGWriteGearSample(FGObserver):
 
     def __init__(self):
         self.t_running = Thread(target=self.write)
@@ -18,8 +18,9 @@ class FGWriteEngineSample(FGObserver):
     def write(self):
         sleep(5)
         while self.running:
-            FGPropertyWriter._write_engine(throttle=np.random.choice([0, 1]),
-                                           mixture=np.random.choice([0, 1]))
+            # FGPropertyWriter._write_gear(brake_left=np.random.choice([-1, 0, 1]),
+            #                              brake_right=np.random.choice([-1, 0, 1]),
+            #                              brake_parking=np.random.choice([0, 1]))
             sleep(10)
 
     def stop(self):
@@ -31,5 +32,5 @@ class FGWriteEngineSample(FGObserver):
 
 if __name__ == '__main__':
     fg_observable = FGReadyObservable()
-    fg_observable.add_observer(FGWriteEngineSample())
+    fg_observable.add_observer(FGWriteGearSample())
     FGMain(fg_observable).start()

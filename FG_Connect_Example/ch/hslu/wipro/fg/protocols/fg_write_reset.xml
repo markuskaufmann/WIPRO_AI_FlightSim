@@ -18,11 +18,11 @@
 	<node>/controls/flight/aileron</node>
    </chunk>
 
-   <chunk>
-	<name>aileron-trim</name>
-	<type>float</type>
-	<node>/controls/flight/aileron-trim</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>aileron-trim</name>-->
+	<!--<type>float</type>-->
+	<!--<node>/controls/flight/aileron-trim</node>-->
+   <!--</chunk>-->
 
    <chunk>
 	<name>elevator</name>
@@ -30,11 +30,11 @@
 	<node>/controls/flight/elevator</node>
    </chunk>
 
-   <chunk>
-	<name>elevator-trim</name>
-	<type>float</type>
-	<node>/controls/flight/elevator-trim</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>elevator-trim</name>-->
+	<!--<type>float</type>-->
+	<!--<node>/controls/flight/elevator-trim</node>-->
+   <!--</chunk>-->
 
    <chunk>
 	<name>rudder</name>
@@ -42,11 +42,11 @@
 	<node>/controls/flight/rudder</node>
    </chunk>
 
-   <chunk>
-	<name>rudder-trim</name>
-	<type>float</type>
-	<node>/controls/flight/rudder-trim</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>rudder-trim</name>-->
+	<!--<type>float</type>-->
+	<!--<node>/controls/flight/rudder-trim</node>-->
+   <!--</chunk>-->
 
    <chunk>
 	<name>flaps</name>
@@ -68,23 +68,23 @@
    </chunk>
 
    <!-- Gear -->
-   <chunk>
-	<name>brake-left</name>
-	<type>float</type>
-	<node>/controls/gear/brake-left</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>brake-left</name>-->
+	<!--<type>float</type>-->
+	<!--<node>/controls/gear/brake-left</node>-->
+   <!--</chunk>-->
 
-   <chunk>
-	<name>brake-right</name>
-	<type>float</type>
-	<node>/controls/gear/brake-right</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>brake-right</name>-->
+	<!--<type>float</type>-->
+	<!--<node>/controls/gear/brake-right</node>-->
+   <!--</chunk>-->
 
-   <chunk>
-	<name>brake-parking</name>
-	<type>float</type>
-	<node>/controls/gear/brake-parking</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>brake-parking</name>-->
+	<!--<type>float</type>-->
+	<!--<node>/controls/gear/brake-parking</node>-->
+   <!--</chunk>-->
 
    <!-- Position -->
    <chunk>

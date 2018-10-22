@@ -20,7 +20,6 @@ class FGReadSample(FGObserver):
             distance_vector = DistCalc.process_distance_vector(props)
             print(props)
             distance_vector.print()
-            sleep(0.5)
 
     def stop(self):
         self.running = False

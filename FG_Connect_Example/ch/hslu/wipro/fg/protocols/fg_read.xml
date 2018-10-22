@@ -19,12 +19,12 @@
 	<node>/controls/flight/aileron</node>
    </chunk>
 
-   <chunk>
-	<name>aileron-trim</name>
-	<type>float</type>
-	<format>aileron-trim=%f</format>
-	<node>/controls/flight/aileron-trim</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>aileron-trim</name>-->
+	<!--<type>float</type>-->
+	<!--<format>aileron-trim=%f</format>-->
+	<!--<node>/controls/flight/aileron-trim</node>-->
+   <!--</chunk>-->
 
    <chunk>
 	<name>elevator</name>
@@ -33,12 +33,12 @@
 	<node>/controls/flight/elevator</node>
    </chunk>
 
-   <chunk>
-	<name>elevator-trim</name>
-	<type>float</type>
-	<format>elevator-trim=%f</format>
-	<node>/controls/flight/elevator-trim</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>elevator-trim</name>-->
+	<!--<type>float</type>-->
+	<!--<format>elevator-trim=%f</format>-->
+	<!--<node>/controls/flight/elevator-trim</node>-->
+   <!--</chunk>-->
 
    <chunk>
 	<name>rudder</name>
@@ -47,12 +47,12 @@
 	<node>/controls/flight/rudder</node>
    </chunk>
 
-   <chunk>
-	<name>rudder-trim</name>
-	<type>float</type>
-	<format>rudder-trim=%f</format>
-	<node>/controls/flight/rudder-trim</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>rudder-trim</name>-->
+	<!--<type>float</type>-->
+	<!--<format>rudder-trim=%f</format>-->
+	<!--<node>/controls/flight/rudder-trim</node>-->
+   <!--</chunk>-->
 
    <chunk>
 	<name>flaps</name>
@@ -77,38 +77,38 @@
    </chunk>
 
    <!-- Gear -->
-   <chunk>
-	<name>brake-left</name>
-	<type>float</type>
-	<format>brake-left=%f</format>
-	<node>/controls/gear/brake-left</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>brake-left</name>-->
+	<!--<type>float</type>-->
+	<!--<format>brake-left=%f</format>-->
+	<!--<node>/controls/gear/brake-left</node>-->
+   <!--</chunk>-->
 
-   <chunk>
-	<name>brake-right</name>
-	<type>float</type>
-	<format>brake-right=%f</format>
-	<node>/controls/gear/brake-right</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>brake-right</name>-->
+	<!--<type>float</type>-->
+	<!--<format>brake-right=%f</format>-->
+	<!--<node>/controls/gear/brake-right</node>-->
+   <!--</chunk>-->
 
-   <chunk>
-	<name>brake-parking</name>
-	<type>float</type>
-	<format>brake-parking=%f</format>
-	<node>/controls/gear/brake-parking</node>
-   </chunk>
+   <!--<chunk>-->
+	<!--<name>brake-parking</name>-->
+	<!--<type>float</type>-->
+	<!--<format>brake-parking=%f</format>-->
+	<!--<node>/controls/gear/brake-parking</node>-->
+   <!--</chunk>-->
 
    <!-- Position -->
    <chunk>
 	<name>latitude-deg</name>
-	<type>double</type>
+	<type>float</type>
 	<format>latitude-deg=%.10lf</format>
 	<node>/position/latitude-deg</node>
    </chunk>
 
    <chunk>
 	<name>longitude-deg</name>
-	<type>double</type>
+	<type>float</type>
 	<format>longitude-deg=%.10lf</format>
 	<node>/position/longitude-deg</node>
    </chunk>

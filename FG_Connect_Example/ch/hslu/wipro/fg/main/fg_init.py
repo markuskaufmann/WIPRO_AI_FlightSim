@@ -9,8 +9,8 @@ class FGInit:
     conn_read = None
     conn_write_reset = None
     conn_write_control = None
-    conn_write_engine = None
-    conn_write_gear = None
+    # conn_write_engine = None
+    # conn_write_gear = None
 
     def init_read_connection(self):
         self.conn_read = TCPSocketServerRead(FGPropertyType.READ)
@@ -19,9 +19,9 @@ class FGInit:
     def init_write_connections(self):
         self.conn_write_reset = TCPSocketClientWrite(FGPropertyType.WRITE_RESET)
         self.conn_write_control = TCPSocketClientWrite(FGPropertyType.WRITE_CONTROL)
-        self.conn_write_engine = TCPSocketClientWrite(FGPropertyType.WRITE_ENGINE)
-        self.conn_write_gear = TCPSocketClientWrite(FGPropertyType.WRITE_GEAR)
+        # self.conn_write_engine = TCPSocketClientWrite(FGPropertyType.WRITE_ENGINE)
+        # self.conn_write_gear = TCPSocketClientWrite(FGPropertyType.WRITE_GEAR)
         self.conn_write_reset.start()
         self.conn_write_control.start()
-        self.conn_write_engine.start()
-        self.conn_write_gear.start()
+        # self.conn_write_engine.start()
+        # self.conn_write_gear.start()
