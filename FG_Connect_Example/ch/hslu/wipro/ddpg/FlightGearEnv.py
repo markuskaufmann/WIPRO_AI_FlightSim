@@ -24,6 +24,7 @@ class FlightGearEnv(GoalEnv, ABC):
         self.utility = FlightGearUtility()
         self.initialize_action_space()
         self.initialize_observation_space()
+        self.old_dist_vector = 0
 
         # Why?
         self.seed()
@@ -56,7 +57,7 @@ class FlightGearEnv(GoalEnv, ABC):
         dist_vector = DistCalc.process_distance_vector(props)
 
         # TODO: fix observation
-        observation = np.array([props['aileron'], props['rudder'], props['elevator']])
+        observation = np.array([props['throttle'], 0, dist_vector.dist_m])
 
         return dist_vector, observation
 
@@ -69,7 +70,11 @@ class FlightGearEnv(GoalEnv, ABC):
     def initialize_action_space(self):
         self.action_space = dict_space.Dict({
             'throttle': Box(low=-1, high=1, shape=(1,), dtype=np.float32),
-            'mixture': Box(low=-1, high=1, shape=(1,), dtype=np.float32)
+            'mixture': Box(low=-1, high=1, shape=(1,), dtype=np.float32),
+            'aileron': Box(low=-1, high=1, shape=(1,), dtype=np.float32),
+            'elevator': Box(low=-1, high=1, shape=(1,), dtype=np.float32),
+            'rudder': Box(low=-1, high=1, shape=(1,), dtype=np.float32),
+            'flaps': Box(low=-1, high=1, shape=(1,), dtype=np.float32)
         })
 
     #   self.action_space = Box(low=-self.max_torque, high=self.max_torque, shape=(1,), dtype=np.float32)
@@ -108,4 +113,6 @@ class FlightGearEnv(GoalEnv, ABC):
 
     # For the first stage no desired goal has to be set yet
     def compute_reward(self, achieved_goal, desired_goal, info=None):
-        return -achieved_goal.dist_m
+        delta_distance = self.old_dist_vector - achieved_goal.dist_m
+        self.old_dist_vector = achieved_goal.dist_m
+        return delta_distance

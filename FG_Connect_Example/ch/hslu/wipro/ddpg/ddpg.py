@@ -112,7 +112,7 @@ def train(sess, env, args, actor, critic, actor_noise):
                 critic.update_target_network()
 
             s = s2
-            ep_reward += r
+            ep_reward = r
 
             summary_str = sess.run(summary_ops, feed_dict={
                 summary_vars[0]: ep_reward,
