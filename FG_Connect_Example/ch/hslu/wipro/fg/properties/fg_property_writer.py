@@ -27,7 +27,7 @@ class FGPropertyWriter:
 
     @staticmethod
     def reset_checkpoint2():
-        FGPropertyWriter._write_reset(aileron=0, elevator=0, rudder=0.5, flaps=0, throttle=0.6, mixture=0.95,
+        FGPropertyWriter._write_reset(aileron=0, elevator=0, rudder=0, flaps=0, throttle=0.6, mixture=0.95,
                                       latitude_deg=21.3252466948, longitude_deg=-157.95,
                                       altitude_ft=100, airspeed_kt=20, damage='false', pitch_deg=0, roll_deg=0,
                                       heading_deg=90)

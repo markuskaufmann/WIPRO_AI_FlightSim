@@ -15,5 +15,11 @@ class FGPropertyReader:
             values = data.split(FGPropertyReader.VAR_SEPARATOR)
             for val in values:
                 val_split = val.split(FGPropertyReader.INNER_SEPARATOR)
-                props[val_split[0]] = float(val_split[1])
+                str_value = str(val_split[1])
+                value = None
+                try:
+                    value = float(str_value)
+                except ValueError:
+                    value = str_value
+                props[val_split[0]] = value
         return props

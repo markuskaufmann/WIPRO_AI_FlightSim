@@ -63,6 +63,13 @@
 
    <!-- Engine -->
    <chunk>
+	<name>engine-running</name>
+	<type>string</type>
+	<format>engine-running=%s</format>
+	<node>/engines/active-engine/running</node>
+   </chunk>
+
+   <chunk>
 	<name>throttle</name>
 	<type>float</type>
 	<format>throttle=%f</format>
