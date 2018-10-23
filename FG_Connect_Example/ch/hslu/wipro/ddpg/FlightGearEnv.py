@@ -35,18 +35,20 @@ class FlightGearEnv(Env, ABC):
 
     def step(self, u):
         FGPropertyWriter.write_action(u)
-        sleep(0.7)
+        sleep(0.5)
         dist_vector, observation = self._get_obs()
+
+        if observation is None:
+            return None, None, None, None
 
         reward, terminal = self.compute_reward(dist_vector, observation)
         print("Step done")
         return observation, reward, terminal, {}
 
-
     def reset(self):
         # TODO: Put plane in the specific position with the defined speed etc, RETURN OBSERVATION
         FGPropertyWriter.reset_checkpoint2()
-        sleep(3)
+        sleep(2)
         dist_vector, observation = self._get_obs()
         return observation
 
@@ -54,6 +56,12 @@ class FlightGearEnv(Env, ABC):
         # TODO: remove fakes
         props = FGPropertyReader.get_properties()
         dist_vector = DistCalc.process_distance_vector(props)
+
+        # avoid crash situation
+        if props['altitude-ft'] < 30 \
+                and (props['pitch-deg'] < -50 or (props['roll-deg'] < -45 or props['roll-deg'] > 45)):
+            return dist_vector, None
+
         observation = []
         # TODO: fix observation
         for key in SpaceDefiner.DefaultObservationSpaceKeys:

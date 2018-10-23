@@ -3,11 +3,11 @@
 <PropertyList>
  <comment>
   <![CDATA[
-	Usage: [Commands] --generic=socket,out,0.5,127.0.0.1,9876,tcp,fg_read
+	Usage: [Commands] --generic=socket,in,0.5,127.0.0.1,9877,tcp,fg_write_reset
   ]]>
  </comment>
  <generic>
-  <output>
+  <input>
    <line_separator>\r\n</line_separator>
    <var_separator>,</var_separator>
 
@@ -15,71 +15,55 @@
    <chunk>
     <name>aileron</name>
 	<type>float</type>
-	<format>aileron=%f</format>
 	<node>/controls/flight/aileron</node>
    </chunk>
 
    <!--<chunk>-->
 	<!--<name>aileron-trim</name>-->
 	<!--<type>float</type>-->
-	<!--<format>aileron-trim=%f</format>-->
 	<!--<node>/controls/flight/aileron-trim</node>-->
    <!--</chunk>-->
 
    <chunk>
 	<name>elevator</name>
 	<type>float</type>
-	<format>elevator=%f</format>
 	<node>/controls/flight/elevator</node>
    </chunk>
 
    <!--<chunk>-->
 	<!--<name>elevator-trim</name>-->
 	<!--<type>float</type>-->
-	<!--<format>elevator-trim=%f</format>-->
 	<!--<node>/controls/flight/elevator-trim</node>-->
    <!--</chunk>-->
 
    <chunk>
 	<name>rudder</name>
 	<type>float</type>
-	<format>rudder=%f</format>
 	<node>/controls/flight/rudder</node>
    </chunk>
 
    <!--<chunk>-->
 	<!--<name>rudder-trim</name>-->
 	<!--<type>float</type>-->
-	<!--<format>rudder-trim=%f</format>-->
 	<!--<node>/controls/flight/rudder-trim</node>-->
    <!--</chunk>-->
 
    <chunk>
 	<name>flaps</name>
 	<type>float</type>
-	<format>flaps=%f</format>
 	<node>/controls/flight/flaps</node>
    </chunk>
 
-   <!-- Engine -->
-   <chunk>
-	<name>engine-running</name>
-	<type>string</type>
-	<format>engine-running=%s</format>
-	<node>/engines/active-engine/running</node>
-   </chunk>
-
+   <!-- Engines -->
    <chunk>
 	<name>throttle</name>
 	<type>float</type>
-	<format>throttle=%f</format>
 	<node>/controls/engines/current-engine/throttle</node>
    </chunk>
 
    <chunk>
 	<name>mixture</name>
 	<type>float</type>
-	<format>mixture=%f</format>
 	<node>/controls/engines/current-engine/mixture</node>
    </chunk>
 
@@ -87,90 +71,72 @@
    <!--<chunk>-->
 	<!--<name>brake-left</name>-->
 	<!--<type>float</type>-->
-	<!--<format>brake-left=%f</format>-->
 	<!--<node>/controls/gear/brake-left</node>-->
    <!--</chunk>-->
 
    <!--<chunk>-->
 	<!--<name>brake-right</name>-->
 	<!--<type>float</type>-->
-	<!--<format>brake-right=%f</format>-->
 	<!--<node>/controls/gear/brake-right</node>-->
    <!--</chunk>-->
 
    <!--<chunk>-->
 	<!--<name>brake-parking</name>-->
 	<!--<type>float</type>-->
-	<!--<format>brake-parking=%f</format>-->
 	<!--<node>/controls/gear/brake-parking</node>-->
    <!--</chunk>-->
 
    <!-- Position -->
    <chunk>
 	<name>latitude-deg</name>
-	<type>float</type>
-	<format>latitude-deg=%.10lf</format>
+	<type>double</type>
 	<node>/position/latitude-deg</node>
    </chunk>
 
    <chunk>
 	<name>longitude-deg</name>
-	<type>float</type>
-	<format>longitude-deg=%.10lf</format>
+	<type>double</type>
 	<node>/position/longitude-deg</node>
    </chunk>
 
    <chunk>
 	<name>altitude-ft</name>
 	<type>float</type>
-	<format>altitude-ft=%f</format>
-	<node>/position/altitude-agl-ft</node>
+	<node>/position/altitude-ft</node>
+   </chunk>
+
+   <!-- Velocities -->
+   <chunk>
+    <name>airspeed-kt</name>
+    <type>float</type>
+    <node>/velocities/airspeed-kt</node>
+   </chunk>
+
+   <!-- Damage -->
+   <chunk>
+    <name>damage</name>
+    <type>string</type>
+    <node>/fdm/jsbsim/settings/damage</node>
    </chunk>
 
    <!-- Orientation -->
    <chunk>
 	<name>roll-deg</name>
 	<type>float</type>
-	<format>roll-deg=%f</format>
 	<node>/orientation/roll-deg</node>
    </chunk>
 
    <chunk>
 	<name>pitch-deg</name>
 	<type>float</type>
-	<format>pitch-deg=%f</format>
 	<node>/orientation/pitch-deg</node>
    </chunk>
 
    <chunk>
 	<name>heading-deg</name>
 	<type>float</type>
-	<format>heading-deg=%f</format>
 	<node>/orientation/heading-deg</node>
    </chunk>
-
-   <chunk>
-	<name>side-slip-deg</name>
-	<type>float</type>
-	<format>side-slip-deg=%f</format>
-	<node>/orientation/side-slip-deg</node>
-   </chunk>
-
-   <!-- Velocities -->
-   <chunk>
-	<name>airspeed-kt</name>
-	<type>float</type>
-	<format>airspeed-kt=%f</format>
-	<node>/instrumentation/airspeed-indicator/true-speed-kt</node>
-   </chunk>
-
-   <!-- Pause -->
-   <chunk>
-	<name>pause</name>
-	<type>string</type>
-	<format>pause=%s</format>
-	<node>/sim/freeze/clock</node>
-   </chunk>
-  </output>
+  </input>
  </generic>
 </PropertyList>
