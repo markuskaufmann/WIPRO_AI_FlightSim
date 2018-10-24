@@ -16,10 +16,7 @@ class FGPropertyWriter:
             return
         FGPropertyWriter._write_control(aileron=actions_to_write['aileron'],
                                         elevator=actions_to_write['elevator'],
-                                        rudder=actions_to_write['rudder'],
-                                        flaps=actions_to_write['flaps'],
-                                        throttle=actions_to_write['throttle'],
-                                        mixture=actions_to_write['mixture'])
+                                        throttle=actions_to_write['throttle'])
 
     @staticmethod
     def reset_checkpoint1():
@@ -48,10 +45,9 @@ class FGPropertyWriter:
                                           checkpoint_2=checkpoint_2)
 
     @staticmethod
-    def _write_control(aileron: float, elevator: float, rudder: float, flaps: float, throttle: float,
-                       mixture: float):
-        FGPropertyWriter._write_to_output(FGPropertyType.WRITE_CONTROL, aileron, elevator, rudder,
-                                          flaps, throttle, mixture)
+    def _write_control(aileron: float, elevator: float, throttle: float):
+        FGPropertyWriter._write_to_output(FGPropertyType.WRITE_CONTROL, aileron=aileron,
+                                          elevator=elevator, throttle=throttle)
 
     # @staticmethod
     # def _write_engine(throttle: float, mixture: float):

@@ -5,11 +5,8 @@ _normal_box = Box(low=-1, high=1, shape=(1,), dtype=np.float32)
 
 DefaultActionSpaces = [
     (True, 'throttle', _normal_box),
-    (True, 'mixture', _normal_box),
     (True, 'aileron', _normal_box),
-    (True, 'elevator', _normal_box),
-    (True, 'rudder', _normal_box),
-    (True, 'flaps', _normal_box)
+    (True, 'elevator', _normal_box)
 ]
 
 DefaultObservationSpaces = [

@@ -18,40 +18,10 @@
 	<node>/controls/flight/aileron</node>
    </chunk>
 
-   <!--<chunk>-->
-	<!--<name>aileron-trim</name>-->
-	<!--<type>float</type>-->
-	<!--<node>/controls/flight/aileron-trim</node>-->
-   <!--</chunk>-->
-
    <chunk>
 	<name>elevator</name>
 	<type>float</type>
 	<node>/controls/flight/elevator</node>
-   </chunk>
-
-   <!--<chunk>-->
-	<!--<name>elevator-trim</name>-->
-	<!--<type>float</type>-->
-	<!--<node>/controls/flight/elevator-trim</node>-->
-   <!--</chunk>-->
-
-   <chunk>
-	<name>rudder</name>
-	<type>float</type>
-	<node>/controls/flight/rudder</node>
-   </chunk>
-
-   <!--<chunk>-->
-	<!--<name>rudder-trim</name>-->
-	<!--<type>float</type>-->
-	<!--<node>/controls/flight/rudder-trim</node>-->
-   <!--</chunk>-->
-
-   <chunk>
-	<name>flaps</name>
-	<type>float</type>
-	<node>/controls/flight/flaps</node>
    </chunk>
 
    <!-- Engine -->
@@ -61,11 +31,6 @@
 	<node>/controls/engines/current-engine/throttle</node>
    </chunk>
 
-   <chunk>
-	<name>mixture</name>
-	<type>float</type>
-	<node>/controls/engines/current-engine/mixture</node>
-   </chunk>
   </input>
  </generic>
 </PropertyList>

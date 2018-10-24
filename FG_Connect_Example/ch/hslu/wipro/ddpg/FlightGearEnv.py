@@ -37,10 +37,6 @@ class FlightGearEnv(Env, ABC):
         FGPropertyWriter.write_action(u)
         sleep(0.5)
         dist_vector, observation = self._get_obs()
-
-        if observation is None:
-            return None, None, None, None
-
         reward, terminal = self.compute_reward(dist_vector, observation)
         print("Step done")
         return observation, reward, terminal, {}
@@ -48,7 +44,9 @@ class FlightGearEnv(Env, ABC):
     def reset(self):
         # TODO: Put plane in the specific position with the defined speed etc, RETURN OBSERVATION
         FGPropertyWriter.reset_checkpoint2()
-        sleep(2)
+        self.old_dist_vector = None
+        self.old_throttle = None
+        sleep(1)
         dist_vector, observation = self._get_obs()
         return observation
 
@@ -56,12 +54,6 @@ class FlightGearEnv(Env, ABC):
         # TODO: remove fakes
         props = FGPropertyReader.get_properties()
         dist_vector = DistCalc.process_distance_vector(props)
-
-        # avoid crash situation
-        if props['altitude-ft'] < 30 \
-                and (props['pitch-deg'] < -50 or (props['roll-deg'] < -45 or props['roll-deg'] > 45)):
-            return dist_vector, None
-
         observation = []
         # TODO: fix observation
         for key in SpaceDefiner.DefaultObservationSpaceKeys:
@@ -90,19 +82,21 @@ class FlightGearEnv(Env, ABC):
             self.set_old_values(achieved_goal, observation)
             return 0, False
 
-        if achieved_goal.dist_m < 20:
-            print("******************** GOAL REACHED *****************")
+        if achieved_goal.dist_m < 20 and achieved_goal.alt_m < 1.4:
+            print("******************** GOAL REACHED ********************")
             return 3000, True
 
-        delta_distance = self.old_dist_vector - achieved_goal.dist_m
+        delta_distance = (self.old_dist_vector.dist_m - achieved_goal.dist_m) + \
+                         (self.old_dist_vector.alt_m - achieved_goal.alt_m) * 3
         # TODO: change constant zero to action map
-        delta_throttle = self.old_throttle - observation[0]
+        delta_throttle = observation[0] - self.old_throttle
 
         self.set_old_values(achieved_goal, observation)
 
-        return delta_distance - delta_throttle*100, delta_distance == 0
+        return delta_distance - delta_throttle * 100 - achieved_goal.bound_discrepancy * 50, \
+               delta_distance == 0 or achieved_goal.bound_discrepancy != 0
 
     def set_old_values(self, achieved_goal, observation):
-        self.old_dist_vector = achieved_goal.dist_m
+        self.old_dist_vector = achieved_goal
         # TODO: change constant zero to action map
         self.old_throttle = observation[0]

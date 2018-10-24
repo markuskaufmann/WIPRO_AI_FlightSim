@@ -2,6 +2,7 @@ from ch.hslu.wipro.fg.const.dist_lookup import DistLookup
 import math
 
 from ch.hslu.wipro.fg.calc.distance_vector import DistanceVector
+from ch.hslu.wipro.fg.properties.fg_property_boundaries import FGPropertyBoundaries
 
 
 class DistCalc:
@@ -30,7 +31,9 @@ class DistCalc:
         #             * math.cos(delta_lon_rad)
         # bearing_deg = math.degrees(math.atan2(bearing_y, bearing_x))
         bearing_diff_deg = DistLookup.RWY_BEARING_DEG - plane_heading_deg
-        return DistanceVector(bearing_diff_deg, dist_m, alt_m)
+        # verify property boundaries
+        discrepancy = FGPropertyBoundaries.verify_prop_boundaries(properties)
+        return DistanceVector(bearing_diff_deg, dist_m, alt_m, discrepancy)
 
     @staticmethod
     def feet_to_meters(dist_ft: float) -> float:

@@ -64,22 +64,19 @@ def train(sess, env, args, actor, critic, actor_noise):
     for i in range(int(args['max_episodes'])):
 
         s = env.reset()
+
         print("environment reseted")
 
         ep_reward = 0
         ep_ave_max_q = 0
 
-        for j in range(int(args['max_episode_len'])-(int(280-i/5))):
+        for j in range(5+(int(i/30))):
             # Added exploration noise
 
             # TODO: Predict has to return a dictionary with the action!
             a = actor.predict(np.reshape(s, (1, actor.s_dim))) + actor_noise()
 
             s2, r, terminal, info = env.step(a[0])
-
-            if s2 is None:
-                print("collision avoidance: cancel episode")
-                break
 
             replay_buffer.add(np.reshape(s, (actor.s_dim,)), np.reshape(a, (actor.a_dim,)), r,
                               terminal, np.reshape(s2, (actor.s_dim,)))

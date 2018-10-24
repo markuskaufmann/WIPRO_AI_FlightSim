@@ -19,6 +19,13 @@
 	<node>/controls/flight/aileron</node>
    </chunk>
 
+   <!--<chunk>-->
+	<!--<name>aileron-trim</name>-->
+	<!--<type>float</type>-->
+	<!--<format>aileron-trim=%f</format>-->
+	<!--<node>/controls/flight/aileron-trim</node>-->
+   <!--</chunk>-->
+
    <chunk>
 	<name>elevator</name>
 	<type>float</type>
@@ -26,12 +33,26 @@
 	<node>/controls/flight/elevator</node>
    </chunk>
 
+   <!--<chunk>-->
+	<!--<name>elevator-trim</name>-->
+	<!--<type>float</type>-->
+	<!--<format>elevator-trim=%f</format>-->
+	<!--<node>/controls/flight/elevator-trim</node>-->
+   <!--</chunk>-->
+
    <chunk>
 	<name>rudder</name>
 	<type>float</type>
 	<format>rudder=%f</format>
 	<node>/controls/flight/rudder</node>
    </chunk>
+
+   <!--<chunk>-->
+	<!--<name>rudder-trim</name>-->
+	<!--<type>float</type>-->
+	<!--<format>rudder-trim=%f</format>-->
+	<!--<node>/controls/flight/rudder-trim</node>-->
+   <!--</chunk>-->
 
    <chunk>
 	<name>flaps</name>
@@ -61,6 +82,28 @@
 	<format>mixture=%f</format>
 	<node>/controls/engines/current-engine/mixture</node>
    </chunk>
+
+   <!-- Gear -->
+   <!--<chunk>-->
+	<!--<name>brake-left</name>-->
+	<!--<type>float</type>-->
+	<!--<format>brake-left=%f</format>-->
+	<!--<node>/controls/gear/brake-left</node>-->
+   <!--</chunk>-->
+
+   <!--<chunk>-->
+	<!--<name>brake-right</name>-->
+	<!--<type>float</type>-->
+	<!--<format>brake-right=%f</format>-->
+	<!--<node>/controls/gear/brake-right</node>-->
+   <!--</chunk>-->
+
+   <!--<chunk>-->
+	<!--<name>brake-parking</name>-->
+	<!--<type>float</type>-->
+	<!--<format>brake-parking=%f</format>-->
+	<!--<node>/controls/gear/brake-parking</node>-->
+   <!--</chunk>-->
 
    <!-- Position -->
    <chunk>
