@@ -20,11 +20,8 @@ class FGReadyObservable(FGObservable):
             props = FGPropertyReader.get_properties()
             if props is None:
                 continue
-            # if round(float(props['altitude-ft']), 1) > 0.0:
-            #     sleep(10)
-            #     self.fg_ready_fired = True
             if props['engine-running'] == 'true':
-                sleep(5)
+                sleep(10)
                 self.fg_ready_fired = True
         # notify observers
         self.notify_observers("FlightGear is ready")

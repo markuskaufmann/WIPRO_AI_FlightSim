@@ -617,7 +617,7 @@ setlistener("/sim/signals/fdm-initialized", func {
     setlistener("/sim/model/c172p/cabin-air-temp-in-range", func (node) {
         if (node.getValue()) {
             cabin_temp_timer.stop();
-            logger.screen.green("Cabin temperature between 32F/0C and 90F/32C");
+            # logger.screen.green("Cabin temperature between 32F/0C and 90F/32C");
         }
         else {
             log_cabin_temp();
@@ -671,9 +671,17 @@ setlistener("/sim/signals/fdm-initialized", func {
 
     # Listening for lightning strikes
     setlistener("/environment/lightning/lightning-pos-y", thunder);
-	
-	# Autostart
-	autostart();
+
+	# set view-number=1 (Helicopter View)
+	var current_view = getprop("/sim/current-view/view-number");
+	if (current_view != 1) {
+	    setprop("/sim/current-view/view-number", 1);
+	}
+
+	# activate autostart
+	if (!getprop("/engines/active-engine/running")) {
+	    autostart();
+	}
 	
     reset_system();
     var c172_timer = maketimer(0.25, func{global_system_loop()});
