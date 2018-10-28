@@ -47,11 +47,18 @@ class FlightGearEnv(Env, ABC):
         self.old_dist_vector = None
         self.old_throttle = None
         sleep(1)
-        dist_vector, observation = self._get_obs()
+        dist_vector, observation = self._get_obs(reset=True)
         return observation
 
-    def _get_obs(self):
-        # TODO: remove fakes
+    def _get_obs(self, reset=False):
+        props = None
+        reset_first = True
+        while props is None or props['reset_cp1'] == 1 or props['reset_cp2'] == 1:
+            # react to FG bug that resets personal properties on reposition
+            if reset and reset_first:
+                sleep(0.5)
+                reset_first = False
+            props = FGPropertyReader.get_properties()
         props = FGPropertyReader.get_properties()
         dist_vector = DistCalc.process_distance_vector(props)
         observation = []

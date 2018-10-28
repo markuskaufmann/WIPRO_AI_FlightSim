@@ -121,12 +121,63 @@
 	<node>/instrumentation/airspeed-indicator/true-speed-kt</node>
    </chunk>
 
-   <!-- Pause -->
+   <!-- Damage -->
    <chunk>
-	<name>pause</name>
+	<name>gear-front-broken</name>
 	<type>string</type>
-	<format>pause=%s</format>
-	<node>/sim/freeze/clock</node>
+	<format>gear-front-broken=%s</format>
+	<node>/fdm/jsbsim/gear/unit[0]/broken</node>
+   </chunk>
+
+   <chunk>
+	<name>gear-left-broken</name>
+	<type>string</type>
+	<format>gear-left-broken=%s</format>
+	<node>/fdm/jsbsim/gear/unit[1]/broken</node>
+   </chunk>
+
+   <chunk>
+	<name>gear-right-broken</name>
+	<type>string</type>
+	<format>gear-right-broken=%s</format>
+	<node>/fdm/jsbsim/gear/unit[2]/broken</node>
+   </chunk>
+
+   <chunk>
+	<name>left-wing-damage</name>
+	<type>float</type>
+	<format>left-wing-damage=%f</format>
+	<node>/fdm/jsbsim/wing-damage/left-wing</node>
+   </chunk>
+
+   <chunk>
+	<name>right-wing-damage</name>
+	<type>float</type>
+	<format>right-wing-damage=%f</format>
+	<node>/fdm/jsbsim/wing-damage/right-wing</node>
+   </chunk>
+
+   <chunk>
+	<name>collapsed-wings</name>
+	<type>string</type>
+	<format>collapsed-wings=%s</format>
+	<node>/fdm/jsbsim/crash</node>
+   </chunk>
+
+   <!-- Reset Checkpoint 1 -->
+   <chunk>
+    <name>checkpoint_1</name>
+	<type>float</type>
+    <format>reset_cp1=%f</format>
+	<node>/wipro/reset_cp1</node>
+   </chunk>
+
+   <!-- Reset Checkpoint 2 -->
+   <chunk>
+    <name>checkpoint_2</name>
+	<type>float</type>
+    <format>reset_cp2=%f</format>
+	<node>/wipro/reset_cp2</node>
    </chunk>
   </output>
  </generic>

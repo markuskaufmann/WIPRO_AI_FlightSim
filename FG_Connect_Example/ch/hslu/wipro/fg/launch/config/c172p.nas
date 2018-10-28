@@ -2,10 +2,12 @@
 # Autostart
 ##########################################
 
+var first_init = 0;
+
 var autostart = func (msg=1) {
     if (getprop("/engines/active-engine/running")) {
         if (msg)
-            gui.popupTip("Engine already running", 5);
+            # gui.popupTip("Engine already running", 5);
         return;
     }
 
@@ -31,7 +33,7 @@ var autostart = func (msg=1) {
     setprop("/controls/lighting/beacon", 1);
 
     # Setting flaps to 0
-    setprop("/controls/flight/flaps", 0.0);
+    # setprop("/controls/flight/flaps", 0.0);
 
     # Set the altimeter
     var pressure_sea_level = getprop("/environment/pressure-sea-level-inhg");
@@ -104,7 +106,7 @@ var autostart = func (msg=1) {
     var engine_running_check_delay = 5.0;
     settimer(func {
         if (!getprop("/engines/active-engine/running")) {
-            gui.popupTip("The autostart failed to start the engine. You must lean the mixture and start the engine manually.", 5);
+            # gui.popupTip("The autostart failed to start the engine. You must lean the mixture and start the engine manually.", 5);
         }
         setprop("/controls/switches/starter", 0);
         setprop("/engines/active-engine/auto-start", 0);
@@ -660,28 +662,34 @@ setlistener("/sim/signals/fdm-initialized", func {
         }
     }, 0, 0);
 
-    # Checking if fuel tanks should be refilled (in case save state is off)
-    fuel_save_state();
+    if(first_init == 0) {
+        # Checking if fuel tanks should be refilled (in case save state is off)
+        fuel_save_state();
 
-    # Checking if switches should be moved back to default position (in case save state is off)
-    switches_save_state();
+        # Checking if switches should be moved back to default position (in case save state is off)
+        switches_save_state();
 
-    # Checking if fuel contamination is allowed, and if so generating a random situation
-    fuel_contamination();
+        # Checking if fuel contamination is allowed, and if so generating a random situation
+        fuel_contamination();
 
-    # Listening for lightning strikes
-    setlistener("/environment/lightning/lightning-pos-y", thunder);
+        # Listening for lightning strikes
+        setlistener("/environment/lightning/lightning-pos-y", thunder);
 
-	# set view-number=1 (Helicopter View)
-	var current_view = getprop("/sim/current-view/view-number");
-	if (current_view != 1) {
-	    setprop("/sim/current-view/view-number", 1);
-	}
+        # set view-number=1 (Helicopter View)
+        var current_view = getprop("/sim/current-view/view-number");
+        if (current_view != 1) {
+            setprop("/sim/current-view/view-number", 1);
+        }
 
-	# activate autostart
-	if (!getprop("/engines/active-engine/running")) {
-	    autostart();
-	}
+        # start the engine if not already running
+        if (!getprop("/engines/active-engine/running")) {
+            setprop("/engines/active-engine/oil_consumption_allowed", 0);
+            setprop("/consumables/fuel/contamination_allowed", 0);
+            c172p.autostart();
+        }
+
+        first_init = 1;
+    }
 	
     reset_system();
     var c172_timer = maketimer(0.25, func{global_system_loop()});

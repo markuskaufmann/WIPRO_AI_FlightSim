@@ -8,7 +8,7 @@ class FGPropertyReader:
     @staticmethod
     def get_properties():
         data = None
-        while data is None or len(str(data).strip()) == 0 or data == 'None' or "pause=true" in str(data):
+        while data is None or len(str(data).strip()) == 0 or data == 'None':
             data = FGDataInput.get()
         props = dict()
         if data is not None:
