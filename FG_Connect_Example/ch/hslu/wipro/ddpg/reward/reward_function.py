@@ -11,7 +11,7 @@ class RewardFunction(object):
 
         for r_function in self.reward_functions:
             if self.terminal:
-                return reward
+                return reward, self.terminal
 
             r, t = r_function.calculate_reward(props)
             reward += r
@@ -26,11 +26,9 @@ class RewardFunction(object):
         return reward, self.terminal
 
     def set_old_values(self, achieved_goal, observation):
-        self.old_dist_vector = achieved_goal
-        # TODO: change constant zero to action map
-        self.old_throttle = observation[0]
+        pass
 
     def reset(self):
         self.terminal = False
-        for r_function in self.reward_functionsL:
+        for r_function in self.reward_functions:
             r_function.reset()

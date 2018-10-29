@@ -22,8 +22,6 @@ class FlightGearEnv(Env, ABC):
         self.viewer = None
         self.initialize_action_space()
         self.initialize_observation_space()
-        self.old_dist_vector = None
-        self.old_throttle = None
         self.space_factory = SpaceFactory()
         self.props = None
         self.reward_function = reward_function_generator.generate_checkpoint2_reward_function()
@@ -47,8 +45,7 @@ class FlightGearEnv(Env, ABC):
     def reset(self):
         # TODO: Put plane in the specific position with the defined speed etc, RETURN OBSERVATION
         FGPropertyWriter.reset_checkpoint2()
-        self.old_dist_vector = None
-        self.old_throttle = None
+        self.reward_function.reset()
         sleep(1)
         observation = self._get_obs(reset=True)
         return observation

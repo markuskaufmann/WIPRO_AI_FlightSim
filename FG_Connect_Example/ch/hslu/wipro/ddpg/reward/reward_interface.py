@@ -1,5 +1,5 @@
 class RewardInterface:
-    def calculate_reward(self, observation):
+    def calculate_reward(self, observation) -> (float, bool):
         raise NotImplementedError
 
     def reset(self):

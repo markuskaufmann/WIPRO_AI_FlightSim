@@ -21,24 +21,23 @@ class PositionRewards(RewardInterface):
     def reset(self):
         self.old_dist_vector = None
 
-    def calculate_reward(self, props):
+    def calculate_reward(self, props) -> (float, bool):
         # add vector to observation space
         reward_to_return = 0
         dist_vector = DistCalc.process_distance_vector(props)
 
         if self.old_dist_vector is None:
             self._set_old_values(dist_vector)
-            return 0, False
+            return reward_to_return, False
 
-        reward = 0
-        reward += self.calculate_distance_reward(dist_vector)
-        reward += self.calculate_alt_reward(dist_vector)
-        reward += self.calculate_bearing_reward(dist_vector)
-        reward += self.calculate_discrepancy_reward(dist_vector)
+        reward_to_return += self.calculate_distance_reward(dist_vector)
+        reward_to_return += self.calculate_alt_reward(dist_vector)
+        reward_to_return += self.calculate_bearing_reward(dist_vector)
+        reward_to_return += self.calculate_discrepancy_reward(dist_vector)
 
         self._set_old_values(dist_vector)
 
-        return reward, False
+        return reward_to_return, False
 
     def _set_old_values(self, dist_vector):
         self.old_dist_vector = dist_vector
