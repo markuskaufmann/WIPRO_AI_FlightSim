@@ -23,5 +23,5 @@ DefaultObservationSpaces = [
     (True, 'bearing_deg', _normal_box)
 ]
 
-DefaultObservationSpaceKeys = ['throttle', 'mixture', 'aileron', 'elevator', 'rudder', 'flaps']
+DefaultObservationSpaceKeys = [observation_space[1] for observation_space in DefaultObservationSpaces]
 

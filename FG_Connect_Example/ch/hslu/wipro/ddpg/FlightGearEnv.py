@@ -6,6 +6,7 @@ from time import sleep
 import numpy as np
 
 from ch.hslu.wipro.ddpg.Environment import Env
+from ch.hslu.wipro.ddpg.reward import reward_function_generator
 from ch.hslu.wipro.ddpg.spaces import dict_space
 from ch.hslu.wipro.ddpg.utility import Seeding
 from ch.hslu.wipro.ddpg.utility import SpaceDefiner
@@ -24,6 +25,8 @@ class FlightGearEnv(Env, ABC):
         self.old_dist_vector = None
         self.old_throttle = None
         self.space_factory = SpaceFactory()
+        self.props = None
+        self.reward_function = reward_function_generator.generate_checkpoint2_reward_function()
 
         # Why?
         self.seed()
@@ -36,8 +39,8 @@ class FlightGearEnv(Env, ABC):
     def step(self, u):
         FGPropertyWriter.write_action(u)
         sleep(0.5)
-        dist_vector, observation = self._get_obs()
-        reward, terminal = self.compute_reward(dist_vector, observation)
+        observation = self._get_obs()
+        reward, terminal = self.compute_reward()
         print("Step done")
         return observation, reward, terminal, {}
 
@@ -47,27 +50,36 @@ class FlightGearEnv(Env, ABC):
         self.old_dist_vector = None
         self.old_throttle = None
         sleep(1)
-        dist_vector, observation = self._get_obs(reset=True)
+        observation = self._get_obs(reset=True)
         return observation
 
     def _get_obs(self, reset=False):
-        props = None
+        self.props = None
         reset_first = True
-        while props is None or props['reset_cp1'] == 1 or props['reset_cp2'] == 1:
+        while self.props is None or self.props['reset_cp1'] == 1 or self.props['reset_cp2'] == 1:
             # react to FG bug that resets personal properties on reposition
             if reset and reset_first:
                 sleep(0.5)
                 reset_first = False
-            props = FGPropertyReader.get_properties()
-        props = FGPropertyReader.get_properties()
-        dist_vector = DistCalc.process_distance_vector(props)
+            self.props = FGPropertyReader.get_properties()
+        self.props = FGPropertyReader.get_properties()
+        dist_vector = DistCalc.process_distance_vector(self.props)
         observation = []
         # TODO: fix observation
         for key in SpaceDefiner.DefaultObservationSpaceKeys:
-            observation.append(props[key])
+            if key == 'alt_m':
+                observation.append(dist_vector.alt_m)
+            elif key == 'dist_m':
+                observation.append(dist_vector.dist_m)
+            elif key == 'bearing_deg':
+                observation.append(dist_vector.bearing_diff_deg)
+            elif key == 'discrepancy':
+                observation.append(dist_vector.bound_discrepancy)
+            else:
+                observation.append(self.props[key])
 
         observation = np.array(observation)
-        return dist_vector, observation
+        return observation
 
     def render(self, mode='human'):
         raise NotImplementedError
@@ -84,26 +96,5 @@ class FlightGearEnv(Env, ABC):
         self.observation_space = dict_space.Dict(SpaceFactory().create_space(SpaceDefiner.DefaultObservationSpaces))
 
     # For the first stage no desired goal has to be set yet
-    def compute_reward(self, achieved_goal, observation):
-        if self.old_dist_vector is None or self.old_throttle is None:
-            self.set_old_values(achieved_goal, observation)
-            return 0, False
-
-        if achieved_goal.dist_m < 20 and achieved_goal.alt_m < 1.4:
-            print("******************** GOAL REACHED ********************")
-            return 3000, True
-
-        delta_distance = (self.old_dist_vector.dist_m - achieved_goal.dist_m) + \
-                         (self.old_dist_vector.alt_m - achieved_goal.alt_m) * 3
-        # TODO: change constant zero to action map
-        delta_throttle = observation[0] - self.old_throttle
-
-        self.set_old_values(achieved_goal, observation)
-
-        return delta_distance - delta_throttle * 100 - achieved_goal.bound_discrepancy * 50, \
-               delta_distance == 0 or achieved_goal.bound_discrepancy != 0
-
-    def set_old_values(self, achieved_goal, observation):
-        self.old_dist_vector = achieved_goal
-        # TODO: change constant zero to action map
-        self.old_throttle = observation[0]
+    def compute_reward(self):
+        return self.reward_function.compute_reward(self.props)
