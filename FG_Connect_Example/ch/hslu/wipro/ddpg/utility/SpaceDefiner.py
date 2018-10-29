@@ -17,9 +17,10 @@ DefaultObservationSpaces = [
     (True, 'elevator', _normal_box),
     (True, 'rudder', _normal_box),
     (True, 'flaps', _positive_box),
+    (True, 'airspeed-kt', _positive_box),
     (True, 'alt_m', _normal_box),
     (True, 'dist_m', _normal_box),
-    (True, 'discrepancy', _normal_box),
+    (True, 'discrepancy', _positive_box),
     (True, 'bearing_deg', _normal_box)
 ]
 
