@@ -123,23 +123,23 @@
 
    <!-- Damage -->
    <chunk>
-	<name>gear-front-broken</name>
+	<name>front-gear-damage</name>
 	<type>string</type>
-	<format>gear-front-broken=%s</format>
+	<format>front-gear-damage=%s</format>
 	<node>/fdm/jsbsim/gear/unit[0]/broken</node>
    </chunk>
 
    <chunk>
-	<name>gear-left-broken</name>
+	<name>left-gear-damage</name>
 	<type>string</type>
-	<format>gear-left-broken=%s</format>
+	<format>left-gear-damage=%s</format>
 	<node>/fdm/jsbsim/gear/unit[1]/broken</node>
    </chunk>
 
    <chunk>
-	<name>gear-right-broken</name>
+	<name>right-gear-damage</name>
 	<type>string</type>
-	<format>gear-right-broken=%s</format>
+	<format>right-gear-damage=%s</format>
 	<node>/fdm/jsbsim/gear/unit[2]/broken</node>
    </chunk>
 

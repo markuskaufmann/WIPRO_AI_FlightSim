@@ -20,8 +20,10 @@ DefaultObservationSpaces = [
     (True, 'airspeed-kt', _positive_box),
     (True, 'alt_m', _normal_box),
     (True, 'dist_m', _normal_box),
-    (True, 'discrepancy', _positive_box),
-    (True, 'bearing_deg', _normal_box)
+    (True, 'bearing_deg', _normal_box),
+    (True, 'discrepancy_pitch_deg', _normal_box),
+    (True, 'discrepancy_roll_deg', _normal_box),
+    (True, 'discrepancy_heading_deg', _normal_box)
 ]
 
 DefaultObservationSpaceKeys = [observation_space[1] for observation_space in DefaultObservationSpaces]

@@ -46,7 +46,7 @@ class PositionRewards(RewardInterface):
         return -(dist_vector.dist_m - self.old_dist_vector.dist_m)
 
     def calculate_alt_reward(self, dist_vector):
-        return -(dist_vector.alt_m - self.old_dist_vector.alt_m)
+        return -(dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m)
 
     def calculate_bearing_reward(self, dist_vector):
         return 0

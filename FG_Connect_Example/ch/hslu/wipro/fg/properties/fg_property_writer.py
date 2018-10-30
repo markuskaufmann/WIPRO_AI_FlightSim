@@ -76,8 +76,8 @@ class FGPropertyWriter:
     #     FGDataOutput.set((fg_property_type, output[:-1] + FGPropertyWriter.LINE_SEPARATOR))
 
     @staticmethod
-    def _write_to_output(fg_property_type: FGPropertyType, aileron=None, elevator=None, rudder=None, flaps=None,
-                         throttle=None, mixture=None, checkpoint_1=None, checkpoint_2=None):
+    def _write_to_output(fg_property_type: FGPropertyType, aileron=None, elevator=None,
+                         throttle=None, checkpoint_1=None, checkpoint_2=None):
         prop_type_keys = FGPropertyType.TYPE_PROP_MAP[fg_property_type]
         frame = inspect.currentframe()
         args, _, _, values = inspect.getargvalues(frame)

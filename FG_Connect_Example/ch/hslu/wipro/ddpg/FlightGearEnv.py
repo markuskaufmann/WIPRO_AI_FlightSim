@@ -12,6 +12,7 @@ from ch.hslu.wipro.ddpg.utility import Seeding
 from ch.hslu.wipro.ddpg.utility import SpaceDefiner
 from ch.hslu.wipro.ddpg.utility.factories.SpaceFactory import SpaceFactory
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
+from ch.hslu.wipro.fg.properties.fg_property_normalizer import FGPropertyNormalizer
 from ch.hslu.wipro.fg.properties.fg_property_reader import FGPropertyReader
 from ch.hslu.wipro.fg.properties.fg_property_writer import FGPropertyWriter
 
@@ -52,29 +53,34 @@ class FlightGearEnv(Env, ABC):
 
     def _get_obs(self, reset=False):
         self.props = None
-        reset_first = True
+        reset_wait_after_init = True
         while self.props is None or self.props['reset_cp1'] == 1 or self.props['reset_cp2'] == 1:
             # react to FG bug that resets personal properties on reposition
-            if reset and reset_first:
+            if reset and reset_wait_after_init:
                 sleep(0.5)
-                reset_first = False
+                reset_wait_after_init = False
             self.props = FGPropertyReader.get_properties()
         self.props = FGPropertyReader.get_properties()
         dist_vector = DistCalc.process_distance_vector(self.props)
+        # normalization
+        norm_props, norm_dist_vector = FGPropertyNormalizer.perform_normalization(self.props, dist_vector)
         observation = []
         # TODO: fix observation
         for key in SpaceDefiner.DefaultObservationSpaceKeys:
             if key == 'alt_m':
-                observation.append(dist_vector.alt_m)
+                observation.append(norm_dist_vector.alt_diff_m)
             elif key == 'dist_m':
-                observation.append(dist_vector.dist_m)
+                observation.append(norm_dist_vector.dist_m)
             elif key == 'bearing_deg':
-                observation.append(dist_vector.bearing_diff_deg)
-            elif key == 'discrepancy':
-                observation.append(dist_vector.bound_discrepancy)
+                observation.append(norm_dist_vector.bearing_diff_deg)
+            elif key == 'discrepancy_pitch_deg':
+                observation.append(norm_dist_vector.bound_discrepancy['pitch-deg'])
+            elif key == 'discrepancy_roll_deg':
+                observation.append(norm_dist_vector.bound_discrepancy['roll-deg'])
+            elif key == 'discrepancy_heading_deg':
+                observation.append(norm_dist_vector.bound_discrepancy['heading-deg'])
             else:
-                observation.append(self.props[key])
-
+                observation.append(norm_props[key])
         observation = np.array(observation)
         return observation
 

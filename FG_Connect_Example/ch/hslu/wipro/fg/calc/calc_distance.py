@@ -25,15 +25,10 @@ class DistCalc:
             * math.sin(delta_lon_rad / 2) ** 2
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
         dist_m = DistLookup.EARTH_RADIUS_METER * c
-        # bearing_y = math.sin(delta_lon_rad) * math.cos(plane_lat_rad)
-        # bearing_x = math.cos(runway_lat_rad) * math.sin(plane_lat_rad) - math.sin(runway_lat_rad) \
-        #             * math.cos(plane_lat_rad) \
-        #             * math.cos(delta_lon_rad)
-        # bearing_deg = math.degrees(math.atan2(bearing_y, bearing_x))
         bearing_diff_deg = DistLookup.RWY_BEARING_DEG - plane_heading_deg
-        # verify property boundaries
-        discrepancy = FGPropertyBoundaries.verify_prop_boundaries(properties)
-        return DistanceVector(bearing_diff_deg, dist_m, alt_m, discrepancy)
+        discrepancy_dict = FGPropertyBoundaries.verify_prop_boundaries(properties)
+        alt_diff_m = FGPropertyBoundaries.verify_height_boundary(alt_m)
+        return DistanceVector(bearing_diff_deg, dist_m, alt_diff_m, discrepancy_dict)
 
     @staticmethod
     def feet_to_meters(dist_ft: float) -> float:

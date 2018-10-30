@@ -1,5 +1,7 @@
 import numpy as np
 
+from ch.hslu.wipro.fg.const.dist_lookup import DistLookup
+
 
 class FGPropertyBoundaries:
 
@@ -9,16 +11,27 @@ class FGPropertyBoundaries:
         'heading-deg': [70, 110]
     }
 
+    _HEIGHT_BOUNDARY = [DistLookup.ARC_HEIGHT_METER - 0.001,
+                        DistLookup.ARC_HEIGHT_METER + 0.001]
+
     @staticmethod
-    def verify_prop_boundaries(props: dict) -> float:
-        total_discrepancy = 0
+    def verify_prop_boundaries(props: dict) -> dict:
+        discrepancy_dict = dict()
         for bound_key in FGPropertyBoundaries._BOUNDARY_MAP.keys():
             bound_range = FGPropertyBoundaries._BOUNDARY_MAP[bound_key]
             prop_val = props[bound_key]
-            discrepancy = 0
-            if prop_val < bound_range[0]:
-                discrepancy = np.abs(bound_range[0] - prop_val)
-            elif prop_val > bound_range[1]:
-                discrepancy = np.abs(prop_val - bound_range[1])
-            total_discrepancy += discrepancy
-        return total_discrepancy
+            discrepancy_dict[bound_key] = FGPropertyBoundaries._compute_discrepancy(prop_val, bound_range)
+        return discrepancy_dict
+
+    @staticmethod
+    def verify_height_boundary(alt_meter: float) -> float:
+        return FGPropertyBoundaries._compute_discrepancy(alt_meter,
+                                                         FGPropertyBoundaries._HEIGHT_BOUNDARY)
+
+    @staticmethod
+    def _compute_discrepancy(val: float, boundary: []) -> float:
+        if val < boundary[0]:
+            return np.abs(boundary[0]) - np.abs(val)
+        elif val > boundary[1]:
+            return np.abs(val) - np.abs(boundary[1])
+        return 0
