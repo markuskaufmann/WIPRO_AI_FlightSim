@@ -10,6 +10,19 @@ class DistLookup:
     ARC_HEIGHT_METER = 1.339
 
     RWY_BEARING_DEG = 89.9
-    RWY_LOC_TD_ZONE_START = (math.radians(21.325269), math.radians(-157.941620))
-    RWY_LOC_TD_ZONE_END = (math.radians(21.325269), math.radians(-157.934269))
-    RWY_LOC_AIMING_ZONE = (math.radians(21.325269), math.radians(-157.940038))
+    RWY_WIDTH_BOUNDARY = {
+        'left': 21.32538,
+        'right': 21.32512
+    }
+    RWY_LOC_TD_ZONE_START = {
+        'lat': 21.325269,
+        'lon': -157.941620
+    }
+    RWY_LOC_TD_ZONE_END = {
+        'lat': 21.325269,
+        'lon': -157.934269
+    }
+    RWY_LOC_AIMING_ZONE = {
+        'lat': 21.325269,
+        'lon': -157.940038
+    }

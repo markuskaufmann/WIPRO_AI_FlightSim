@@ -42,7 +42,7 @@ var cp1 = {
     elevator_trim: 0,
     rudder: 0,
     rudder_trim: 0,
-    flaps: func { return random(0, 1); },
+    flaps: 1,
     throttle: func { return random(0.7, 1); },
     mixture: func { return random(0.7, 1); },
     latitude_deg: func { return random(21.32522, 21.32526); },
@@ -84,12 +84,12 @@ var cp2 = {
     elevator_trim: 0,
     rudder: 0,
     rudder_trim: 0,
-    flaps: func { return random(0, 1); },
+    flaps: 1,
     throttle: func { return random(0.7, 1); },
     mixture: func { return random(0.7, 1); },
     latitude_deg: func { return random(21.32522, 21.32526); },
     longitude_deg: func { return random(-157.948, -157.944); },
-    altitude_ft: func { return random(66, 132); },
+    altitude_ft: func { return random(66, 98); },
     airspeed_kt: func { return random(55, 100); },
     pitch_deg: func { return random(-5, 0); },
     roll_deg: func { return random(-5, 5); },
@@ -200,7 +200,7 @@ setlistener("/sim/signals/reinit", func {
             setprop("/controls/flight/elevator-trim", cp_current.elevator_trim);
             setprop("/controls/flight/rudder", cp_current.rudder);
             setprop("/controls/flight/rudder-trim", cp_current.rudder_trim);
-            setprop("/controls/flight/flaps", cp_current.flaps());
+            setprop("/controls/flight/flaps", cp_current.flaps);
             setprop("/controls/engines/current-engine/mixture", cp_current.mixture());
             setprop("/controls/engines/current-engine/throttle", cp_current.throttle());
 

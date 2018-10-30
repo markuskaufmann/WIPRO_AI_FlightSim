@@ -16,8 +16,8 @@ class DistCalc:
         alt_m = DistCalc.feet_to_meters(plane_alt_ft)
         plane_lat_rad = math.radians(plane_lat_deg)
         plane_lon_rad = math.radians(plane_lon_deg)
-        runway_lat_rad = DistLookup.RWY_LOC_TD_ZONE_START[0]
-        runway_lon_rad = DistLookup.RWY_LOC_TD_ZONE_START[1]
+        runway_lat_rad = math.radians(DistLookup.RWY_LOC_TD_ZONE_START['lat'])
+        runway_lon_rad = math.radians(DistLookup.RWY_LOC_TD_ZONE_START['lon'])
         delta_lat_rad = plane_lat_rad - runway_lat_rad
         delta_lon_rad = plane_lon_rad - runway_lon_rad
         a = math.sin(delta_lat_rad / 2) ** 2 + math.cos(runway_lat_rad) \

@@ -6,18 +6,18 @@ class TouchdownReward(RewardInterface):
     def __init__(self):
         self.plane_touched_ground = False
 
-    def calculate_reward(self, observation) -> (float, bool):
+    def calculate_reward(self, props) -> (float, bool):
         if self.plane_touched_ground:
             return 0, False
 
-        dist_vector = DistCalc.process_distance_vector(observation)
+        dist_vector = DistCalc.process_distance_vector(props)
         reward_to_return = 0
 
-        if -20 < dist_vector.dist_m < 20 and dist_vector.alt_m < 1:
+        if -20 < dist_vector.dist_m < 20 and dist_vector.alt_diff_m < 1:
             self.plane_touched_ground = True
             reward_to_return = 1000
 
-        elif dist_vector.alt_m < 1:
+        elif dist_vector.alt_diff_m < 1:
             self.plane_touched_ground = True
             reward_to_return = -150
 

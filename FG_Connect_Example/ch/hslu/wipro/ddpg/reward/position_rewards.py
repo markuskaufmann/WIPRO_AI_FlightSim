@@ -1,9 +1,10 @@
+import numpy as np
+
 from ch.hslu.wipro.ddpg.reward.reward_interface import RewardInterface
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
 
 
 class PositionRewards(RewardInterface):
-
     """
                 if key == 'alt_m':
                 observation.append(dist_vector.alt_m)
@@ -46,10 +47,12 @@ class PositionRewards(RewardInterface):
         return -(dist_vector.dist_m - self.old_dist_vector.dist_m)
 
     def calculate_alt_reward(self, dist_vector):
-        return -(dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m)
+        return -30 * (dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m)
 
     def calculate_bearing_reward(self, dist_vector):
-        return 0
+        return 100 - (dist_vector.bearing_diff_deg ** 2)
 
     def calculate_discrepancy_reward(self, dist_vector):
-        return 0
+        return -50 * (np.abs(dist_vector.bound_discrepancy['pitch-deg'])
+                      + np.abs(dist_vector.bound_discrepancy['roll-deg'])
+                      + np.abs(dist_vector.bound_discrepancy['heading-deg']))
