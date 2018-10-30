@@ -17,12 +17,6 @@ class RewardFunction(object):
             reward += r
             self.terminal = t
 
-        #if achieved_goal.dist_m < 20 and achieved_goal.alt_m < 1.4:
-        #    print("******************** GOAL REACHED ********************")
-        #    return 3000, True
-
-        # TODO: change constant zero to action map
-
         return reward, self.terminal
 
     def set_old_values(self, achieved_goal, observation):

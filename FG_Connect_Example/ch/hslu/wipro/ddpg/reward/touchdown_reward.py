@@ -13,11 +13,11 @@ class TouchdownReward(RewardInterface):
         dist_vector = DistCalc.process_distance_vector(observation)
         reward_to_return = 0
 
-        if 20 > dist_vector.dist_m > -20 and dist_vector.alt_m < 5:
+        if -20 < dist_vector.dist_m < 20 and dist_vector.alt_m < 1:
             self.plane_touched_ground = True
             reward_to_return = 1000
 
-        elif dist_vector.alt_m < 5:
+        elif dist_vector.alt_m < 1:
             self.plane_touched_ground = True
             reward_to_return = -150
 
