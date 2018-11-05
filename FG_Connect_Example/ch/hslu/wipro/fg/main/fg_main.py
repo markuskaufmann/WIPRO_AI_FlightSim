@@ -28,6 +28,12 @@ class FGMain(FGObserver):
             print(e)
 
 
+def show_tensorboard():
+    import os
+    path = "C:\\Users\\Cyrille\\Documents\\GitHub\\WIPRO_AI_FlightSim\\FG_Connect_Example\\ch\\hslu\\wipro\\fg\\main\\results\\tf_ddpg"
+    os.system('tensorboard --logdir=' + path)
+
+
 if __name__ == '__main__':
     fg_main = FGMain(FGReadyObservable())
     fg_main.start()

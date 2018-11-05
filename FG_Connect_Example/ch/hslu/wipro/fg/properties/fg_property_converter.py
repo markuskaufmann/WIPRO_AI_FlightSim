@@ -11,8 +11,8 @@ class FGPropertyConverter:
 
     _CONVERSION_MAP = {
         'throttle': {'fact': 0.2, 'val_range_alg': [-1, 1], 'val_range_fg': [0, 1]},
-        'aileron': {'fact': 0.2, 'val_range_alg': [-1, 1], 'val_range_fg': [-1, 1]},
-        'elevator': {'fact': 0.2, 'val_range_alg': [-1, 1], 'val_range_fg': [-1, 1]}
+        'aileron': {'fact': 0.05, 'val_range_alg': [-1, 1], 'val_range_fg': [-1, 1]},
+        'elevator': {'fact': 0.05, 'val_range_alg': [-1, 1], 'val_range_fg': [-1, 1]}
     }
 
     @staticmethod
