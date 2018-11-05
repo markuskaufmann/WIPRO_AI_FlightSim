@@ -32,11 +32,15 @@ class PositionRewards(RewardInterface):
             return reward_to_return, False
 
         reward_to_return += self.calculate_distance_reward(dist_vector)
-        reward_to_return += self.calculate_alt_reward(dist_vector)
+        reward_to_return += self.calculate_alt_reward(props, dist_vector)
         reward_to_return += self.calculate_bearing_reward(dist_vector)
         reward_to_return += self.calculate_discrepancy_reward(dist_vector)
 
         self._set_old_values(dist_vector)
+
+        discrepancy_reset = self.determine_discrepancy_reset(dist_vector)
+        if discrepancy_reset != 0:
+            return -10 * (discrepancy_reset + np.abs(reward_to_return)), True
 
         return reward_to_return, False
 
@@ -46,13 +50,31 @@ class PositionRewards(RewardInterface):
     def calculate_distance_reward(self, dist_vector):
         return -(dist_vector.dist_m - self.old_dist_vector.dist_m)
 
-    def calculate_alt_reward(self, dist_vector):
-        return -30 * (dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m)
+    def calculate_alt_reward(self, props, dist_vector):
+        if dist_vector.alt_diff_m < 20 and props['pitch-deg'] < -5:
+            return -500
+        return -100 * (dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m)
 
     def calculate_bearing_reward(self, dist_vector):
-        return 100 - (dist_vector.bearing_diff_deg ** 2)
+        return -10 * (np.abs(dist_vector.bearing_diff_deg) - np.abs(self.old_dist_vector.bearing_diff_deg))
 
     def calculate_discrepancy_reward(self, dist_vector):
-        return -50 * (np.abs(dist_vector.bound_discrepancy['pitch-deg'])
-                      + np.abs(dist_vector.bound_discrepancy['roll-deg'])
-                      + np.abs(dist_vector.bound_discrepancy['heading-deg']))
+        reward = 0
+        discrepancies = dist_vector.bound_discrepancy
+        for discrepancy_key in discrepancies.keys():
+            discrepancy_value = discrepancies[discrepancy_key]
+            if discrepancy_value == 0:
+                reward += 100
+            else:
+                reward -= np.abs(discrepancy_value)
+        if reward < 0:
+            reward *= 30
+        return reward
+
+    def determine_discrepancy_reset(self, dist_vector) -> float:
+        discrepancies_reset = dist_vector.bound_discrepancy_reset
+        for discrepancy_key in discrepancies_reset.keys():
+            discrepancy_value = discrepancies_reset[discrepancy_key]
+            if discrepancy_value != 0:
+                return np.abs(discrepancy_value)
+        return 0

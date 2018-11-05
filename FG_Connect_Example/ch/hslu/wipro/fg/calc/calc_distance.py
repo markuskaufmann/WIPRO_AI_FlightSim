@@ -26,9 +26,9 @@ class DistCalc:
         c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
         dist_m = DistLookup.EARTH_RADIUS_METER * c
         bearing_diff_deg = DistLookup.RWY_BEARING_DEG - plane_heading_deg
-        discrepancy_dict = FGPropertyBoundaries.verify_prop_boundaries(properties)
+        discrepancy_dict, discrepancy_dict_reset = FGPropertyBoundaries.verify_prop_boundaries(properties)
         alt_diff_m = FGPropertyBoundaries.verify_height_boundary(alt_m)
-        return DistanceVector(bearing_diff_deg, dist_m, alt_diff_m, discrepancy_dict)
+        return DistanceVector(bearing_diff_deg, dist_m, alt_diff_m, discrepancy_dict, discrepancy_dict_reset)
 
     @staticmethod
     def feet_to_meters(dist_ft: float) -> float:

@@ -1,5 +1,3 @@
-import math
-
 
 class DistLookup:
     EARTH_RADIUS_METER = 6371*10**3
@@ -11,18 +9,18 @@ class DistLookup:
 
     RWY_BEARING_DEG = 89.9
     RWY_WIDTH_BOUNDARY = {
-        'left': 21.32538,
-        'right': 21.32512
+        'left': 21.325315,
+        'right': 21.325180
     }
     RWY_LOC_TD_ZONE_START = {
-        'lat': 21.325269,
-        'lon': -157.941620
+        'lat': 21.325247,
+        'lon': -157.94162
     }
     RWY_LOC_TD_ZONE_END = {
-        'lat': 21.325269,
+        'lat': 21.325247,
         'lon': -157.934269
     }
     RWY_LOC_AIMING_ZONE = {
-        'lat': 21.325269,
+        'lat': 21.325247,
         'lon': -157.940038
     }

@@ -326,6 +326,7 @@ var coughing_timer = maketimer(1, engine_coughing);
 # ========== Main loop ======================
 
 var update = func {
+    return;
     var leftTankUsable  = getprop("/consumables/fuel/tank[0]/selected") and getprop("/consumables/fuel/tank[0]/level-gal_us") > 0;
     var rightTankUsable = getprop("/consumables/fuel/tank[1]/selected") and getprop("/consumables/fuel/tank[1]/level-gal_us") > 0;
     var outOfFuel = !(leftTankUsable or rightTankUsable);

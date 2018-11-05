@@ -6,22 +6,34 @@ from ch.hslu.wipro.fg.const.dist_lookup import DistLookup
 class FGPropertyBoundaries:
 
     _BOUNDARY_MAP = {
-        'pitch-deg': [-60, 60],
-        'roll-deg': [-20, 20],
-        'heading-deg': [70, 110]
+        'pitch-deg': [-50, 50],
+        'roll-deg': [-10, 10],
+        'heading-deg': [80, 100]
+    }
+
+    _BOUNDARY_MAP_RESET = {
+        'pitch-deg': [-70, 70],
+        'roll-deg': [-70, 70]
     }
 
     _HEIGHT_BOUNDARY = [DistLookup.ARC_HEIGHT_METER - 0.001,
                         DistLookup.ARC_HEIGHT_METER + 0.001]
 
     @staticmethod
-    def verify_prop_boundaries(props: dict) -> dict:
+    def verify_prop_boundaries(props: dict):
         discrepancy_dict = dict()
+        discrepancy_dict_reset = dict()
         for bound_key in FGPropertyBoundaries._BOUNDARY_MAP.keys():
             bound_range = FGPropertyBoundaries._BOUNDARY_MAP[bound_key]
             prop_val = props[bound_key]
-            discrepancy_dict[bound_key] = FGPropertyBoundaries._compute_discrepancy(prop_val, bound_range)
-        return discrepancy_dict
+            discrepancy_dict[bound_key] = FGPropertyBoundaries._compute_discrepancy(prop_val,
+                                                                                    bound_range)
+        for bound_key in FGPropertyBoundaries._BOUNDARY_MAP_RESET.keys():
+            bound_range = FGPropertyBoundaries._BOUNDARY_MAP_RESET[bound_key]
+            prop_val = props[bound_key]
+            discrepancy_dict_reset[bound_key] = FGPropertyBoundaries._compute_discrepancy(prop_val,
+                                                                                          bound_range)
+        return discrepancy_dict, discrepancy_dict_reset
 
     @staticmethod
     def verify_height_boundary(alt_meter: float) -> float:
