@@ -28,7 +28,25 @@ class DistCalc:
         bearing_diff_deg = DistLookup.RWY_BEARING_DEG - plane_heading_deg
         discrepancy_dict, discrepancy_dict_reset = FGPropertyBoundaries.verify_prop_boundaries(properties)
         alt_diff_m = FGPropertyBoundaries.verify_height_boundary(alt_m)
-        return DistanceVector(bearing_diff_deg, dist_m, alt_diff_m, discrepancy_dict, discrepancy_dict_reset)
+        dist_m_calc = dist_m
+        if dist_m_calc == 0:
+            dist_m_calc = 1e-10
+        if dist_m_calc > 0:
+            pitch_deg = math.degrees(math.atan(alt_diff_m / dist_m_calc))
+        else:
+            pitch_deg = 5
+        return DistanceVector(bearing_diff_deg, pitch_deg, dist_m, alt_diff_m, discrepancy_dict,
+                              discrepancy_dict_reset)
+
+    @staticmethod
+    def check_if_plane_is_on_runway(props: dict) -> bool:
+        lat_deg = props['latitude-deg']
+        lon_deg = props['longitude-deg']
+        if (DistLookup.RWY_WIDTH_BOUNDARY['right'] <= lat_deg <= DistLookup.RWY_WIDTH_BOUNDARY['left']) \
+                and (DistLookup.RWY_LOC_TD_ZONE_START['lon'] <= lon_deg <=
+                     DistLookup.RWY_LOC_TD_ZONE_END['lon']):
+            return True
+        return False
 
     @staticmethod
     def feet_to_meters(dist_ft: float) -> float:
