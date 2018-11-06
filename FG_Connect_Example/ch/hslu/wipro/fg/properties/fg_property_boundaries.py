@@ -6,9 +6,9 @@ from ch.hslu.wipro.fg.const.dist_lookup import DistLookup
 class FGPropertyBoundaries:
 
     _BOUNDARY_MAP = {
-        'pitch-deg': [-50, 50],
+        'pitch-deg': [-20, 20],
         'roll-deg': [-10, 10],
-        'heading-deg': [80, 100]
+        'heading-deg': [85, 95]
     }
 
     _BOUNDARY_MAP_RESET = {

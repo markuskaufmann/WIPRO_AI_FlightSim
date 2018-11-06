@@ -31,8 +31,9 @@ class PositionRewards(RewardInterface):
             self._set_old_values(dist_vector)
             return reward_to_return, False
 
-        reward_to_return += self.calculate_distance_reward(dist_vector)
-        reward_to_return += self.calculate_alt_reward(props, dist_vector)
+        reward_to_return += self.calculate_distance_reward(props, dist_vector)
+        reward_to_return += self.calculate_pitch_reward(dist_vector)
+        reward_to_return += self.calculate_alt_reward(dist_vector)
         reward_to_return += self.calculate_bearing_reward(dist_vector)
         reward_to_return += self.calculate_discrepancy_reward(dist_vector)
 
@@ -40,23 +41,30 @@ class PositionRewards(RewardInterface):
 
         discrepancy_reset = self.determine_discrepancy_reset(dist_vector)
         if discrepancy_reset != 0:
-            return -10 * (discrepancy_reset + np.abs(reward_to_return)), True
+            return -10000, True
 
         return reward_to_return, False
 
     def _set_old_values(self, dist_vector):
         self.old_dist_vector = dist_vector
 
-    def calculate_distance_reward(self, dist_vector):
+    def calculate_distance_reward(self, props, dist_vector):
+        if DistCalc.check_if_plane_is_on_runway(props):
+            return 500
         return -(dist_vector.dist_m - self.old_dist_vector.dist_m)
 
-    def calculate_alt_reward(self, props, dist_vector):
-        if dist_vector.alt_diff_m < 20 and props['pitch-deg'] < -5:
-            return -500
+    def calculate_alt_reward(self, dist_vector):
         return -100 * (dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m)
 
     def calculate_bearing_reward(self, dist_vector):
         return -10 * (np.abs(dist_vector.bearing_diff_deg) - np.abs(self.old_dist_vector.bearing_diff_deg))
+
+    def calculate_pitch_reward(self, dist_vector):
+        pitch_diff_deg = dist_vector.pitch_deg - self.old_dist_vector.pitch_deg
+        if -3 < pitch_diff_deg < 0:
+            return 100
+        else:
+            return -10 * np.abs(pitch_diff_deg)
 
     def calculate_discrepancy_reward(self, dist_vector):
         reward = 0
