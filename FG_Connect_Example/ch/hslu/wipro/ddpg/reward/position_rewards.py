@@ -51,9 +51,13 @@ class PositionRewards(RewardInterface):
         return -(dist_vector.dist_m - self.old_dist_vector.dist_m)
 
     def calculate_alt_reward(self, props, dist_vector):
+        delta_alt_dif = dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m
         if dist_vector.alt_diff_m < 20 and props['pitch-deg'] < -5:
             return -500
-        return -100 * (dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m)
+        elif delta_alt_dif > 0:
+            return -100 * delta_alt_dif
+        else:
+            return 0
 
     def calculate_bearing_reward(self, dist_vector):
         return -10 * (np.abs(dist_vector.bearing_diff_deg) - np.abs(self.old_dist_vector.bearing_diff_deg))
