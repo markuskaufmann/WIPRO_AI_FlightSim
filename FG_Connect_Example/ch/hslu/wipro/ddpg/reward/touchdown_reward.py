@@ -5,7 +5,8 @@ from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
 class TouchdownReward(RewardInterface):
     def __init__(self):
         self.plane_touched_ground = False
-        self.damage = ['front-gear-damage', 'left-gear-damage', 'right-gear-damage']
+        self.back_gear_keys = ['left-gear-damage', 'right-gear-damage']
+        self.front_gear_key = 'front-gear-damage'
 
     def calculate_reward(self, props) -> (float, bool):
         if self.plane_touched_ground:
@@ -14,11 +15,14 @@ class TouchdownReward(RewardInterface):
         dist_vector = DistCalc.process_distance_vector(props)
         reward_to_return = 0
 
-        has_damage = self.has_damage(props)
+        has_back_gear_damage = self.has_back_gear_damage(props)
 
         if -20 < dist_vector.dist_m < 20 and dist_vector.alt_diff_m < 1:
             self.plane_touched_ground = True
-            if has_damage:
+
+            if has_back_gear_damage:
+                reward_to_return = -500
+            elif props[self.front_gear_key] == 'false':
                 reward_to_return = 1000
             else:
                 reward_to_return = 10000
@@ -32,8 +36,8 @@ class TouchdownReward(RewardInterface):
     def reset(self):
         self.plane_touched_ground = False
 
-    def has_damage(self, props) -> bool:
-        for damage_key in self.damage:
+    def has_back_gear_damage(self, props) -> bool:
+        for damage_key in self.back_gear_keys:
             if props[damage_key] == 'true':
                 return True
 

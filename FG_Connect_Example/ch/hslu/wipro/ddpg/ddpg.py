@@ -180,10 +180,10 @@ def start_reinforcement_learning():
     # agent parameters
     parser.add_argument('--actor-lr', help='actor network learning rate', default=0.00001)
     parser.add_argument('--critic-lr', help='critic network learning rate', default=0.0001)
-    parser.add_argument('--gamma', help='discount factor for critic updates', default=0.99)
+    parser.add_argument('--gamma', help='discount factor for critic updates', default=0.95)
     parser.add_argument('--tau', help='soft target update parameter', default=0.001)
-    parser.add_argument('--buffer-size', help='max size of the replay buffer', default=1000000)
-    parser.add_argument('--minibatch-size', help='size of minibatch for minibatch-SGD', default=64)
+    parser.add_argument('--buffer-size', help='max size of the replay buffer', default=2000000)
+    parser.add_argument('--minibatch-size', help='size of minibatch for minibatch-SGD', default=254)
 
     # run parameters
     # parser.add_argument('--env', help='choose the gym env- tested on {Pendulum-v0}', default='Pendulum-v0')

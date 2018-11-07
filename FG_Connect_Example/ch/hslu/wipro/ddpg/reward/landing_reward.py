@@ -7,7 +7,7 @@ class LandingReward(RewardInterface):
     def calculate_reward(self, props) -> (float, bool):
         if props['airspeed-kt'] < 5:
             if DistCalc.check_if_plane_is_on_runway(props):
-                return 5000, True
+                return 50000, True
         return 0, False
 
     def reset(self):

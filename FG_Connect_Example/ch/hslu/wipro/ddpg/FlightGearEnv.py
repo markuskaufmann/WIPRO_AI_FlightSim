@@ -37,7 +37,7 @@ class FlightGearEnv(Env, ABC):
 
     def step(self, u):
         FGPropertyWriter.write_action(u)
-        sleep(0.5)
+        sleep(0.3)
         observation = self._get_obs()
         reward, terminal = self.compute_reward()
         print("Step done")
