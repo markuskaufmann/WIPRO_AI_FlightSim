@@ -7,18 +7,21 @@ class FGPropertyNormalizer:
 
     _NORM_BOUNDARIES = {
         'airspeed-kt': [0, 250],
+        'airspeed-kt_delta': [-250, 250],
         'alt_m': [-50, 10000],
+        'alt_m_delta': [-5000, 5000],
         'dist_m': [-10000, 10000],
         'bearing_deg': [-90, 90],
-        'discrepancy_pitch_deg': [-90, 90],
-        'discrepancy_roll_deg': [-90, 90],
-        'discrepancy_heading_deg': [0, 180]
+        'pitch_deg_delta': [-180, 180],
+        'roll_deg_delta': [-180, 180],
+        'heading_deg_delta': [-180, 180]
     }
 
     @staticmethod
-    def perform_normalization(props: dict, dist_vector: DistanceVector):
+    def perform_normalization(props: dict, dist_vector: DistanceVector, delta_values: dict):
         norm_props = dict()
         norm_dist_vector = dist_vector.copy()
+        norm_delta_values = dict()
         for observation_space in SpaceDefiner.DefaultObservationSpaces:
             key = observation_space[1]
             box = observation_space[2]
@@ -30,21 +33,22 @@ class FGPropertyNormalizer:
             if key == 'alt_m':
                 norm_dist_vector.alt_diff_m = FGPropertyNormalizer._normalize_float(dist_vector.alt_diff_m,
                                                                                     boundaries, box)
+            elif key == 'alt_m_delta':
+                norm_delta_values[key] = FGPropertyNormalizer._normalize_float(delta_values[key], boundaries, box)
+            elif key == 'airspeed-kt_delta':
+                norm_delta_values[key] = FGPropertyNormalizer._normalize_float(delta_values[key], boundaries, box)
             elif key == 'dist_m':
                 norm_dist_vector.dist_m = FGPropertyNormalizer._normalize_float(dist_vector.dist_m,
                                                                                 boundaries, box)
             elif key == 'bearing_deg':
                 norm_dist_vector.bearing_diff_deg = FGPropertyNormalizer._normalize_float(dist_vector.bearing_diff_deg,
                                                                                           boundaries, box)
-            elif key == 'discrepancy_pitch_deg':
-                norm_dist_vector.bound_discrepancy['pitch-deg'] = \
-                    FGPropertyNormalizer._normalize_float(dist_vector.bound_discrepancy['pitch-deg'], boundaries, box)
-            elif key == 'discrepancy_roll_deg':
-                norm_dist_vector.bound_discrepancy['roll-deg'] = \
-                    FGPropertyNormalizer._normalize_float(dist_vector.bound_discrepancy['roll-deg'], boundaries, box)
-            elif key == 'discrepancy_heading_deg':
-                norm_dist_vector.bound_discrepancy['heading-deg'] = \
-                    FGPropertyNormalizer._normalize_float(dist_vector.bound_discrepancy['heading-deg'], boundaries, box)
+            elif key == 'pitch_deg_delta':
+                norm_delta_values[key] = FGPropertyNormalizer._normalize_float(delta_values[key], boundaries, box)
+            elif key == 'roll_deg_delta':
+                norm_delta_values[key] = FGPropertyNormalizer._normalize_float(delta_values[key], boundaries, box)
+            elif key == 'heading_deg_delta':
+                norm_delta_values[key] = FGPropertyNormalizer._normalize_float(delta_values[key], boundaries, box)
             else:
                 val = props[key]
                 norm_val = None
@@ -54,7 +58,7 @@ class FGPropertyNormalizer:
                 except ValueError:
                     norm_val = FGPropertyNormalizer._normalize_str_bool(str(val))
                 norm_props[key] = norm_val
-        return norm_props, norm_dist_vector
+        return norm_props, norm_dist_vector, norm_delta_values
 
     @staticmethod
     def _normalize_float(prop_val_float: float, min_max: [], box: Box) -> float:

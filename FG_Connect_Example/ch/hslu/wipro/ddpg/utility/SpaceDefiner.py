@@ -18,12 +18,14 @@ DefaultObservationSpaces = [
     (True, 'rudder', _normal_box),
     (True, 'flaps', _positive_box),
     (True, 'airspeed-kt', _positive_box),
+    (True, 'airspeed-kt_delta', _normal_box),
     (True, 'alt_m', _normal_box),
+    (True, 'alt_m_delta', _normal_box),
     (True, 'dist_m', _normal_box),
     (True, 'bearing_deg', _normal_box),
-    (True, 'discrepancy_pitch_deg', _normal_box),
-    (True, 'discrepancy_roll_deg', _normal_box),
-    (True, 'discrepancy_heading_deg', _normal_box)
+    (True, 'pitch_deg_delta', _normal_box),
+    (True, 'roll_deg_delta', _normal_box),
+    (True, 'heading_deg_delta', _normal_box)
 ]
 
 DefaultObservationSpaceKeys = [observation_space[1] for observation_space in DefaultObservationSpaces]

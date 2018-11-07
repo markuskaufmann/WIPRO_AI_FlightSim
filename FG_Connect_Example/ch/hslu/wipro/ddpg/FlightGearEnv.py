@@ -25,6 +25,9 @@ class FlightGearEnv(Env, ABC):
         self.initialize_observation_space()
         self.space_factory = SpaceFactory()
         self.props = None
+        self.old_props = None
+        self.dist_vector = None
+        self.old_dist_vector = None
         self.reward_function = reward_function_generator.generate_checkpoint2_reward_function()
 
         # Why?
@@ -52,7 +55,8 @@ class FlightGearEnv(Env, ABC):
         return observation
 
     def _get_obs(self, reset=False):
-        self.props = None
+        self.set_old_values()
+        self.reset_values()
         reset_wait_after_init = True
         while self.props is None or self.props['reset_cp1'] == 1 or self.props['reset_cp2'] == 1:
             # react to FG bug that resets personal properties on reposition
@@ -61,28 +65,60 @@ class FlightGearEnv(Env, ABC):
                 reset_wait_after_init = False
             self.props = FGPropertyReader.get_properties()
         self.props = FGPropertyReader.get_properties()
-        dist_vector = DistCalc.process_distance_vector(self.props)
+        self.dist_vector = DistCalc.process_distance_vector(self.props)
+        delta_values = self.get_delta_values()
         # normalization
-        norm_props, norm_dist_vector = FGPropertyNormalizer.perform_normalization(self.props, dist_vector)
+        norm_props, norm_dist_vector, norm_delta_values = FGPropertyNormalizer.perform_normalization(
+            self.props,
+            self.dist_vector,
+            delta_values)
         observation = []
         # TODO: fix observation
         for key in SpaceDefiner.DefaultObservationSpaceKeys:
             if key == 'alt_m':
                 observation.append(norm_dist_vector.alt_diff_m)
+            elif key == 'alt_m_delta':
+                observation.append(norm_delta_values[key])
+            elif key == 'airspeed-kt_delta':
+                observation.append(norm_delta_values[key])
             elif key == 'dist_m':
                 observation.append(norm_dist_vector.dist_m)
             elif key == 'bearing_deg':
                 observation.append(norm_dist_vector.bearing_diff_deg)
-            elif key == 'discrepancy_pitch_deg':
-                observation.append(norm_dist_vector.bound_discrepancy['pitch-deg'])
-            elif key == 'discrepancy_roll_deg':
-                observation.append(norm_dist_vector.bound_discrepancy['roll-deg'])
-            elif key == 'discrepancy_heading_deg':
-                observation.append(norm_dist_vector.bound_discrepancy['heading-deg'])
+            elif key == 'pitch_deg_delta':
+                observation.append(norm_delta_values[key])
+            elif key == 'roll_deg_delta':
+                observation.append(norm_delta_values[key])
+            elif key == 'heading_deg_delta':
+                observation.append(norm_delta_values[key])
             else:
                 observation.append(norm_props[key])
         observation = np.array(observation)
         return observation
+
+    def set_old_values(self):
+        self.old_props = self.props
+        self.old_dist_vector = self.dist_vector
+
+    def reset_values(self):
+        self.props = None
+        self.dist_vector = None
+
+    def get_delta_values(self) -> dict:
+        delta_values = dict()
+        delta_values['alt_m_delta'] = 0
+        delta_values['airspeed-kt_delta'] = 0
+        delta_values['pitch_deg_delta'] = 0
+        delta_values['roll_deg_delta'] = 0
+        delta_values['heading_deg_delta'] = 0
+        if self.old_dist_vector is None or self.old_props is None:
+            return delta_values
+        delta_values['alt_m_delta'] = self.dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m
+        delta_values['airspeed-kt_delta'] = self.props['airspeed-kt'] - self.old_props['airspeed-kt']
+        delta_values['pitch_deg_delta'] = self.props['pitch-deg'] - self.old_props['pitch-deg']
+        delta_values['roll_deg_delta'] = self.props['roll-deg'] - self.old_props['roll-deg']
+        delta_values['heading_deg_delta'] = self.props['heading-deg'] - self.old_props['heading-deg']
+        return delta_values
 
     def render(self, mode='human'):
         raise NotImplementedError
