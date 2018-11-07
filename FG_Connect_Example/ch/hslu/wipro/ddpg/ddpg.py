@@ -61,6 +61,8 @@ def train(sess, env, args, actor, critic, actor_noise):
     # in other environments.
     # tflearn.is_training(True)
 
+
+
     for i in range(int(args['max_episodes'])):
 
         s = env.reset()
@@ -69,6 +71,8 @@ def train(sess, env, args, actor, critic, actor_noise):
 
         ep_reward = 0
         ep_ave_max_q = 0
+
+
 
         for j in range(5+(int(i/30))):
             # Added exploration noise
@@ -124,7 +128,7 @@ def train(sess, env, args, actor, critic, actor_noise):
             writer.add_summary(summary_str, i)
             writer.flush()
 
-            print('| Reward: {:d} | Episode: {:d} | Qmax: {:.4f}'.format(int(ep_reward), j,
+            print('| Reward: {:d} |Episode: {:d} | Sub Episode: {:d} | Qmax: {:.4f}'.format(int(ep_reward), i, j,
                                                                          (ep_ave_max_q / float(j+1))))
 
             if terminal:

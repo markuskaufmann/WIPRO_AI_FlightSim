@@ -1,21 +1,11 @@
 import numpy as np
 
+from ch.hslu.wipro.ddpg.reward import RewardMultipliers
 from ch.hslu.wipro.ddpg.reward.reward_interface import RewardInterface
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
 
 
 class PositionRewards(RewardInterface):
-    """
-                if key == 'alt_m':
-                observation.append(dist_vector.alt_m)
-            elif key == 'dist_m':
-                observation.append(dist_vector.dist_m)
-            elif key == 'bearing_deg':
-                observation.append(dist_vector.bearing_diff_deg)
-            elif key == 'discrepancy':
-                observation.append(dist_vector.bound_discrepancy)
-    """
-
     def __init__(self):
         self.old_dist_vector = None
 
@@ -41,7 +31,7 @@ class PositionRewards(RewardInterface):
 
         discrepancy_reset = self.determine_discrepancy_reset(dist_vector)
         if discrepancy_reset != 0:
-            return -10000, True
+            return -10 * RewardMultipliers.DISCREPANCY_RESET_MULTIPLIER, True
 
         return reward_to_return, False
 
@@ -50,27 +40,27 @@ class PositionRewards(RewardInterface):
 
     def calculate_distance_reward(self, props, dist_vector):
         if DistCalc.check_if_plane_is_on_runway(props):
-            return 500
+            return 10 * RewardMultipliers.DISTANCE_MULTIPLIER
         return -(dist_vector.dist_m - self.old_dist_vector.dist_m)
 
     def calculate_alt_reward(self, props, dist_vector):
         delta_alt_dif = dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m
         if dist_vector.alt_diff_m < 20 and props['pitch-deg'] < -5:
-            return -500
+            return -5 * RewardMultipliers.ALTITUDE_MULTIPLIER
         elif delta_alt_dif > 0:
-            return -100 * delta_alt_dif
+            return -1 * delta_alt_dif * RewardMultipliers.ALTITUDE_MULTIPLIER
         else:
             return 0
 
     def calculate_bearing_reward(self, dist_vector):
-        return -10 * (np.abs(dist_vector.bearing_diff_deg) - np.abs(self.old_dist_vector.bearing_diff_deg))
+        return RewardMultipliers.BEARING_MULTIPLIER * -(np.abs(dist_vector.bearing_diff_deg) - np.abs(self.old_dist_vector.bearing_diff_deg))
 
     def calculate_pitch_reward(self, dist_vector):
         pitch_diff_deg = dist_vector.pitch_deg - self.old_dist_vector.pitch_deg
         if -3 < pitch_diff_deg < 0:
-            return 1000
+            return 10 * RewardMultipliers.PITCH_MULTIPLIER
         else:
-            return -100 * np.abs(pitch_diff_deg)
+            return -1 * np.abs(pitch_diff_deg) * RewardMultipliers.PITCH_MULTIPLIER
 
     def calculate_discrepancy_reward(self, dist_vector):
         reward = 0
@@ -78,11 +68,10 @@ class PositionRewards(RewardInterface):
         for discrepancy_key in discrepancies.keys():
             discrepancy_value = discrepancies[discrepancy_key]
             if discrepancy_value == 0:
-                reward += 100
+                reward += 10 * RewardMultipliers.DISCREPANCY_MULTIPLIER
             else:
-                reward -= np.abs(discrepancy_value)
-        if reward < 0:
-            reward *= 30
+                reward -= np.abs(discrepancy_value) * RewardMultipliers.DISCREPANCY_MULTIPLIER
+
         return reward
 
     def determine_discrepancy_reset(self, dist_vector) -> float:
