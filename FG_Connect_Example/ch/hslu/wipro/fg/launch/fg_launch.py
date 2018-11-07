@@ -19,7 +19,7 @@ class FGLaunch:
     FG_CMD_AIRCRAFT = " --aircraft=c172p"
     FG_CMD_AIRPORT = " --airport=PHNL --runway=08L"
     FG_CMD_TIME = " --timeofday=noon"
-    FG_CMD_FREEZE = " --enable-fuel-freeze"
+    FG_CMD_FREEZE = " --enable-fuel-freeze --enable-auto-coordination"
     FG_CMD_OBJECTS = " --disable-random-objects --disable-ai-models --disable-ai-traffic"
     FG_CMD_SOUND = " --disable-sound"
     FG_CMD_WEATHER = " --turbulence=0.0 --disable-clouds --disable-clouds3d --fog-disable --disable-real-weather-fetch"
