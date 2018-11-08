@@ -32,6 +32,13 @@ class DistCalc:
         return False
 
     @staticmethod
+    def check_if_plane_horizontally_is_on_runway(props: dict) -> bool:
+        lat_deg = props['latitude-deg']
+        if (DistLookup.RWY_WIDTH_BOUNDARY['right'] <= lat_deg <= DistLookup.RWY_WIDTH_BOUNDARY['left']):
+            return True
+        return False
+
+    @staticmethod
     def _dist_to_runway_pos(props: dict, runway_pos: dict) -> float:
         plane_lat_deg = float(props['latitude-deg'])
         plane_lon_deg = float(props['longitude-deg'])
