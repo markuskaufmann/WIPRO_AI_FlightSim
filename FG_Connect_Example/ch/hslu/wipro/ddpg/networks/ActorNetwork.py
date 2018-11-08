@@ -55,41 +55,27 @@ class ActorNetwork(object):
 
     def create_actor_network(self):
         inputs = tflearn.input_data(shape=[None, self.s_dim])
-        net = tflearn.fully_connected(inputs, 13)
-        net = tflearn.layers.normalization.batch_normalization(net)
-        net = tflearn.activations.relu(net)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.fully_connected(net, 50)
-        net = tflearn.layers.normalization.batch_normalization(net)
-        net = tflearn.activations.relu(net)
-        # Final layer weights are init to Uniform[-3e-3, 3e-3]
         w_init = tflearn.initializations.uniform(minval=-0.003, maxval=0.003)
-        out = tflearn.fully_connected(
-            net, self.a_dim, activation='tanh', weights_init=w_init)
+        net = tflearn.fully_connected(incoming=inputs,
+                                      n_units=self.s_dim + 1)
+        # net = tflearn.layers.normalization.batch_normalization(net)
+        # net = tflearn.activations.relu(net)
+        net = tflearn.fully_connected(incoming=net,
+                                      n_units=int((2/3 * self.s_dim + 1) + self.a_dim),
+                                      activation='relu',
+                                      weights_init=w_init)
+        net = tflearn.fully_connected(incoming=net,
+                                      n_units=int((2/3 * self.s_dim + 1) + self.a_dim),
+                                      activation='relu',
+                                      weights_init=w_init)
+        # net = tflearn.layers.normalization.batch_normalization(net)
+        # net = tflearn.activations.relu(net)
+        # Final layer weights are init to Uniform[-3e-3, 3e-3]
+        # w_init = tflearn.initializations.uniform(minval=-0.003, maxval=0.003)
+        out = tflearn.fully_connected(incoming=net,
+                                      n_units=self.a_dim,
+                                      activation='tanh',
+                                      weights_init=w_init)
         # Scale output to -action_bound to action_bound
         scaled_out = tf.multiply(out, self.action_bound)
         return inputs, out, scaled_out

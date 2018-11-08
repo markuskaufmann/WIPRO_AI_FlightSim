@@ -57,28 +57,28 @@ class CriticNetwork(object):
     def create_critic_network(self):
         inputs = tflearn.input_data(shape=[None, self.s_dim])
         action = tflearn.input_data(shape=[None, self.a_dim])
-        net = tflearn.fully_connected(inputs, 50)
-        net = tflearn.fully_connected(net, 40)
-        net = tflearn.fully_connected(net, 40)
-        net = tflearn.fully_connected(net, 40)
-        net = tflearn.fully_connected(net, 40)
-        net = tflearn.fully_connected(net, 40)
-        net = tflearn.fully_connected(net, 40)
-        net = tflearn.layers.normalization.batch_normalization(net)
-        net = tflearn.activations.relu(net)
+        net = tflearn.fully_connected(incoming=inputs,
+                                      n_units=self.s_dim + 1)
+        # net = tflearn.layers.normalization.batch_normalization(net)
+        # net = tflearn.activations.relu(net)
 
         # Add the action tensor in the 2nd hidden layer
         # Use two temp layers to get the corresponding weights and biases
-        t1 = tflearn.fully_connected(net, 400)
-        t2 = tflearn.fully_connected(action, 400)
-
+        t1 = tflearn.fully_connected(incoming=net,
+                                     n_units=int((2/3 * self.s_dim + 1) + self.a_dim),
+                                     activation='relu')
+        t2 = tflearn.fully_connected(incoming=action,
+                                     n_units=int((2 / 3 * self.s_dim + 1) + self.a_dim),
+                                     activation='relu')
         net = tflearn.activation(
             tf.matmul(net, t1.W) + tf.matmul(action, t2.W) + t2.b, activation='relu')
 
         # linear layer connected to 1 output representing Q(s,a)
         # Weights are init to Uniform[-3e-3, 3e-3]
         w_init = tflearn.initializations.uniform(minval=-0.003, maxval=0.003)
-        out = tflearn.fully_connected(net, 1, weights_init=w_init)
+        out = tflearn.fully_connected(incoming=net,
+                                      n_units=1,
+                                      weights_init=w_init)
         return inputs, action, out
 
     def train(self, inputs, action, predicted_q_value):
