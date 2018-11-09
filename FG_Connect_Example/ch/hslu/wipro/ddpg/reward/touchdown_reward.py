@@ -10,27 +10,25 @@ class TouchdownReward(RewardInterface):
         self.front_gear_key = 'front-gear-damage'
 
     def calculate_reward(self, props) -> (float, bool):
-        if self.plane_touched_ground:
-            return 0, False
+        #if self.plane_touched_ground:
+        #    return 0, False
 
         dist_vector = DistCalc.process_distance_vector(props)
         reward_to_return = 0
 
         has_back_gear_damage = self.has_back_gear_damage(props)
 
-        if -50 < dist_vector.dist_m < 50 and dist_vector.alt_diff_m < 1:
+        if dist_vector.alt_diff_m < 1:
             self.plane_touched_ground = True
 
-            if has_back_gear_damage:
-                reward_to_return = -10 * RewardMultipliers.TOUCHDOWN_MULTIPLIER
+            if has_back_gear_damage and not self.plane_touched_ground:
+                reward_to_return = (-15 * RewardMultipliers.TOUCHDOWN_MULTIPLIER)
+            elif has_back_gear_damage:
+                reward_to_return = (5 * RewardMultipliers.TOUCHDOWN_MULTIPLIER) / props['airspeed-kt']
             elif props[self.front_gear_key] == 'false':
-                reward_to_return = 20 * RewardMultipliers.TOUCHDOWN_MULTIPLIER
+                reward_to_return = (20 * RewardMultipliers.TOUCHDOWN_MULTIPLIER) / props['airspeed-kt']
             else:
-                reward_to_return = 200 * RewardMultipliers.TOUCHDOWN_MULTIPLIER
-
-        elif dist_vector.alt_diff_m < 1:
-            self.plane_touched_ground = True
-            reward_to_return = 10 * RewardMultipliers.TOUCHDOWN_MULTIPLIER
+                reward_to_return = (200 * RewardMultipliers.TOUCHDOWN_MULTIPLIER) / props['airspeed-kt']
 
         return reward_to_return, False
 

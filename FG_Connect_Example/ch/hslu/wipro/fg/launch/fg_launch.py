@@ -7,7 +7,7 @@ class FGLaunch:
     FG_DIR_MK = "C:\\Users\\MK\\Documents\\FlightGear_Root\\FlightGear 2018.2.2"
     FG_DIR_CU = "C:\\Program Files\\FlightGear 2018.2.2"
 
-    FG_DIR = FG_DIR_MK
+    FG_DIR = FG_DIR_CU
 
     # Executable
     FG_EXECUTABLE = FG_DIR + "\\bin\\fgfs.exe"

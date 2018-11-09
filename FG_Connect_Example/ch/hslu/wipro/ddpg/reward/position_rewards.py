@@ -21,17 +21,23 @@ class PositionRewards(RewardInterface):
             self._set_old_values(dist_vector)
             return reward_to_return, False
 
-        reward_to_return += self.calculate_distance_reward(props, dist_vector)
-        reward_to_return += self.calculate_pitch_reward(dist_vector)
-        reward_to_return += self.calculate_alt_reward(props, dist_vector)
-        reward_to_return += self.calculate_bearing_reward(dist_vector)
-        reward_to_return += self.calculate_discrepancy_reward(dist_vector)
-
+        # reward_to_return += self.calculate_distance_reward(props, dist_vector)
+        # reward_to_return += self.calculate_pitch_reward(dist_vector)
+        # reward_to_return += self.calculate_alt_reward(props, dist_vector)
+        # reward_to_return += self.calculate_bearing_reward(dist_vector)
+        # reward_to_return += self.calculate_discrepancy_reward(dist_vector)
+        delta_alt_dif = dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m
         self._set_old_values(dist_vector)
 
         discrepancy_reset = self.determine_discrepancy_reset(dist_vector)
         if discrepancy_reset != 0:
             return -10 * RewardMultipliers.DISCREPANCY_RESET_MULTIPLIER, True
+
+        if delta_alt_dif > 0.1:
+            return -100 * RewardMultipliers.ALTITUDE_MULTIPLIER, True
+
+        if not DistCalc.check_if_plane_horizontally_is_on_runway(props):
+            return -10 * RewardMultipliers.NOT_ON_RUNWAY_MULTIPLIER, True
 
         return reward_to_return, False
 
@@ -53,7 +59,8 @@ class PositionRewards(RewardInterface):
             return 0
 
     def calculate_bearing_reward(self, dist_vector):
-        return RewardMultipliers.BEARING_MULTIPLIER * -(np.abs(dist_vector.bearing_diff_deg) - np.abs(self.old_dist_vector.bearing_diff_deg))
+        return RewardMultipliers.BEARING_MULTIPLIER * -(
+                    np.abs(dist_vector.bearing_diff_deg) - np.abs(self.old_dist_vector.bearing_diff_deg))
 
     def calculate_pitch_reward(self, dist_vector):
         pitch_diff_deg = dist_vector.pitch_deg - self.old_dist_vector.pitch_deg
