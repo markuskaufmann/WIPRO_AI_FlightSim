@@ -142,8 +142,6 @@ def learn(network, env,
                 # note these outputs are batched from vecenv
 
                 t += 1
-                if rank == 0 and render:
-                    env.render()
                 episode_reward += r
                 episode_step += 1
 
@@ -166,6 +164,7 @@ def learn(network, env,
                     episodes += 1
                     agent.reset()
                     env.reset()
+                    break
 
             # Train.
             epoch_actor_losses = []
