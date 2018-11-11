@@ -1,11 +1,11 @@
 import tensorflow as tf
-from baselines.common import tf_util
-from baselines.a2c.utils import fc
-from baselines.common.distributions import make_pdtype
-from baselines.common.input import observation_placeholder, encode_observation
-from baselines.common.tf_util import adjust_shape
-from baselines.common.mpi_running_mean_std import RunningMeanStd
-from baselines.common.models import get_network_builder
+from ch.hslu.wipro.ddpg.new.common import tf_util
+from ch.hslu.wipro.ddpg.new.common.a2c.utils import fc
+from ch.hslu.wipro.ddpg.new.common.distributions import make_pdtype
+from ch.hslu.wipro.ddpg.new.common.input import observation_placeholder, encode_observation
+from ch.hslu.wipro.ddpg.new.common.tf_util import adjust_shape
+from ch.hslu.wipro.ddpg.new.common.mpi_running_mean_std import RunningMeanStd
+from ch.hslu.wipro.ddpg.new.common.models import get_network_builder
 
 import gym
 

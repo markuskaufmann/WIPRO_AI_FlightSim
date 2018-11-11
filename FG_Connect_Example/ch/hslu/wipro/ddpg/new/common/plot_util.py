@@ -5,8 +5,8 @@ import os
 import numpy as np
 import pandas
 from collections import defaultdict, namedtuple
-from baselines.bench import monitor
-from baselines.logger import read_json, read_csv
+from ch.hslu.wipro.ddpg.new.common.bench import monitor
+from ch.hslu.wipro.ddpg.new.logger import read_json, read_csv
 
 def smooth(y, radius, mode='two_sided', valid_only=False):
     '''
