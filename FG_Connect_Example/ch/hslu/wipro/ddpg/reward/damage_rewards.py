@@ -11,11 +11,11 @@ class DamageRewards(RewardInterface):
     def calculate_reward(self, props) -> (float, bool):
         for possible_damage_key in self.boolean_damage_keys:
             if props[possible_damage_key] == 'true':
-                return -5 * RewardMultipliers.DAMAGE_MULTIPLIER, True
+                return RewardMultipliers.NEGATIVE_REWARD, True
 
         for possible_damage_key in self.float_damage_keys:
             if props[possible_damage_key] > 0:
-                return -10 * RewardMultipliers.DAMAGE_MULTIPLIER, True
+                return RewardMultipliers.NEGATIVE_REWARD, True
 
         return 0, False
 

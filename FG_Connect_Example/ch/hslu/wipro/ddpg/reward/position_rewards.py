@@ -31,13 +31,13 @@ class PositionRewards(RewardInterface):
 
         discrepancy_reset = self.determine_discrepancy_reset(dist_vector)
         if discrepancy_reset != 0:
-            return -10 * RewardMultipliers.DISCREPANCY_RESET_MULTIPLIER, True
+            return RewardMultipliers.NEGATIVE_REWARD, True
 
-        if delta_alt_dif > 0.1:
-            return -100 * RewardMultipliers.ALTITUDE_MULTIPLIER, True
+        if delta_alt_dif > 2:
+            return RewardMultipliers.NEGATIVE_REWARD, True
 
         if not DistCalc.check_if_plane_horizontally_is_on_runway(props):
-            return -10 * RewardMultipliers.NOT_ON_RUNWAY_MULTIPLIER, True
+            return RewardMultipliers.NEGATIVE_REWARD, True
 
         return reward_to_return, False
 
