@@ -379,7 +379,7 @@ def _configure_default_logger():
     format_strs = None
     # keep the old default of only writing to stdout
     if 'OPENAI_LOG_FORMAT' not in os.environ:
-        format_strs = ['stdout']
+        format_strs = ['stdout', 'log', 'tensorboard']
     configure(format_strs=format_strs)
     Logger.DEFAULT = Logger.CURRENT
 

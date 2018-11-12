@@ -23,7 +23,7 @@ class PositionRewards(RewardInterface):
 
         reward_to_return += self.calculate_distance_reward(props, dist_vector)
         reward_to_return += self.calculate_pitch_reward(dist_vector)
-        reward_to_return += self.calculate_alt_reward(props, dist_vector)
+        # reward_to_return += self.calculate_alt_reward(props, dist_vector)
         # reward_to_return += self.calculate_bearing_reward(dist_vector)
         # reward_to_return += self.calculate_discrepancy_reward(dist_vector)
         delta_alt_dif = dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m
@@ -67,7 +67,7 @@ class PositionRewards(RewardInterface):
         if -3 < pitch_diff_deg < 0:
             return 10 * RewardMultipliers.PITCH_MULTIPLIER
         else:
-            return -1 * np.abs(pitch_diff_deg) * RewardMultipliers.PITCH_MULTIPLIER
+            return 0
 
     def calculate_discrepancy_reward(self, dist_vector):
         reward = 0
