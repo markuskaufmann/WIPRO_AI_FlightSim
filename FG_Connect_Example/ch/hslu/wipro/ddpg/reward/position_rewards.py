@@ -21,9 +21,9 @@ class PositionRewards(RewardInterface):
             self._set_old_values(dist_vector)
             return reward_to_return, False
 
-        # reward_to_return += self.calculate_distance_reward(props, dist_vector)
-        # reward_to_return += self.calculate_pitch_reward(dist_vector)
-        # reward_to_return += self.calculate_alt_reward(props, dist_vector)
+        reward_to_return += self.calculate_distance_reward(props, dist_vector)
+        reward_to_return += self.calculate_pitch_reward(dist_vector)
+        reward_to_return += self.calculate_alt_reward(props, dist_vector)
         # reward_to_return += self.calculate_bearing_reward(dist_vector)
         # reward_to_return += self.calculate_discrepancy_reward(dist_vector)
         delta_alt_dif = dist_vector.alt_diff_m - self.old_dist_vector.alt_diff_m
