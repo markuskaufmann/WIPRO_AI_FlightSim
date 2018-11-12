@@ -36,7 +36,7 @@ class PositionRewards(RewardInterface):
         if delta_alt_dif > 0.1:
             return -100 * RewardMultipliers.ALTITUDE_MULTIPLIER, True
 
-        if not DistCalc.check_if_plane_horizontally_is_on_runway(props):
+        if not DistCalc.check_if_plane_is_on_runway_width(props):
             return -10 * RewardMultipliers.NOT_ON_RUNWAY_MULTIPLIER, True
 
         return reward_to_return, False

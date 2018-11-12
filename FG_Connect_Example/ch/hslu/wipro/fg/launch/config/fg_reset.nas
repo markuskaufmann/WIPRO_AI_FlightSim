@@ -186,6 +186,35 @@ setlistener("/sim/signals/reinit", func {
         # reset repairing flag
         setprop("/fdm/jsbsim/damage/repairing", 0);
 
+        # reset date / time
+        setprop("/sim/time/gmt", "2018-11-11T23:00:00");
+
+        # reset fuel freeze
+        setprop("/sim/freeze/fuel", 1);
+
+        # reset engine properties
+        setprop("/engines/active-engine/oil_consumption_allowed", 0);
+        setprop("/engines/active-engine/carb_icing_allowed", 0);
+        setprop("/engines/active-engine/coughing", 0);
+        setprop("/engines/active-engine/cranking", 0);
+        setprop("/engines/active-engine/crash-engine", 0);
+        setprop("/engines/active-engine/crashed", 0);
+        setprop("/engines/active-engine/damage_allowed", 0);
+        setprop("/engines/active-engine/kill-engine", 0);
+        setprop("/engines/active-engine/killed", 0);
+        setprop("/engines/active-engine/oil-level", 7);
+        setprop("/engines/active-engine/oil-lacking", 0);
+        setprop("/engines/active-engine/running", 1);
+
+        # reset fuel properties
+        setprop("/consumables/fuel/contamination_allowed", 0);
+        setprop("/consumables/fuel/tank[0]/empty", 0);
+        setprop("/consumables/fuel/tank[0]/level-gal_us", 19.8);
+        setprop("/consumables/fuel/tank[0]/water-contamination", 0);
+        setprop("/consumables/fuel/tank[1]/empty", 0);
+        setprop("/consumables/fuel/tank[1]/level-gal_us", 19.8);
+        setprop("/consumables/fuel/tank[1]/water-contamination", 0);
+
         settimer(func {
             # reset orientation
             setprop("/orientation/pitch-deg", cp_current_pitch);
