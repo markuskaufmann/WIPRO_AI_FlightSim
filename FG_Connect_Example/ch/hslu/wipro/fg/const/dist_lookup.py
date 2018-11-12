@@ -9,8 +9,8 @@ class DistLookup:
 
     RWY_BEARING_DEG = 89.9
     RWY_WIDTH_BOUNDARY = {
-        'left': 21.325315,
-        'right': 21.325180
+        'left': 21.325443,
+        'right': 21.325050
     }
     RWY_LOC_TD_ZONE_START = {
         'lat': 21.325247,
