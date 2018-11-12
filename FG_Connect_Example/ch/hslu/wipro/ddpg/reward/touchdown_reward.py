@@ -22,7 +22,7 @@ class TouchdownReward(RewardInterface):
             self.plane_touched_ground = True
 
             if has_back_gear_damage and not self.plane_touched_ground:
-                reward_to_return = RewardMultipliers.NEGATIVE_REWARD
+                reward_to_return = (-15 * RewardMultipliers.TOUCHDOWN_MULTIPLIER)
             elif has_back_gear_damage:
                 reward_to_return = (5 * RewardMultipliers.TOUCHDOWN_MULTIPLIER) / (props['airspeed-kt'] + 1)
             elif props[self.front_gear_key] == 'false':

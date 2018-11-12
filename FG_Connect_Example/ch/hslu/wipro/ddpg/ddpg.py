@@ -76,7 +76,7 @@ def train(sess, env, args, actor, critic, actor_noise):
             # Added exploration noise
 
             # TODO: Predict has to return a dictionary with the action!
-            a = actor.predict(np.reshape(s, (1, actor.s_dim))) #+ actor_noise()
+            a = actor.predict(np.reshape(s, (1, actor.s_dim))) + actor_noise()
 
             s2, r, terminal, info = env.step(a[0])
 
