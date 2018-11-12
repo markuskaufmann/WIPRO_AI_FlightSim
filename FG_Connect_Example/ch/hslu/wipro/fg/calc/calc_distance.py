@@ -23,20 +23,25 @@ class DistCalc:
 
     @staticmethod
     def check_if_plane_is_on_runway(props: dict) -> bool:
-        lat_deg = props['latitude-deg']
-        lon_deg = props['longitude-deg']
-        if (DistLookup.RWY_WIDTH_BOUNDARY['right'] <= lat_deg <= DistLookup.RWY_WIDTH_BOUNDARY['left']) \
-                and (DistLookup.RWY_LOC_TD_ZONE_START['lon'] <= lon_deg <=
-                     DistLookup.RWY_LOC_TD_ZONE_END['lon']):
-            return True
-        return False
+        return DistCalc._check_plane_on_runway_width(props) and DistCalc._check_plane_on_runway_length(props)
 
     @staticmethod
-    def check_if_plane_horizontally_is_on_runway(props: dict) -> bool:
+    def check_if_plane_is_on_runway_width(props: dict) -> bool:
+        return DistCalc._check_plane_on_runway_width(props)
+
+    @staticmethod
+    def check_if_plane_is_on_runway_length(props: dict) -> bool:
+        return DistCalc._check_plane_on_runway_length(props)
+
+    @staticmethod
+    def _check_plane_on_runway_width(props: dict) -> bool:
         lat_deg = props['latitude-deg']
-        if (DistLookup.RWY_WIDTH_BOUNDARY['right'] <= lat_deg <= DistLookup.RWY_WIDTH_BOUNDARY['left']):
-            return True
-        return False
+        return DistLookup.RWY_WIDTH_BOUNDARY['right'] <= lat_deg <= DistLookup.RWY_WIDTH_BOUNDARY['left']
+
+    @staticmethod
+    def _check_plane_on_runway_length(props: dict) -> bool:
+        lon_deg = props['longitude-deg']
+        return DistLookup.RWY_LOC_TD_ZONE_START['lon'] <= lon_deg <= DistLookup.RWY_LOC_TD_ZONE_END['lon']
 
     @staticmethod
     def _dist_to_runway_pos(props: dict, runway_pos: dict) -> float:
