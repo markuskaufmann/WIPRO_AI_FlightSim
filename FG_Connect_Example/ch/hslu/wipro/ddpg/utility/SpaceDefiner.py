@@ -4,6 +4,9 @@ import numpy as np
 _normal_box = Box(low=-1, high=1, shape=(1,), dtype=np.float32)
 _positive_box = Box(low=0, high=1, shape=(1,), dtype=np.float32)
 
+_positive_range = (0, 1)
+_normal_range = (-1, 1)
+
 DefaultActionSpaces = [
     (True, 'throttle', _normal_box),
     (True, 'aileron', _normal_box),
@@ -28,5 +31,22 @@ DefaultObservationSpaces = [
     (True, 'heading_deg_delta', _normal_box)
 ]
 
-DefaultObservationSpaceKeys = [observation_space[1] for observation_space in DefaultObservationSpaces]
+DefaultObservationSpaces2 = [
+    _positive_range,
+    _positive_range,
+    _normal_range,
+    _normal_range,
+    _normal_range,
+    _positive_range,
+    _positive_range,
+    _normal_range,
+    _normal_range,
+    _normal_range,
+    _normal_range,
+    _normal_range,
+    _normal_range,
+    _normal_range,
+    _normal_range
+]
 
+DefaultObservationSpaceKeys = [observation_space[1] for observation_space in DefaultObservationSpaces]
