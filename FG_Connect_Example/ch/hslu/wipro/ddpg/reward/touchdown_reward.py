@@ -7,12 +7,9 @@ class TouchdownReward(RewardInterface):
     def __init__(self):
         self.plane_touched_ground = False
         self.first_step_after_touchdown = False
-        self.back_gear_keys = ['left-gear-damage', 'right-gear-damage', 'front-gear-damage']
+        self.gear_keys = ['left-gear-damage', 'right-gear-damage', 'front-gear-damage']
 
     def calculate_reward(self, props) -> (float, bool):
-        #if self.plane_touched_ground:
-        #    return 0, False
-
         dist_vector = DistCalc.process_distance_vector(props)
         reward_to_return = 0
         terminal = False
@@ -46,7 +43,7 @@ class TouchdownReward(RewardInterface):
         self.first_step_after_touchdown = False
 
     def has_damage(self, props) -> bool:
-        for damage_key in self.back_gear_keys:
+        for damage_key in self.gear_keys:
             if props[damage_key] == 'true':
                 return True
 
