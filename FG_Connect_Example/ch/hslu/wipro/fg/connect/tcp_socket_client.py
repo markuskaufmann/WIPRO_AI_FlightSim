@@ -28,4 +28,8 @@ class TCPSocketClient:
         raise NotImplementedError("Abstract method - to be implemented in subclasses")
 
     def close(self):
-        self.socket.close()
+        try:
+            FGPropertyType.remove_socket_from_connection_map(self.fg_property_type, self.socket)
+            self.socket.close()
+        except Exception as e:
+            print(e)

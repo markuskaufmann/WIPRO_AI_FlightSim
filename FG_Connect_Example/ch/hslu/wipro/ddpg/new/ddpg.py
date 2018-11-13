@@ -3,6 +3,7 @@ import time
 from collections import deque
 import pickle
 
+from ch.hslu.wipro.ddpg.new.ddpg_fg_restart_observer import DDPGFGRestartObserver
 from ch.hslu.wipro.ddpg.new.ddpg_learner import DDPG
 from ch.hslu.wipro.ddpg.new.models import Actor, Critic
 from ch.hslu.wipro.ddpg.new.memory import Memory
@@ -12,6 +13,8 @@ import ch.hslu.wipro.ddpg.new.common.tf_util as U
 
 from ch.hslu.wipro.ddpg.new import logger
 import numpy as np
+
+from ch.hslu.wipro.fg.main.fg_start_stop import FGStartStop
 
 try:
     from mpi4py import MPI
@@ -124,8 +127,13 @@ def learn(network, env,
     epoch_actions = []
     epoch_qs = []
     epoch_episodes = 0
+    first_epoch = True
     for epoch in range(100000):
-        # TODO: Restart Flightgear here
+        if not first_epoch:
+            observer = restart_fg()
+            while not observer.ready:
+                time.sleep(0.05)
+        first_epoch = False
         for cycle in range(100):
             env.reset()
             # Perform rollouts.
@@ -268,3 +276,11 @@ def learn(network, env,
                     pickle.dump(eval_env.get_state(), f)
 
     return agent
+
+
+def restart_fg() -> DDPGFGRestartObserver:
+    FGStartStop.stop_fg()
+    time.sleep(3)
+    observer = DDPGFGRestartObserver()
+    FGStartStop.start_fg([observer])
+    return observer

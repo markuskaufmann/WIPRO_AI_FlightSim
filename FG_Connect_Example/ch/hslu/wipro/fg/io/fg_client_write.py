@@ -16,9 +16,13 @@ class FGClientWrite(FGClient):
 
     def process(self):
         while self.running:
-            data = FGDataOutput.get()
-            data_val = str(data[1])
-            if data_val is None or len(data_val.strip()) == 0 or data_val == 'None':
-                continue
-            socket = FGPropertyType.TYPE_CONNECTION_MAP[data[0]][1]
-            socket.send(bytes(data_val, encoding='utf-8'))
+            try:
+                data = FGDataOutput.get()
+                data_val = str(data[1])
+                if data_val is None or len(data_val.strip()) == 0 or data_val == 'None':
+                    continue
+                socket = FGPropertyType.TYPE_CONNECTION_MAP[data[0]][1]
+                socket.send(bytes(data_val, encoding='utf-8'))
+            except Exception as e:
+                print(e)
+                break

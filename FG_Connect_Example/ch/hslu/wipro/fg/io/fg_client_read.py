@@ -6,7 +6,11 @@ class FGClientRead(FGClient):
 
     def process(self):
         while self.running:
-            data = self.socket.recv(1024)
-            if data == b'':
-                continue
-            FGDataInput.set(str(data, encoding='utf-8'))
+            try:
+                data = self.socket.recv(1024)
+                if data == b'':
+                    continue
+                FGDataInput.set(str(data, encoding='utf-8'))
+            except Exception as e:
+                print(e)
+                break

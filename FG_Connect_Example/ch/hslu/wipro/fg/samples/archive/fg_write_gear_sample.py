@@ -1,12 +1,9 @@
-import numpy as np
-
 from threading import Thread
 from time import sleep
 
 from ch.hslu.wipro.fg.events.fg_observer import FGObserver
 from ch.hslu.wipro.fg.main.fg_main import FGMain
-from ch.hslu.wipro.fg.main.fg_ready_observable import FGReadyObservable
-from ch.hslu.wipro.fg.properties.fg_property_writer import FGPropertyWriter
+from ch.hslu.wipro.fg.events.fg_ready_observable import FGReadyObservable
 
 
 class FGWriteGearSample(FGObserver):

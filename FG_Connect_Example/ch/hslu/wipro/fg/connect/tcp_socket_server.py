@@ -13,6 +13,7 @@ class TCPSocketServer:
         self.backlog = backlog
         self.closed = False
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client_socket = None
         self.t_listen = Thread(target=self.listen)
 
     def start(self):
@@ -27,6 +28,7 @@ class TCPSocketServer:
             FGPropertyType.add_socket_to_connection_map(self.fg_property_type, self.socket)
             while not self.closed:
                 (client_socket, address) = self.socket.accept()
+                self.client_socket = client_socket
                 self.threaded_method(client_socket, address)
             self.socket.close()
         except Exception as e:
@@ -37,6 +39,14 @@ class TCPSocketServer:
 
     def close(self):
         self.closed = True
+
+    def close_client(self):
+        if self.client_socket is None:
+            return
+        try:
+            self.client_socket.close()
+        except Exception as e:
+            print(e)
 
     def is_closed(self):
         return self.closed
