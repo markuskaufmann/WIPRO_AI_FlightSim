@@ -24,7 +24,7 @@ def learn(network, env,
           total_timesteps=None,
           nb_epochs=None,  # with default settings, perform 1M steps total
           nb_epoch_cycles=20,
-          nb_rollout_steps=100,
+          nb_rollout_steps=40,
           reward_scale=1.0,
           render=False,
           render_eval=False,
@@ -125,8 +125,8 @@ def learn(network, env,
     epoch_qs = []
     epoch_episodes = 0
     for epoch in range(100000):
-        env.reset()
         for cycle in range(40):
+            env.reset()
             # Perform rollouts.
             for t_rollout in range(nb_rollout_steps):
                 # Predict next action.
@@ -163,7 +163,6 @@ def learn(network, env,
                     epoch_episodes += 1
                     episodes += 1
                     agent.reset()
-                    env.reset()
                     break
 
             # Train.
