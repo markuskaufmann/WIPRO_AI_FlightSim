@@ -654,14 +654,6 @@ setlistener("/sim/signals/fdm-initialized", func {
     }, 0, 0);
 
     setlistener("/engines/active-engine/running", func (node) {
-        if(!getprop("/engines/active-engine/running")) {
-            setprop("/engines/active-engine/damage_allowed", 0);
-            setprop("/engines/active-engine/oil_consumption_allowed", 0);
-            setprop("/engines/active-engine/carb_icing_allowed", 0);
-            setprop("/consumables/fuel/contamination_allowed", 0);
-            c172p.autostart();
-            return;
-        }
         var autostart = getprop("/engines/active-engine/auto-start");
         var cranking  = getprop("/engines/active-engine/cranking");
         if (autostart and cranking and node.getBoolValue()) {

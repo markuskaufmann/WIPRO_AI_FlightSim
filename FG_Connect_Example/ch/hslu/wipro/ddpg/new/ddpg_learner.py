@@ -298,8 +298,8 @@ class DDPG(object):
             })
             self.ret_rms.update(target_Q.flatten())
             self.sess.run(self.renormalize_Q_outputs_op, feed_dict={
-                self.old_std : np.array([old_std]),
-                self.old_mean : np.array([old_mean]),
+                self.old_std: np.array([old_std]),
+                self.old_mean: np.array([old_mean]),
             })
 
             # Run sanity check. Disabled by default since it slows down things considerably.

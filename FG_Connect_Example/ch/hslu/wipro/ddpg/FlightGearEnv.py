@@ -44,7 +44,6 @@ class FlightGearEnv(Env, ABC):
         sleep(0.3)
         observation = self._get_obs()
         reward, terminal = self.compute_reward()
-        print("Step done")
         return observation, reward, terminal, {}
 
     def reset(self):
