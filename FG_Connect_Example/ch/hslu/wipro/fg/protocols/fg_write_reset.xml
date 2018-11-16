@@ -25,6 +25,13 @@
 	<node>/wipro/reset_cp2</node>
    </chunk>
 
+   <!-- Exit FlightGear -->
+   <chunk>
+    <name>fg_exit</name>
+	<type>double</type>
+	<node>/wipro/fg_exit</node>
+   </chunk>
+
   </input>
  </generic>
 </PropertyList>

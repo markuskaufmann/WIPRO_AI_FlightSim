@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 
 from ch.hslu.wipro.ddpg.FlightGearEnv import FlightGearEnv
-from ch.hslu.wipro.ddpg.new import ddpg
+from ch.hslu.wipro.ddpg.new import ddpg, logger
 
 
 #_game_envs = defaultdict(set)
@@ -27,6 +27,8 @@ from ch.hslu.wipro.ddpg.new import ddpg
 #    'SpaceInvaders-Snes',
 #}
 #
+from ch.hslu.wipro.ddpg.new.common import tf_util
+
 
 def train(args, extra_args):
     total_timesteps = 100000
@@ -184,3 +186,27 @@ def start_reinforcement_learning():
     args = vars(parser.parse_args())
 
     train(args, None)
+
+
+def start_with_existing_network(filename):
+    # logger.log("Loading trained model")
+    # env = FlightGearEnv()
+    # obs = env.reset()
+    #
+    # tf_util.load_variables(filename)
+    #
+    # def initialize_placeholders(nlstm=128, **kwargs):
+    #     return np.zeros((args.num_env or 1, 2 * nlstm)), np.zeros((1))
+    #
+    # state, dones = initialize_placeholders(**extra_args)
+    # while True:
+    #     actions, _, state, _ = model.step(obs, S=state, M=dones)
+    #     obs, _, done, _ = env.step(actions)
+    #     env.render()
+    #     done = done.any() if isinstance(done, np.ndarray) else done
+    #
+    #     if done:
+    #         obs = env.reset()
+    #
+    # env.close()
+    pass

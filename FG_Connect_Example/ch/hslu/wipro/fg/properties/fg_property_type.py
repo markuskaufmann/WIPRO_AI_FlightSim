@@ -5,7 +5,7 @@ class FGPropertyType:
     WRITE_CONTROL = 'FG Property Write'
 
     TYPE_PROP_MAP = {
-        WRITE_RESET: ['checkpoint_1', 'checkpoint_2'],
+        WRITE_RESET: ['checkpoint_1', 'checkpoint_2', 'fg_exit'],
         WRITE_CONTROL: ['aileron', 'elevator', 'throttle']
     }
 

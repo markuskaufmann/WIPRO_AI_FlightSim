@@ -27,10 +27,15 @@ class FGPropertyWriter:
         FGPropertyWriter._write_reset(checkpoint_1=0, checkpoint_2=1)
 
     @staticmethod
-    def _write_reset(checkpoint_1: float, checkpoint_2: float):
+    def fg_exit():
+        FGPropertyWriter._write_reset(checkpoint_1=0, checkpoint_2=0, fg_exit=1)
+
+    @staticmethod
+    def _write_reset(checkpoint_1: float, checkpoint_2: float, fg_exit: float=0):
         FGPropertyWriter._write_to_output(FGPropertyType.WRITE_RESET,
                                           checkpoint_1=checkpoint_1,
-                                          checkpoint_2=checkpoint_2)
+                                          checkpoint_2=checkpoint_2,
+                                          fg_exit=fg_exit)
 
     @staticmethod
     def _write_control(aileron: float, elevator: float, throttle: float):
@@ -39,7 +44,7 @@ class FGPropertyWriter:
 
     @staticmethod
     def _write_to_output(fg_property_type: FGPropertyType, aileron=None, elevator=None,
-                         throttle=None, checkpoint_1=None, checkpoint_2=None):
+                         throttle=None, checkpoint_1=None, checkpoint_2=None, fg_exit=None):
         prop_type_keys = FGPropertyType.TYPE_PROP_MAP[fg_property_type]
         frame = inspect.currentframe()
         args, _, _, values = inspect.getargvalues(frame)

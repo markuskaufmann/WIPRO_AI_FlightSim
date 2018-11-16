@@ -1,7 +1,9 @@
+import datetime
 import os
 import time
 from collections import deque
 import pickle
+from datetime import date
 
 from ch.hslu.wipro.ddpg.new.ddpg_fg_restart_observer import DDPGFGRestartObserver
 from ch.hslu.wipro.ddpg.new.ddpg_learner import DDPG
@@ -128,7 +130,7 @@ def learn(network, env,
     epoch_qs = []
     epoch_episodes = 0
     first_epoch = True
-    for epoch in range(100000):
+    for epoch in range(1000000):
         if not first_epoch:
             observer = restart_fg()
             while not observer.ready:
@@ -211,6 +213,9 @@ def learn(network, env,
                             eval_episode_rewards_history.append(eval_episode_reward[d])
                             eval_episode_reward[d] = 0.0
 
+        filename = "network_ep" + str(epoch) + "_" + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M")
+        U.save_variables("C:\\Users\\Student\\AppData\\Local\\Temp\\Networks\\" + filename)
+
         if MPI is not None:
             mpi_size = MPI.COMM_WORLD.Get_size()
         else:
@@ -280,7 +285,7 @@ def learn(network, env,
 
 def restart_fg() -> DDPGFGRestartObserver:
     FGStartStop.stop_fg()
-    time.sleep(3)
+    time.sleep(10)
     observer = DDPGFGRestartObserver()
     FGStartStop.start_fg([observer])
     return observer
