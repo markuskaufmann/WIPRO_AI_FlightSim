@@ -1,11 +1,10 @@
-from time import sleep
-
 from ch.hslu.wipro.fg.events.fg_observer import FGObserver
-from ch.hslu.wipro.fg.launch.fg_launch import FGLaunch
-from ch.hslu.wipro.fg.main.fg_exit import FGExit
-from ch.hslu.wipro.fg.main.fg_init import FGInit
 from ch.hslu.wipro.fg.events.fg_ready_observable import FGReadyObservable
 from ch.hslu.wipro.fg.events.fg_write_conn_observer import FGWriteConnectionObserver
+from ch.hslu.wipro.fg.launch.fg_launch import FGLaunch
+from ch.hslu.wipro.fg.main.fg_closebroker import FGCloseBroker
+from ch.hslu.wipro.fg.main.fg_exit import FGExit
+from ch.hslu.wipro.fg.main.fg_init import FGInit
 
 
 class FGStartStop:
@@ -26,6 +25,8 @@ class FGStartStop:
         try:
             # init read socket server
             FGInit.init_read_connection()
+            # init close broker
+            FGCloseBroker.get_instance().add_delegate(FGInit.close_write_connections)
             # launch FlightGear
             FGLaunch.start_process()
             # wait until FlightGear is ready

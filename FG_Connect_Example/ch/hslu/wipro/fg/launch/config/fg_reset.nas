@@ -78,9 +78,9 @@ var cp1 = {
 # };
 
 var cp2 = {
-    aileron: func { return random(-0.2, 0.2); },
+    aileron: func { return 0; },
     aileron_trim: 0,
-    elevator: func { return random(0, 0.2); },
+    elevator: func { return random(0, 0.3); },
     elevator_trim: 0,
     rudder: 0,
     rudder_trim: 0,
@@ -90,9 +90,9 @@ var cp2 = {
     latitude_deg: func { return random(21.325180, 21.325315); },
     longitude_deg: func { return random(-157.945, -157.943); },
     altitude_ft: func { return random(66, 98); },
-    airspeed_kt: func { return random(55, 100); },
-    pitch_deg: func { return random(-5, 0); },
-    roll_deg: func { return random(-5, 5); },
+    airspeed_kt: func { return random(60, 90); },
+    pitch_deg: func { return random(-5, -1); },
+    roll_deg: func { return 0; },
     heading_deg: func { return random(88, 92); },
     side_slip_deg: 0
 };
