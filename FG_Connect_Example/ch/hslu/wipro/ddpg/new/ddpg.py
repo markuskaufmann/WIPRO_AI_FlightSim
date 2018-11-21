@@ -27,7 +27,7 @@ def learn(network, env,
           seed=None,
           total_timesteps=None,
           nb_epochs=1000000,  # with default settings, perform 1M steps total
-          nb_epoch_cycles=20,
+          nb_epoch_cycles=40,
           nb_rollout_steps=40,
           reward_scale=1.0,
           render=False,
@@ -143,24 +143,9 @@ def learn(network, env,
                 time.sleep(0.05)
         first_epoch = False
 
-        #obs = env.reset()
-#
-        #print(obs[8])
-        #if obs[8] < 1:
-        #    print("#############################################")
-        #    print("#############################################")
-        #    print("#############################################")
-        #    print("#############################################")
-        #    print("ERROR, CAN NOT WRITE TO SOCKET")
-        #    print("#############################################")
-        #    print("#############################################")
-        #    print("#############################################")
-        #    print("#############################################")
-        #    observer = hard_reset()
-        #    while not observer.ready:
-        #        time.sleep(0.05)
+        # obs = env.reset()
 
-        for cycle in range(15):
+        for cycle in range(nb_epoch_cycles):
             obs = env.reset()
             # Perform rollouts.
             for t_rollout in range(nb_rollout_steps):
