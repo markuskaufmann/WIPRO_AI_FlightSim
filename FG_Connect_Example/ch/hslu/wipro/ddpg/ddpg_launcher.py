@@ -8,5 +8,5 @@ class DDPGLauncher(FGObserver):
 
     def on_update(self, observable, event):
         print("Event: {0} -> Start learning algorithm".format(event))
-        # Thread(target=run.start_reinforcement_learning()).start()
-        Thread(target=run.play_result).start()
+        Thread(target=run.start_reinforcement_learning).start()
+        # Thread(target=run.play_result).start()

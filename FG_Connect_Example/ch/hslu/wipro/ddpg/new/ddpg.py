@@ -48,6 +48,7 @@ def learn(network, env,
           eval_env=None,
           param_noise_adaption_interval=50,
           load_path=None,
+          save_path=None,
           **network_kwargs):
     set_global_seeds(seed)
 
@@ -136,13 +137,31 @@ def learn(network, env,
     first_epoch = True
 
     for epoch in range(nb_epochs):
-        if not first_epoch and epoch % 25 == 0:
+        if not first_epoch:
             observer = restart_fg()
             while not observer.ready:
                 time.sleep(0.05)
         first_epoch = False
-        for cycle in range(40):
-            env.reset()
+
+        #obs = env.reset()
+#
+        #print(obs[8])
+        #if obs[8] < 1:
+        #    print("#############################################")
+        #    print("#############################################")
+        #    print("#############################################")
+        #    print("#############################################")
+        #    print("ERROR, CAN NOT WRITE TO SOCKET")
+        #    print("#############################################")
+        #    print("#############################################")
+        #    print("#############################################")
+        #    print("#############################################")
+        #    observer = hard_reset()
+        #    while not observer.ready:
+        #        time.sleep(0.05)
+
+        for cycle in range(15):
+            obs = env.reset()
             # Perform rollouts.
             for t_rollout in range(nb_rollout_steps):
                 # Predict next action.
@@ -178,7 +197,7 @@ def learn(network, env,
                     episode_reward = 0.
                     episode_step = 0
                     epoch_episodes += 1
-                    episodes += 1
+                    # += 1
                     agent.reset()
                     break
 
@@ -219,7 +238,7 @@ def learn(network, env,
                             eval_episode_reward[d] = 0.0
 
         filename = "network_ep" + str(epoch) + "_" + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M") + ".pkl"
-        U.save_variables("C:\\Users\\Student\\AppData\\Local\\Temp\\Networks\\" + filename)
+        U.save_variables(save_path + filename)
 
         if MPI is not None:
             mpi_size = MPI.COMM_WORLD.Get_size()
@@ -276,6 +295,7 @@ def learn(network, env,
         if rank == 0:
             logger.dump_tabular()
         logger.info('')
+
         logdir = logger.get_dir()
         if rank == 0 and logdir:
             if hasattr(env, 'get_state'):
@@ -287,10 +307,16 @@ def learn(network, env,
 
     return agent
 
+def hard_reset():
+    FGStartStop.stop_fg()
+    time.sleep(60)
+    observer = DDPGFGRestartObserver()
+    FGStartStop.start_fg([observer])
+    return observer
 
 def restart_fg() -> DDPGFGRestartObserver:
     FGStartStop.stop_fg()
-    time.sleep(10)
+    time.sleep(1)
     observer = DDPGFGRestartObserver()
     FGStartStop.start_fg([observer])
     return observer

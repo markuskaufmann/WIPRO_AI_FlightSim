@@ -3,6 +3,7 @@ import argparse
 import numpy as np
 # import gym
 import tensorflow as tf
+import datetime
 
 from ch.hslu.wipro.ddpg.FlightGearEnv import FlightGearEnv
 from ch.hslu.wipro.ddpg.new import ddpg, logger
@@ -31,7 +32,6 @@ from ch.hslu.wipro.ddpg.new.common import tf_util
 
 
 def train(args, extra_args):
-    total_timesteps = 100000
     seed = args['random_seed']
 
 
@@ -51,11 +51,13 @@ def train(args, extra_args):
     #    if alg_kwargs.get('network') is None:
     #        alg_kwargs['network'] = get_default_network(env_type)
     learn = ddpg.learn
-
+    timestamp = datetime.datetime.now().strftime("openai-%Y-%m-%d-%H-%M-%S-%f")
+    logger.configure("C:\\Users\\Student\\Documents\\FG_Logs_Graphs\\" + timestamp + "\\", ['stdout', 'log', 'tensorboard'])
     model = learn(
         env=env,
         seed=seed,
-        total_timesteps=total_timesteps,
+        save_path="C:\\Users\\Student\\Documents\\FG_Logs_Graphs\\" + timestamp + "\\Networks\\",
+        load_path="C:\\Users\\Student\\Documents\\FG_Logs_Graphs\\Networks\\network_ep600_2018_11_21_01_46.plk",
         **alg_kwargs
     )
 
@@ -84,6 +86,7 @@ def play_result():
 
                 if done:
                     break
+
 
 
 
