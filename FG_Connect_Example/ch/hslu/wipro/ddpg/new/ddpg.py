@@ -182,7 +182,7 @@ def learn(network, env,
                     episode_reward = 0.
                     episode_step = 0
                     epoch_episodes += 1
-                    # += 1
+                    episodes += 1
                     agent.reset()
                     break
 
@@ -291,13 +291,6 @@ def learn(network, env,
                     pickle.dump(eval_env.get_state(), f)
 
     return agent
-
-def hard_reset():
-    FGStartStop.stop_fg()
-    time.sleep(60)
-    observer = DDPGFGRestartObserver()
-    FGStartStop.start_fg([observer])
-    return observer
 
 def restart_fg() -> DDPGFGRestartObserver:
     FGStartStop.stop_fg()
