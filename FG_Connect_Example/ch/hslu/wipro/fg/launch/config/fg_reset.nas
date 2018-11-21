@@ -15,26 +15,6 @@ var random = func(min, max) {
 
 # parameters checkpoint 1
 
-# var cp1 = {
-#     aileron: 0,
-#     aileron_trim: 0,
-#     elevator: 0.1,
-#     elevator_trim: 0,
-#     rudder: 0,
-#     rudder_trim: 0,
-#     flaps: 1,
-#     throttle: 0.9,
-#     mixture: 0.95,
-#     latitude_deg: 21.3252466948,
-#     longitude_deg: -157.946,
-#     altitude_ft: 66,
-#     airspeed_kt: 85,
-#     pitch_deg: -3,
-#     roll_deg: 0,
-#     heading_deg: 89.9,
-#     side_slip_deg: 0
-# };
-
 var cp1 = {
     aileron: func { return random(-0.2, 0.2); },
     aileron_trim: 0,
@@ -57,45 +37,45 @@ var cp1 = {
 
 # parameters checkpoint 2
 
-# var cp2 = {
-#     aileron: 0,
-#     aileron_trim: 0,
-#     elevator: 0.1,
-#     elevator_trim: 0,
-#     rudder: 0,
-#     rudder_trim: 0,
-#     flaps: 1,
-#     throttle: 0.9,
-#     mixture: 0.95,
-#     latitude_deg: 21.3252466948,
-#     longitude_deg: -157.946,
-#     altitude_ft: 66,
-#     airspeed_kt: 85,
-#     pitch_deg: -3,
-#     roll_deg: 0,
-#     heading_deg: 89.9,
-#     side_slip_deg: 0
-# };
-
 var cp2 = {
     aileron: func { return 0; },
     aileron_trim: 0,
-    elevator: func { return random(0, 0.3); },
+    elevator: func { return 0.1; },
     elevator_trim: 0,
     rudder: 0,
     rudder_trim: 0,
     flaps: 1,
-    throttle: func { return random(0.7, 1); },
-    mixture: func { return random(0.8, 1); },
-    latitude_deg: func { return random(21.325180, 21.325315); },
-    longitude_deg: func { return random(-157.945, -157.943); },
-    altitude_ft: func { return random(66, 98); },
-    airspeed_kt: func { return random(60, 90); },
-    pitch_deg: func { return random(-5, -1); },
+    throttle: func { return 0.7; },
+    mixture: func { return 0.9; },
+    latitude_deg: func { return 21.325247; },
+    longitude_deg: func { return -157.943; },
+    altitude_ft: func { return 75; },
+    airspeed_kt: func { return 60; },
+    pitch_deg: func { return -3; },
     roll_deg: func { return 0; },
-    heading_deg: func { return random(88, 92); },
+    heading_deg: func { return 89.9; },
     side_slip_deg: 0
 };
+
+# var cp2 = {
+#     aileron: func { retu# rn 0; },
+#     aileron_trim: 0,
+#     elevator: func { return random(0, 0.3); },
+#     elevator_trim: 0,
+#     rudder: 0,
+#     rudder_trim: 0,
+#     flaps: 1,
+#     throttle: func { return random(0.7, 1); },
+#     mixture: func { return random(0.8, 1); },
+#     latitude_deg: func { return random(21.325180, 21.325315); },
+#     longitude_deg: func { return random(-157.945, -157.943); },
+#     altitude_ft: func { return random(66, 98); },
+#     airspeed_kt: func { return random(60, 90); },
+#     pitch_deg: func { return random(-5, -1); },
+#     roll_deg: func { return 0; },
+#     heading_deg: func { return random(88, 92); },
+#     side_slip_deg: 0
+# };
 
 # functions
 var set_cp1 = func(val) {

@@ -61,6 +61,31 @@ def train(args, extra_args):
 
     return model, env
 
+def play_result():
+    learn = ddpg.learn
+    env = FlightGearEnv()
+    alg_kwargs = {}
+    alg_kwargs['network'] = 'mlp'
+
+    model = learn(
+        env=env,
+        nb_epochs=0,
+        load_path="C:\\Users\\Student\\AppData\\Local\\Temp\\Networks\\network_ep600_2018_11_21_01_46.plk",
+        **alg_kwargs
+    )
+
+    while True:
+        obs, done = env.reset(), False
+        episode_rew = 0
+        while not done:
+            for i in range(30):
+                obs, rew, done, _ = env.step(model.step(obs[None])[0])
+                episode_rew += rew
+
+                if done:
+                    break
+
+
 
 #def build_env(args):
 #    ncpu = multiprocessing.cpu_count()

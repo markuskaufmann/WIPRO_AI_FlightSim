@@ -23,11 +23,10 @@ try:
 except ImportError:
     MPI = None
 
-
 def learn(network, env,
           seed=None,
           total_timesteps=None,
-          nb_epochs=None,  # with default settings, perform 1M steps total
+          nb_epochs=1000000,  # with default settings, perform 1M steps total
           nb_epoch_cycles=20,
           nb_rollout_steps=40,
           reward_scale=1.0,
@@ -48,14 +47,13 @@ def learn(network, env,
           tau=0.01,
           eval_env=None,
           param_noise_adaption_interval=50,
+          load_path=None,
           **network_kwargs):
     set_global_seeds(seed)
 
     if total_timesteps is not None:
         assert nb_epochs is None
         nb_epochs = int(total_timesteps) // (nb_epoch_cycles * nb_rollout_steps)
-    else:
-        nb_epochs = 500
 
     if MPI is not None:
         rank = MPI.COMM_WORLD.Get_rank()
@@ -99,6 +97,7 @@ def learn(network, env,
                  batch_size=batch_size, action_noise=action_noise, param_noise=param_noise, critic_l2_reg=critic_l2_reg,
                  actor_lr=actor_lr, critic_lr=critic_lr, enable_popart=popart, clip_norm=clip_norm,
                  reward_scale=reward_scale)
+
     logger.info('Using agent with the following configuration:')
     logger.info(str(agent.__dict__.items()))
 
@@ -107,6 +106,11 @@ def learn(network, env,
     sess = U.get_session()
     # Prepare everything.
     agent.initialize(sess)
+
+    if load_path is not None:
+        U.load_variables(load_path)
+        logger.log('Loaded model from {}'.format(load_path))
+
     sess.graph.finalize()
 
     agent.reset()
@@ -130,13 +134,14 @@ def learn(network, env,
     epoch_qs = []
     epoch_episodes = 0
     first_epoch = True
-    for epoch in range(1000000):
-        if not first_epoch:
+
+    for epoch in range(nb_epochs):
+        if not first_epoch and epoch % 25 == 0:
             observer = restart_fg()
             while not observer.ready:
                 time.sleep(0.05)
         first_epoch = False
-        for cycle in range(100):
+        for cycle in range(40):
             env.reset()
             # Perform rollouts.
             for t_rollout in range(nb_rollout_steps):
@@ -213,7 +218,7 @@ def learn(network, env,
                             eval_episode_rewards_history.append(eval_episode_reward[d])
                             eval_episode_reward[d] = 0.0
 
-        filename = "network_ep" + str(epoch) + "_" + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M")
+        filename = "network_ep" + str(epoch) + "_" + datetime.datetime.now().strftime("%Y_%m_%d_%H_%M") + ".pkl"
         U.save_variables("C:\\Users\\Student\\AppData\\Local\\Temp\\Networks\\" + filename)
 
         if MPI is not None:
