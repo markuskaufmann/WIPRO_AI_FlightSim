@@ -46,7 +46,7 @@ class TCPSocketServer:
         try:
             self.client_socket.close()
         except Exception as e:
-            print(e)
+            print("Error while trying to close client socket: {0}".format(e))
 
     def is_closed(self):
         return self.closed

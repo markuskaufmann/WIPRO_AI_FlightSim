@@ -1,3 +1,5 @@
+from time import sleep
+
 from ch.hslu.wipro.fg.connect.tcp_socket_client import TCPSocketClient
 from ch.hslu.wipro.fg.connect.tcp_socket_client_write import TCPSocketClientWrite
 from ch.hslu.wipro.fg.connect.tcp_socket_server import TCPSocketServer
@@ -28,12 +30,16 @@ class FGInit:
     @staticmethod
     def init_write_connections():
         if FGInit._init_write:
+            print("Init write client sockets: Connections are already established!")
+            print("Try to close write client sockets...")
+            FGInit.close_write_connections()
             return
         print("Init write client sockets")
         FGInit._conn_write_reset = TCPSocketClientWrite(FGPropertyType.WRITE_RESET)
         FGInit._conn_write_control = TCPSocketClientWrite(FGPropertyType.WRITE_CONTROL)
         FGInit._conn_write_reset.start()
         FGInit._conn_write_control.start()
+        FGInit._wait_until_connected()
         FGInit._init_write = True
 
     @staticmethod
@@ -44,8 +50,19 @@ class FGInit:
     @staticmethod
     def close_write_connections():
         if not FGInit._init_write:
+            print("Close write client sockets: Connections are already closed!")
             return
         print("Close write client sockets")
         FGInit._conn_write_control.close()
         FGInit._conn_write_reset.close()
         FGInit._init_write = False
+
+    @staticmethod
+    def _wait_until_connected():
+        wait_count = 0
+        while not FGInit._conn_write_reset.connected and not FGInit._conn_write_control.connected:
+            if wait_count < 5:
+                sleep(1)
+                wait_count += 1
+            else:
+                raise RuntimeError("Timeout while waiting to connect client write sockets")

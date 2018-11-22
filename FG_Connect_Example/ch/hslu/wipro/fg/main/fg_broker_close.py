@@ -12,8 +12,9 @@ class FGCloseBroker:
         self.delegates = set()
         Thread(target=self.process).start()
 
-    def add_delegate(self, delegate):
-        self.delegates.add(delegate)
+    def add_delegates(self, *delegates):
+        for delegate in delegates:
+            self.delegates.add(delegate)
 
     def remove_delegate(self, delegate):
         self.delegates.remove(delegate)

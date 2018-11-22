@@ -16,12 +16,14 @@ import ch.hslu.wipro.ddpg.new.common.tf_util as U
 from ch.hslu.wipro.ddpg.new import logger
 import numpy as np
 
+from ch.hslu.wipro.fg.main.fg_broker_restart import FGRestartBroker
 from ch.hslu.wipro.fg.main.fg_start_stop import FGStartStop
 
 try:
     from mpi4py import MPI
 except ImportError:
     MPI = None
+
 
 def learn(network, env,
           seed=None,
@@ -135,10 +137,13 @@ def learn(network, env,
     epoch_qs = []
     epoch_episodes = 0
     first_epoch = True
+    fg_restart_count = 0
 
     for epoch in range(nb_epochs):
-        if not first_epoch:
-            observer = restart_fg()
+        print("Epoch {0} of {1}".format(epoch, nb_epochs))
+        if not first_epoch and epoch % 10 == 0:
+            fg_restart_count += 1
+            observer = restart_fg(epoch, fg_restart_count)
             while not observer.ready:
                 time.sleep(0.05)
         first_epoch = False
@@ -160,7 +165,7 @@ def learn(network, env,
                 new_obs, r, done, info = env.step(
                     max_action * action)  # scale for execution in env (as far as DDPG is concerned, every action is in [-1, 1])
                 # note these outputs are batched from vecenv
-                print("Epoch: ", epoch, "|| Cycle: ", cycle, "|| Step: ", t_rollout, "|| Reward: ", r)
+                print("Epoch: {0} || Cycle: {1} || Step: {2} || Reward: {3}".format(epoch, cycle, t_rollout, r))
                 print("############################################################")
                 t += 1
                 episode_reward += r
@@ -292,9 +297,11 @@ def learn(network, env,
 
     return agent
 
-def restart_fg() -> DDPGFGRestartObserver:
-    FGStartStop.stop_fg()
-    time.sleep(1)
+
+def restart_fg(epoch: int, fg_restart_count: int) -> DDPGFGRestartObserver:
     observer = DDPGFGRestartObserver()
-    FGStartStop.start_fg([observer])
+    FGRestartBroker(observers=[observer],
+                    start_delegate=FGStartStop.start_fg,
+                    stop_delegate=FGStartStop.stop_fg,
+                    log_file_suffix="ep_{0}_rst_{1}".format(epoch, fg_restart_count)).request_fg_restart()
     return observer

@@ -47,7 +47,6 @@ class FlightGearEnv(Env, ABC):
         return observation, reward, terminal, {}
 
     def reset(self):
-        # TODO: Put plane in the specific position with the defined speed etc, RETURN OBSERVATION
         FGPropertyWriter.reset_checkpoint2()
         self.reward_function.reset()
         sleep(1)
@@ -73,7 +72,6 @@ class FlightGearEnv(Env, ABC):
             self.dist_vector,
             delta_values)
         observation = []
-        # TODO: fix observation
         for key in SpaceDefiner.DefaultObservationSpaceKeys:
             if key == 'alt_m':
                 observation.append(norm_dist_vector.alt_diff_m)

@@ -2,7 +2,7 @@ from time import sleep
 
 from ch.hslu.wipro.fg.data.fg_data_output import FGDataOutput
 from ch.hslu.wipro.fg.io.fg_client import FGClient
-from ch.hslu.wipro.fg.main.fg_closebroker import FGCloseBroker
+from ch.hslu.wipro.fg.main.fg_broker_close import FGCloseBroker
 from ch.hslu.wipro.fg.properties.fg_property_type import FGPropertyType
 
 

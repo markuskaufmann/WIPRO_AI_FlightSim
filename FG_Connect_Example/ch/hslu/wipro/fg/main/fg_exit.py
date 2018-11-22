@@ -10,4 +10,4 @@ class FGExit:
             FGInit.close_read_client_connection()
             FGPropertyWriter.fg_exit()
         except Exception as e:
-            print(e)
+            print("Error while sending close command: {0}".format(e))

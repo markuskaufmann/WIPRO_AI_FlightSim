@@ -30,6 +30,8 @@ from ch.hslu.wipro.ddpg.new import ddpg, logger
 #
 from ch.hslu.wipro.ddpg.new.common import tf_util
 
+CURRENT_USER = "MK"
+LOG_PATH = "C:\\Users\\" + CURRENT_USER + "\\Documents\\FG_Logs_Graphs\\"
 
 def train(args, extra_args):
     seed = args['random_seed']
@@ -52,12 +54,12 @@ def train(args, extra_args):
     #        alg_kwargs['network'] = get_default_network(env_type)
     learn = ddpg.learn
     timestamp = datetime.datetime.now().strftime("openai-%Y-%m-%d-%H-%M-%S-%f")
-    logger.configure("C:\\Users\\Student\\Documents\\FG_Logs_Graphs\\" + timestamp + "\\", ['stdout', 'log', 'tensorboard'])
+    logger.configure(LOG_PATH + timestamp + "\\", ['log', 'tensorboard'])
     model = learn(
         env=env,
         seed=seed,
-        save_path="C:\\Users\\Student\\Documents\\FG_Logs_Graphs\\" + timestamp + "\\Networks\\",
-        load_path="C:\\Users\\Student\\Documents\\FG_Logs_Graphs\\Networks\\network_ep600_2018_11_21_01_46.plk",
+        save_path=LOG_PATH + timestamp + "\\Networks\\",
+        load_path=LOG_PATH + "Networks\\network_ep600_2018_11_21_01_46.plk",
         **alg_kwargs
     )
 
@@ -72,7 +74,7 @@ def play_result():
     model = learn(
         env=env,
         nb_epochs=0,
-        load_path="C:\\Users\\Student\\AppData\\Local\\Temp\\Networks\\network_ep600_2018_11_21_01_46.plk",
+        load_path=LOG_PATH + "Networks\\network_ep600_2018_11_21_01_46.plk",
         **alg_kwargs
     )
 

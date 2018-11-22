@@ -18,7 +18,7 @@ class TouchdownReward(RewardInterface):
         pitch = props["pitch-deg"]
         airspeed = props["airspeed-kt"]
 
-        print("Height: ", dist_vector.alt_diff_m, " --  Pitch: ", pitch)
+        print("Height: {0}, Pitch: {1}".format(dist_vector.alt_diff_m, pitch))
         if dist_vector.alt_diff_m < 10:
             if 15 > pitch > 0:
                 reward_to_return += pitch * RewardMultipliers.PITCH_BEFORE_LANDING_MULTIPLIER

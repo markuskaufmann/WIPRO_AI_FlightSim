@@ -1,7 +1,7 @@
 
 import os
 
-PATH_DIR = "C:\\Users\\[USER]\\AppData\\Local\\Temp\\[OPEN_AI_DIR]\\tb"
+PATH_DIR = "C:\\Users\\[USER]\\Documents\\FG_Logs_Graphs\\[OPEN_AI_DIR]\\tb"
 
 VAR_USER_MK = "MK"
 VAR_USER_CU = "Cyrille"

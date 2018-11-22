@@ -1,5 +1,9 @@
+import os
 import subprocess
+import time
 from threading import Thread
+
+from ch.hslu.wipro.fg.main.log_printer import LogPrinter
 
 
 class FGLaunch:
@@ -76,15 +80,25 @@ class FGLaunch:
 
     FG_LAUNCH = [FG_EXECUTABLE, FG_LAUNCH_ARGS]
 
+    _LOG_FILE = None
+
     @staticmethod
-    def start_process():
+    def start_process(fg_log_file):
+        FGLaunch._LOG_FILE = fg_log_file
         Thread(target=FGLaunch._start).start()
 
     @staticmethod
     def _start():
         print(FGLaunch.FG_LAUNCH)
-        subprocess.call(FGLaunch.FG_LAUNCH, stdin=None, stdout=None, stderr=None, shell=False)
+        print("FG Logfile: {0}".format(os.path.basename(FGLaunch._LOG_FILE.name)))
+        subprocess.call(FGLaunch.FG_LAUNCH,
+                        stdin=None,
+                        stdout=FGLaunch._LOG_FILE,
+                        stderr=subprocess.STDOUT,
+                        shell=False)
 
 
 if __name__ == '__main__':
-    FGLaunch.start_process()
+    log_file_name = time.strftime("%Y%m%d_%H%M%S") + "_fg_manual_launch.log"
+    log_file = open("../main/logs/" + log_file_name, 'w')
+    FGLaunch.start_process(log_file)
