@@ -3,8 +3,6 @@ import subprocess
 import time
 from threading import Thread
 
-from ch.hslu.wipro.fg.main.log_printer import LogPrinter
-
 
 class FGLaunch:
     # FG Location
@@ -41,21 +39,7 @@ class FGLaunch:
     FG_ARGS_PROTOCOL_WRITE_RESET = " --generic=socket,in,5,127.0.0.1,9877,tcp,fg_write_reset"
     FG_ARGS_PROTOCOL_WRITE_CONTROL = " --generic=socket,in,5,127.0.0.1,9878,tcp,fg_write_control"
 
-    # Launch string
-    # FG_LAUNCH_STRING = "\"" + FG_EXECUTABLE + "\"" \
-    #                    + FG_CMD_FGROOT \
-    #                    + FG_CMD_WINDOW \
-    #                    + FG_CMD_AIRCRAFT \
-    #                    + FG_CMD_AIRPORT \
-    #                    + FG_CMD_TIME \
-    #                    + FG_CMD_FREEZE \
-    #                    + FG_CMD_OBJECTS \
-    #                    + FG_CMD_SOUND \
-    #                    + FG_CMD_WEATHER \
-    #                    + FG_CMD_PROTOCOL_READ \
-    #                    + FG_CMD_PROTOCOL_WRITE_RESET \
-    #                    + FG_CMD_PROTOCOL_WRITE_CONTROL
-
+    # Parameters
     FG_LAUNCH_ARGS = [FG_ARGS_FGROOT,
                       FG_ARGS_WINDOW,
                       FG_ARGS_SPLASH,
@@ -89,7 +73,7 @@ class FGLaunch:
 
     @staticmethod
     def _start():
-        print(FGLaunch.FG_LAUNCH)
+        print("FG Launch params: {0}".format(FGLaunch.FG_LAUNCH))
         print("FG Logfile: {0}".format(os.path.basename(FGLaunch._LOG_FILE.name)))
         subprocess.call(FGLaunch.FG_LAUNCH,
                         stdin=None,

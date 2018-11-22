@@ -62,22 +62,30 @@ class HumanOutputFormat(KVWriter, SeqWriter):
                 ' ' * (valwidth - len(val)),
             ))
         lines.append(dashes)
-        self.file.write('\n'.join(lines) + '\n')
+        self._write('\n'.join(lines) + '\n')
 
         # Flush the output to the file
-        self.file.flush()
+        # self.file.flush()
 
     def _truncate(self, s):
         return s[:20] + '...' if len(s) > 23 else s
 
+    def _write(self, val):
+        str_val = str(val)
+        print(str_val)
+        self.file.write(str_val)
+        self.file.flush()
+
     def writeseq(self, seq):
         seq = list(seq)
-        for (i, elem) in enumerate(seq):
-            self.file.write(elem)
-            if i < len(seq) - 1: # add space unless this is the last one
-                self.file.write(' ')
-        self.file.write('\n')
-        self.file.flush()
+        str_seq = ' '.join(seq)
+        # for (i, elem) in enumerate(seq):
+        #     self._write(elem)
+        #     if i < len(seq) - 1: # add space unless this is the last one
+        #         self.file.write(' ')
+        # self.file.write('\n')
+        # self.file.flush()
+        self._write(str_seq + '\n')
 
     def close(self):
         if self.own_file:
@@ -371,9 +379,8 @@ def configure(dir=None, format_strs=None):
             format_strs = os.getenv('OPENAI_LOG_FORMAT_MPI', 'log').split(',')
     format_strs = filter(None, format_strs)
     output_formats = [make_output_format(f, dir, log_suffix) for f in format_strs]
-
     Logger.CURRENT = Logger(dir=dir, output_formats=output_formats)
-    log('Logging to %s'%dir)
+    print('DDPG: Additionally logging to {0}'.format(dir))
 
 def _configure_default_logger():
     format_strs = None
@@ -483,7 +490,8 @@ def read_tb(path):
     return pandas.DataFrame(data, columns=tags)
 
 # configure the default logger on import
-_configure_default_logger()
+# _configure_default_logger()
+
 
 if __name__ == "__main__":
     _demo()

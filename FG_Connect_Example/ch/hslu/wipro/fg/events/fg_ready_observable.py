@@ -23,6 +23,7 @@ class FGReadyObservable(FGObservable):
         self.t_wait.start()
 
     def wait_until_fg_ready(self):
+        print("Wait until FlightGear is ready")
         read_count = 0
         while not self.fg_ready:
             props = FGPropertyReader.get_properties()
@@ -33,6 +34,7 @@ class FGReadyObservable(FGObservable):
             if read_count == 20:
                 sleep(10)
                 self.fg_ready = True
+        print("FlightGear is ready")
         # if there are any important observers, notify them first
         if self.important_observers is not None:
             for observer in self.important_observers:
