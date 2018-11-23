@@ -2,6 +2,7 @@ import numpy as np
 
 from ch.hslu.wipro.ddpg.reward import RewardMultipliers
 from ch.hslu.wipro.ddpg.reward.reward_interface import RewardInterface
+from ch.hslu.wipro.ddpg.reward.reward_state import RewardState
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
 
 
@@ -21,7 +22,7 @@ class PositionRewards(RewardInterface):
             self._set_old_values(dist_vector)
             return reward_to_return, False
 
-        reward_to_return += self.calculate_distance_reward(props, dist_vector)
+        # reward_to_return += self.calculate_distance_reward(props, dist_vector)
         # reward_to_return += self.calculate_pitch_reward(dist_vector)
         # reward_to_return += self.calculate_alt_reward(props, dist_vector)
         # reward_to_return += self.calculate_bearing_reward(dist_vector)
@@ -40,6 +41,9 @@ class PositionRewards(RewardInterface):
             return RewardMultipliers.NEGATIVE_REWARD, True
 
         return reward_to_return, False
+
+    def get_state(self) -> int:
+        return RewardState.COMMON
 
     def _set_old_values(self, dist_vector):
         self.old_dist_vector = dist_vector

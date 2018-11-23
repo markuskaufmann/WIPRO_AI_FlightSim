@@ -135,4 +135,4 @@ class FlightGearEnv(Env, ABC):
 
     # For the first stage no desired goal has to be set yet
     def compute_reward(self):
-        return self.reward_function.compute_reward(self.props)
+        return self.reward_function.compute_reward(self.props, self.dist_vector)

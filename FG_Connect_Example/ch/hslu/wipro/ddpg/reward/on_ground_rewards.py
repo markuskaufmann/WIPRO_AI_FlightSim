@@ -1,19 +1,26 @@
+import numpy as np
+
 from ch.hslu.wipro.ddpg.reward import RewardMultipliers
 from ch.hslu.wipro.ddpg.reward.reward_interface import RewardInterface
-from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
-import numpy as np
+from ch.hslu.wipro.ddpg.reward.reward_state import RewardState
+from ch.hslu.wipro.ddpg.reward.util import Util
+
 
 class OnGroundRewards(RewardInterface):
 
     def calculate_reward(self, props) -> (float, bool):
-        dist_vector = DistCalc.process_distance_vector(props)
-        reward_to_return = 0
+        multiplier = 1
+        has_gear_damage = Util.has_gear_damage(props)
+        if has_gear_damage:
+            multiplier = 4
 
-        if dist_vector.alt_diff_m < 1:
-            # Round on zero decimals, so it won't return insane high reward (for example divided by 0.002)
-            reward_to_return = RewardMultipliers.ON_GROUND_MULTIPLIER / np.round((props['airspeed-kt'] + 1), 1)
+        # Round on one decimal, so it won't return insane high reward (for example divided by 0.0002)
+        reward_to_return = -np.abs(RewardMultipliers.ON_GROUND_MULTIPLIER * (props['airspeed-kt'] + 1) * multiplier)
 
         return reward_to_return, False
 
     def reset(self):
         pass
+
+    def get_state(self) -> int:
+        return RewardState.ON_GROUND

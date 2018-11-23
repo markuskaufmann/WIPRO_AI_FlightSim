@@ -165,7 +165,7 @@ def learn(network, env,
                 new_obs, r, done, info = env.step(
                     max_action * action)  # scale for execution in env (as far as DDPG is concerned, every action is in [-1, 1])
                 # note these outputs are batched from vecenv
-                print("Epoch: {0} || Cycle: {1} || Step: {2} || Reward: {3}".format(epoch, cycle, t_rollout, r))
+                print("Epoch: {0} || Cycle: {1} || Step: {2} || &&&&&&&&&&&&&=>> Reward: {3}".format(epoch, cycle, t_rollout, r))
                 print("############################################################")
                 t += 1
                 episode_reward += r
