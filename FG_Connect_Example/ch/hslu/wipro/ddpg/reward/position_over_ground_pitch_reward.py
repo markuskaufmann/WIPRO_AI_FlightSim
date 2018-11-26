@@ -39,7 +39,7 @@ class PositionOverGroundPitchReward(RewardInterface):
 
         if -2 < delta_pitch_deg < 1:
             rounded_pitch = np.round(np.abs(delta_pitch_deg), 1)
-            reward_to_return += 1000 / (rounded_pitch if rounded_pitch != 0 else 0.01)
+            reward_to_return += 1000 / (rounded_pitch if rounded_pitch != 0 else 0.1)
 
         if -2 < pitch_deg < 3:
             reward_to_return += 2000

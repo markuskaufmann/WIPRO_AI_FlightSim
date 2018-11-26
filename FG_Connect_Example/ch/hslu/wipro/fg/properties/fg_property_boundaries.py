@@ -12,8 +12,8 @@ class FGPropertyBoundaries:
     }
 
     _BOUNDARY_MAP_RESET = {
-        'pitch-deg': [-40, 40],
-        'roll-deg': [-40, 40]
+        'pitch-deg': [-10, 10],
+        'roll-deg': [-10, 10]
     }
 
     _HEIGHT_BOUNDARY = [DistLookup.ARC_HEIGHT_METER - 0.001,
