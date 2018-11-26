@@ -30,7 +30,7 @@ from ch.hslu.wipro.ddpg.new import ddpg, logger
 #
 from ch.hslu.wipro.ddpg.new.common import tf_util
 
-CURRENT_USER = "MK"
+CURRENT_USER = "Student"
 LOG_PATH = "C:\\Users\\" + CURRENT_USER + "\\Documents\\FG_Logs_Graphs\\"
 
 def train(args, extra_args):
@@ -59,7 +59,7 @@ def train(args, extra_args):
         env=env,
         seed=seed,
         save_path=LOG_PATH + timestamp + "\\Networks\\",
-        load_path=LOG_PATH + "Networks\\network_ep600_2018_11_21_01_46.plk",
+        # load_path=LOG_PATH + "Networks\\network_ep243_2018_11_22_05_59.pkl",
         **alg_kwargs
     )
 
@@ -74,7 +74,7 @@ def play_result():
     model = learn(
         env=env,
         nb_epochs=0,
-        load_path=LOG_PATH + "Networks\\network_ep600_2018_11_21_01_46.plk",
+        load_path=LOG_PATH + "openai-2018-11-22-13-51-47-964492\\Networks\\network_ep403_2018_11_23_12_27.pkl",
         **alg_kwargs
     )
 

@@ -141,7 +141,7 @@ def learn(network, env,
 
     for epoch in range(nb_epochs):
         print("Epoch {0} of {1}".format(epoch, nb_epochs))
-        if not first_epoch and epoch % 10 == 0:
+        if not first_epoch and epoch % 20 == 0:
             fg_restart_count += 1
             observer = restart_fg(epoch, fg_restart_count)
             while not observer.ready:

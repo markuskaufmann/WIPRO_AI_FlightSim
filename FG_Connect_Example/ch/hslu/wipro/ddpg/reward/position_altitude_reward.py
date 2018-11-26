@@ -15,7 +15,8 @@ class PositionAltitudeReward(RewardInterface):
         # add vector to observation space
         reward_to_return = 0
         dist_vector = DistCalc.process_distance_vector(props)
-        print("Height: {0}, Pitch: {1}, Speed: {2}".format(dist_vector.alt_diff_m, props["pitch-deg"], props["airspeed-kt"]))
+        print("Height: {0}, Pitch: {1}, Speed: {2}".format(dist_vector.alt_diff_m, props["pitch-deg"],
+                                                           props["airspeed-kt"]))
         if self.old_dist_vector is None:
             self._set_old_values(dist_vector)
             return reward_to_return, False
@@ -24,7 +25,7 @@ class PositionAltitudeReward(RewardInterface):
         self._set_old_values(dist_vector)
 
         if delta_alt_diff > 0.3:
-            return RewardMultipliers.NEGATIVE_REWARD, True
+            return RewardMultipliers.NEGATIVE_REWARD / 10, False
 
         return reward_to_return, False
 
