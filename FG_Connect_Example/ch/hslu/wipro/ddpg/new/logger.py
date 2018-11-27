@@ -386,7 +386,7 @@ def _configure_default_logger():
     format_strs = None
     # keep the old default of only writing to stdout
     if 'OPENAI_LOG_FORMAT' not in os.environ:
-        format_strs = ['stdout', 'log', 'tensorboard']
+        format_strs = ['log', 'tensorboard']
     configure(format_strs=format_strs)
     Logger.DEFAULT = Logger.CURRENT
 
@@ -490,7 +490,7 @@ def read_tb(path):
     return pandas.DataFrame(data, columns=tags)
 
 # configure the default logger on import
-# _configure_default_logger()
+_configure_default_logger()
 
 
 if __name__ == "__main__":

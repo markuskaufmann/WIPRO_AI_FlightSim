@@ -1,21 +1,19 @@
 import datetime
 import os
+import pickle
 import time
 from collections import deque
-import pickle
-from datetime import date
 
-from ch.hslu.wipro.ddpg.new.ddpg_fg_restart_observer import DDPGFGRestartObserver
-from ch.hslu.wipro.ddpg.new.ddpg_learner import DDPG
-from ch.hslu.wipro.ddpg.new.models import Actor, Critic
-from ch.hslu.wipro.ddpg.new.memory import Memory
-from ch.hslu.wipro.ddpg.new.noise import AdaptiveParamNoiseSpec, NormalActionNoise, OrnsteinUhlenbeckActionNoise
-from ch.hslu.wipro.ddpg.new.common import set_global_seeds
-import ch.hslu.wipro.ddpg.new.common.tf_util as U
-
-from ch.hslu.wipro.ddpg.new import logger
 import numpy as np
 
+import ch.hslu.wipro.ddpg.new.common.tf_util as U
+from ch.hslu.wipro.ddpg.new import logger
+from ch.hslu.wipro.ddpg.new.common import set_global_seeds
+from ch.hslu.wipro.ddpg.new.ddpg_fg_restart_observer import DDPGFGRestartObserver
+from ch.hslu.wipro.ddpg.new.ddpg_learner import DDPG
+from ch.hslu.wipro.ddpg.new.memory import Memory
+from ch.hslu.wipro.ddpg.new.models import Actor, Critic
+from ch.hslu.wipro.ddpg.new.noise import AdaptiveParamNoiseSpec, NormalActionNoise, OrnsteinUhlenbeckActionNoise
 from ch.hslu.wipro.fg.main.fg_broker_restart import FGRestartBroker
 from ch.hslu.wipro.fg.main.fg_start_stop import FGStartStop
 
@@ -141,7 +139,7 @@ def learn(network, env,
 
     for epoch in range(nb_epochs):
         print("Epoch {0} of {1}".format(epoch, nb_epochs))
-        if not first_epoch and epoch % 20 == 0:
+        if not first_epoch and epoch % 10 == 0:
             fg_restart_count += 1
             observer = restart_fg(epoch, fg_restart_count)
             while not observer.ready:
