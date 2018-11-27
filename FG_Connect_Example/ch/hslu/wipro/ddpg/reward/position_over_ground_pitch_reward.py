@@ -17,12 +17,16 @@ class PositionOverGroundPitchReward(RewardInterface):
         # add vector to observation space
         reward_to_return = 0
         pitch_deg = props['pitch-deg']
+        dist_vector = DistCalc.process_distance_vector(props)
 
         if self.old_pitch_deg is None:
             self._set_old_values(pitch_deg)
             return reward_to_return, False
 
-        reward_to_return += self.calculate_pitch_reward(pitch_deg)
+        if dist_vector.alt_diff_m < 1.5:
+            reward_to_return += self.calc_almost_ground_pitch_reward(pitch_deg)
+        else:
+            reward_to_return += self.calculate_pitch_reward(pitch_deg)
         self._set_old_values(pitch_deg)
 
         return reward_to_return, False
@@ -59,3 +63,6 @@ class PositionOverGroundPitchReward(RewardInterface):
                 reward_to_return += ((30 + pitch) / 5) * RewardMultipliers.PITCH_BEFORE_LANDING_MULTIPLIER
 
         return reward_to_return
+
+    def calc_almost_ground_pitch_reward(self, pitch_deg):
+        return RewardMultipliers.PITCH_BEFORE_LANDING_MULTIPLIER * pitch_deg * 5
