@@ -23,7 +23,7 @@ class PositionOverGroundPitchReward(RewardInterface):
             self._set_old_values(pitch_deg)
             return reward_to_return, False
 
-        if dist_vector.alt_diff_m < 3.5:
+        if dist_vector.alt_diff_m < 6:
             reward_to_return += self.calc_almost_ground_pitch_reward(pitch_deg)
         else:
             reward_to_return += self.calculate_pitch_reward(pitch_deg)
