@@ -74,7 +74,7 @@ def play_result():
     model = learn(
         env=env,
         nb_epochs=0,
-        load_path=LOG_PATH + "openai-2018-11-26-15-52-14-875708\\Networks\\network_ep119_2018_11_27_02_23.pkl",
+        load_path=LOG_PATH + "demo\\2.pkl",
         **alg_kwargs
     )
 
