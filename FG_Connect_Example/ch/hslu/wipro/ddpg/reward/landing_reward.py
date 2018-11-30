@@ -6,14 +6,10 @@ from ch.hslu.wipro.ddpg.reward.util import Util
 
 class LandingReward(RewardInterface):
     def calculate_reward(self, props) -> (float, bool):
-        divider = 1
-        has_gear_damage = Util.has_gear_damage(props)
-        if has_gear_damage:
-            divider = 25
 
         if props['airspeed-kt'] < 1:
             print("Landed!")
-            return (10 * RewardMultipliers.LANDING_MULTIPLIER) / divider, True
+            return RewardMultipliers.LANDING_MULTIPLIER, True
 
         return 0, False
 

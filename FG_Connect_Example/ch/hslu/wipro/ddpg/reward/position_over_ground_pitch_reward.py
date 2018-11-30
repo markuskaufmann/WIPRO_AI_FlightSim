@@ -23,7 +23,7 @@ class PositionOverGroundPitchReward(RewardInterface):
             self._set_old_values(pitch_deg)
             return reward_to_return, False
 
-        if dist_vector.alt_diff_m < 6:
+        if dist_vector.alt_diff_m < 4:
             reward_to_return += self.calc_almost_ground_pitch_reward(pitch_deg)
         else:
             reward_to_return += self.calculate_pitch_reward(pitch_deg)
@@ -39,31 +39,17 @@ class PositionOverGroundPitchReward(RewardInterface):
 
     def calculate_pitch_reward(self, pitch_deg):
         reward_to_return = 0
-        delta_pitch_deg = np.abs(pitch_deg) - np.abs(self.old_pitch_deg)
+        # delta_pitch_deg = np.abs(pitch_deg) - np.abs(self.old_pitch_deg)
 
-        if -2 < delta_pitch_deg < 1:
-            rounded_pitch = np.round(np.abs(delta_pitch_deg), 1)
-            reward_to_return += 1000 / (rounded_pitch if rounded_pitch != 0 else 0.1)
+        # if -2 < delta_pitch_deg < 1:
+        #     rounded_pitch = np.round(np.abs(delta_pitch_deg), 1)
+        #     reward_to_return += 1000 / (rounded_pitch if rounded_pitch != 0 else 0.1)
 
-        if -2 < pitch_deg < 3:
-            reward_to_return += 2000
-
-        return reward_to_return
-
-    def old_calculate_pitch_reward(self, props, dist_vector):
-        pitch = props['pitch-deg']
-        reward_to_return = 0
-
-        if dist_vector.alt_diff_m < 10:
-            if -30 < pitch:
-                reward_to_return = 0
-            elif 15 > pitch > 0:
-                reward_to_return += pitch * RewardMultipliers.PITCH_BEFORE_LANDING_MULTIPLIER
-            elif pitch <= 0:
-                reward_to_return += ((30 + pitch) / 5) * RewardMultipliers.PITCH_BEFORE_LANDING_MULTIPLIER
+        if -5 < pitch_deg < 0:
+            reward_to_return += RewardMultipliers.OVER_GROUND_PITCH_REWARD
 
         return reward_to_return
 
     def calc_almost_ground_pitch_reward(self, pitch_deg):
         print("ççççççççççççççççççççççç almost ground pitch reward added")
-        return RewardMultipliers.PITCH_BEFORE_LANDING_MULTIPLIER * (pitch_deg + 10) * 5
+        return RewardMultipliers.PITCH_BEFORE_LANDING_MULTIPLIER * (pitch_deg + 10)

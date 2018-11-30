@@ -1,6 +1,7 @@
 from ch.hslu.wipro.ddpg.reward import RewardMultipliers
 from ch.hslu.wipro.ddpg.reward.reward_interface import RewardInterface
 from ch.hslu.wipro.ddpg.reward.reward_state import RewardState
+from ch.hslu.wipro.ddpg.reward.util import Util
 
 
 class DamageRewards(RewardInterface):
@@ -18,6 +19,11 @@ class DamageRewards(RewardInterface):
         for possible_damage_key in self.float_damage_keys:
             if props[possible_damage_key] > 0:
                 return RewardMultipliers.NEGATIVE_REWARD, True
+
+        has_gear_damage = Util.has_gear_damage(props)
+
+        if has_gear_damage:
+            return RewardMultipliers.NEGATIVE_REWARD, True
 
         return 0, False
 

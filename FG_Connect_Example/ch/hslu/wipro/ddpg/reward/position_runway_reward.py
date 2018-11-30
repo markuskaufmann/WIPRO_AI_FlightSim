@@ -21,7 +21,7 @@ class PositionRunwayReward(RewardInterface):
 
         current_lat_deg = props['latitude-deg']
         lat_runway_deg = DistLookup.RWY_LOC_TD_ZONE_START['lat']
-        lat_diff_deg = -np.abs(lat_runway_deg - current_lat_deg)
+        lat_diff_deg = -np.abs(lat_runway_deg - current_lat_deg) * 10000
         return NOT_ON_CENTER_RUNWAY_MULTIPLIER * lat_diff_deg, False
 
     def get_state(self) -> int:

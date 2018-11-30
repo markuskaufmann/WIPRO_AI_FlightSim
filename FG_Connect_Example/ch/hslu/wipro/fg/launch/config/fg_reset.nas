@@ -38,9 +38,9 @@ var cp1 = {
 # parameters checkpoint 2
 
 var cp2 = {
-    aileron: func { return 0; },
+    aileron: func { return 0.2; },
     aileron_trim: 0,
-    elevator: func { return 0; },
+    elevator: func { return -0.2; },
     elevator_trim: 0,
     rudder: 0,
     rudder_trim: 0,
@@ -49,8 +49,8 @@ var cp2 = {
     mixture: func { return 0.9; },
     latitude_deg: func { return 21.325247; },
     longitude_deg: func { return -157.942; },
-    altitude_ft: func { return 50; },
-    airspeed_kt: func { return 50; },
+    altitude_ft: func { return 70; },
+    airspeed_kt: func { return 47; },
     pitch_deg: func { return 0; },
     roll_deg: func { return 0; },
     heading_deg: func { return 89.9; },
@@ -216,6 +216,8 @@ setlistener("/sim/signals/reinit", func {
             # reset completed
             reset_ongoing = 0;
             cp_current_func(0);
-        }, 0.5);
+            setprop("/sim/freeze/clock", 0);
+        }, 1, 1);
+        setprop("/sim/freeze/clock", 1);
     }
 });

@@ -10,11 +10,6 @@ class OnGroundRewards(RewardInterface):
 
     def calculate_reward(self, props) -> (float, bool):
 
-        has_gear_damage = Util.has_gear_damage(props)
-
-        if has_gear_damage:
-            return RewardMultipliers.NEGATIVE_REWARD, True
-
         # Round on one decimal, so it won't return insane high reward (for example divided by 0.0002)
         reward_to_return = -np.abs(RewardMultipliers.ON_GROUND_MULTIPLIER * (props['airspeed-kt'] + 1))
 

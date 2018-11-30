@@ -12,7 +12,7 @@ class FGPropertyBoundaries:
     }
 
     _BOUNDARY_MAP_RESET = {
-        'pitch-deg': [-10, 10],
+        'pitch-deg': [-40, 40],
         'roll-deg': [-10, 10]
     }
 

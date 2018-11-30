@@ -32,7 +32,7 @@ def learn(network, env,
           reward_scale=1.0,
           render=False,
           render_eval=False,
-          noise_type='adaptive-param_0.2',
+          noise_type='adaptive-param_0.5',
           normalize_returns=False,
           normalize_observations=True,
           critic_l2_reg=1e-2,
@@ -149,6 +149,8 @@ def learn(network, env,
         # obs = env.reset()
 
         for cycle in range(nb_epoch_cycles):
+            # env.reset()
+            # time.sleep(0.6)
             obs = env.reset()
             # Perform rollouts.
             for t_rollout in range(nb_rollout_steps):
