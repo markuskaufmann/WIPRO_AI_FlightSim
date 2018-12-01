@@ -32,10 +32,11 @@ class PositionOverGroundAirspeedReward(RewardInterface):
         self.old_airspeed_kt = airspeed_kt
 
     def calculate_speed_reward(self, airspeed_kt):
-        delta_airspeed_kt = airspeed_kt - self.old_airspeed_kt
+        delta_airspeed_kt = np.abs(airspeed_kt - self.old_airspeed_kt)
 
-        if delta_airspeed_kt < 0:
-            return 2000
+        if delta_airspeed_kt > 3:
+            print("////////////////////// SLOWING DOWN TO FAST")
+            return RewardMultipliers.TO_FAST_SLOWDOWN_REWARD
 
         return 0
 
