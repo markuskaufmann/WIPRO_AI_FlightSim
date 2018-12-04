@@ -16,8 +16,14 @@ class PositionRunwayReward(RewardInterface):
         pass
 
     def calculate_reward(self, props) -> (float, bool):
+        dist_vector = DistCalc.process_distance_vector(props)
+
         if not DistCalc.check_if_plane_is_on_runway_width(props):
-            return RewardMultipliers.NEGATIVE_REWARD, True
+            if not DistCalc.check_if_plane_is_on_runway_width(props):
+                if dist_vector.alt_diff_m < 0.1:
+                    return 0, True
+                else:
+                    return RewardMultipliers.NEGATIVE_REWARD, True
 
         current_lat_deg = props['latitude-deg']
         lat_runway_deg = DistLookup.RWY_LOC_TD_ZONE_START['lat']
