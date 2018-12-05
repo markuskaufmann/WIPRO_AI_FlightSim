@@ -19,6 +19,14 @@ class FGPropertyWriter:
                                         throttle=actions_to_write['throttle'])
 
     @staticmethod
+    def write_brake(force: float = 1):
+        if force > 1:
+            force = 1
+        elif force < 0.1:
+            force = 0.1
+        FGPropertyWriter._write_brake(force)
+
+    @staticmethod
     def reset_checkpoint1():
         FGPropertyWriter._write_reset(checkpoint_1=1, checkpoint_2=0)
 
@@ -43,8 +51,13 @@ class FGPropertyWriter:
                                           elevator=elevator, throttle=throttle)
 
     @staticmethod
+    def _write_brake(force: float = 1):
+        FGPropertyWriter._write_to_output(FGPropertyType.WRITE_GEAR, brake_left=force, brake_right=force)
+
+    @staticmethod
     def _write_to_output(fg_property_type: FGPropertyType, aileron=None, elevator=None,
-                         throttle=None, checkpoint_1=None, checkpoint_2=None, fg_exit=None):
+                         throttle=None, brake_left=None, brake_right=None,
+                         checkpoint_1=None, checkpoint_2=None, fg_exit=None):
         prop_type_keys = FGPropertyType.TYPE_PROP_MAP[fg_property_type]
         frame = inspect.currentframe()
         args, _, _, values = inspect.getargvalues(frame)

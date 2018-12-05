@@ -3,7 +3,7 @@
 <PropertyList>
  <comment>
   <![CDATA[
-	Usage: [Commands] --generic=socket,out,0.5,127.0.0.1,9876,tcp,fg_read
+	Usage: [Commands] --generic=socket,out,5,127.0.0.1,9876,tcp,fg_read
   ]]>
  </comment>
  <generic>

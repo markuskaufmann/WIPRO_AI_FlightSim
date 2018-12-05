@@ -38,6 +38,7 @@ class FGLaunch:
     FG_ARGS_PROTOCOL_READ = " --generic=socket,out,5,127.0.0.1,9876,tcp,fg_read"
     FG_ARGS_PROTOCOL_WRITE_RESET = " --generic=socket,in,5,127.0.0.1,9877,tcp,fg_write_reset"
     FG_ARGS_PROTOCOL_WRITE_CONTROL = " --generic=socket,in,5,127.0.0.1,9878,tcp,fg_write_control"
+    FG_ARGS_PROTOCOL_WRITE_GEAR = " --generic=socket,in,5,127.0.0.1,9879,tcp,fg_write_gear"
 
     # Parameters
     FG_LAUNCH_ARGS = [FG_ARGS_FGROOT,
@@ -60,7 +61,8 @@ class FGLaunch:
                       FG_ARGS_WEATHER_FETCH,
                       FG_ARGS_PROTOCOL_READ,
                       FG_ARGS_PROTOCOL_WRITE_RESET,
-                      FG_ARGS_PROTOCOL_WRITE_CONTROL]
+                      FG_ARGS_PROTOCOL_WRITE_CONTROL,
+                      FG_ARGS_PROTOCOL_WRITE_GEAR]
 
     FG_LAUNCH = [FG_EXECUTABLE, FG_LAUNCH_ARGS]
 

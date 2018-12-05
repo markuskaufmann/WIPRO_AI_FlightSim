@@ -212,6 +212,8 @@ setlistener("/sim/signals/reinit", func {
             setprop("/controls/flight/flaps", cp_current.flaps);
             setprop("/controls/engines/current-engine/mixture", cp_current.mixture());
             setprop("/controls/engines/current-engine/throttle", cp_current.throttle());
+            setprop("/controls/gear/brake-left", 0);
+            setprop("/controls/gear/brake-right", 0);
 
             # reset completed
             reset_ongoing = 0;

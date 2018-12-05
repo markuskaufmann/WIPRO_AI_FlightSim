@@ -7,7 +7,7 @@ from ch.hslu.wipro.ddpg.reward.util import Util
 class LandingReward(RewardInterface):
     def calculate_reward(self, props) -> (float, bool):
 
-        if props['airspeed-kt'] < 1:
+        if props['airspeed-kt'] < 2:
             print("Landed!")
             return RewardMultipliers.LANDING_MULTIPLIER, True
 

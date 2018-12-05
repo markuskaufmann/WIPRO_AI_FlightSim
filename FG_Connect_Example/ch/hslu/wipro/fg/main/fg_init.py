@@ -13,6 +13,7 @@ class FGInit:
     _conn_read: TCPSocketServer = None
     _conn_write_reset: TCPSocketClient = None
     _conn_write_control: TCPSocketClient = None
+    _conn_write_gear: TCPSocketClient = None
 
     # init flags
     _init_read = False
@@ -37,8 +38,10 @@ class FGInit:
         print("Init write client sockets")
         FGInit._conn_write_reset = TCPSocketClientWrite(FGPropertyType.WRITE_RESET)
         FGInit._conn_write_control = TCPSocketClientWrite(FGPropertyType.WRITE_CONTROL)
+        FGInit._conn_write_gear = TCPSocketClientWrite(FGPropertyType.WRITE_GEAR)
         FGInit._conn_write_reset.start()
         FGInit._conn_write_control.start()
+        FGInit._conn_write_gear.start()
         FGInit._wait_until_connected()
         FGInit._init_write = True
 
@@ -53,6 +56,7 @@ class FGInit:
             print("Close write client sockets: Connections are already closed!")
             return
         print("Close write client sockets")
+        FGInit._conn_write_gear.close()
         FGInit._conn_write_control.close()
         FGInit._conn_write_reset.close()
         FGInit._init_write = False
@@ -60,7 +64,9 @@ class FGInit:
     @staticmethod
     def _wait_until_connected():
         wait_count = 0
-        while not FGInit._conn_write_reset.connected and not FGInit._conn_write_control.connected:
+        while not FGInit._conn_write_reset.connected \
+                and not FGInit._conn_write_control.connected \
+                and not FGInit._conn_write_gear.connected:
             if wait_count < 5:
                 sleep(1)
                 wait_count += 1
