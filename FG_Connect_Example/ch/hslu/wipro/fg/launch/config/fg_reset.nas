@@ -38,9 +38,9 @@ var cp1 = {
 # parameters checkpoint 2
 
 var cp2 = {
-    aileron: func { return 0.2; },
+    aileron: func { return 0.3; },
     aileron_trim: 0,
-    elevator: func { return -0.2; },
+    elevator: func { return -0.1; },
     elevator_trim: 0,
     rudder: 0,
     rudder_trim: 0,

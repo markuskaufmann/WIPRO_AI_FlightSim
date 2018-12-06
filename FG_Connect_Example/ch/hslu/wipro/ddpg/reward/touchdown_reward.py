@@ -29,7 +29,7 @@ class TouchdownReward(RewardInterface):
                 if self.brake_count < 10:
                     if self.brake_interval == 0:
                         print("-------------------- TOUCHDOWN: BRAKE --------------------")
-                        FGPropertyWriter.write_brake(force=0.1 * (self.brake_count + 1))
+                        FGPropertyWriter.write_brake(force=0.2 * (self.brake_count + 1))
                         self.brake_count += 1
                         self.brake_interval = 2
                     else:
