@@ -38,18 +38,18 @@ var cp1 = {
 # parameters checkpoint 2
 
 var cp2 = {
-    aileron: func { return 0.2; },
+    aileron: func { return 0.3; },
     aileron_trim: 0,
-    elevator: func { return -0.2; },
+    elevator: func { return random(-0.1, -0.3); },
     elevator_trim: 0,
     rudder: 0,
     rudder_trim: 0,
     flaps: 1,
     throttle: func { return 0; },
     mixture: func { return 0.9; },
-    latitude_deg: func { return 21.325247; },
+    latitude_deg: func { return random(21.32515, 21.32535); },
     longitude_deg: func { return -157.942; },
-    altitude_ft: func { return 49.2126; },
+    altitude_ft: func { return random(49, 51); },
     airspeed_kt: func { return 42; },
     pitch_deg: func { return 0; },
     roll_deg: func { return 0; },
