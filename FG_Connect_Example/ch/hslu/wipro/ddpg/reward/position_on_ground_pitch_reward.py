@@ -17,12 +17,9 @@ class PositionOnGroundPitchReward(RewardInterface):
         # add vector to observation space
         reward_to_return = 0
         pitch_deg = props['pitch-deg']
+        elevator = 1 + props['elevator']
 
-        if -5 < pitch_deg < 5:
-            reward_to_return = RewardMultipliers.ON_GROUND_PITCH_REWARD * 3
-        elif -9 < pitch_deg < 9:
-            reward_to_return = RewardMultipliers.ON_GROUND_PITCH_REWARD
-
+        reward_to_return = RewardMultipliers.ON_GROUND_ELEVATOR_REWARD * elevator
 
         return reward_to_return, False
 

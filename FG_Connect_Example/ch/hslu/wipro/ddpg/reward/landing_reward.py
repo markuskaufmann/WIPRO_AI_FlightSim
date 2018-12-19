@@ -11,7 +11,7 @@ class LandingReward(RewardInterface):
             print("Landed!")
             return RewardMultipliers.LANDING_MULTIPLIER, True
 
-        return 0, False
+        return RewardMultipliers.ON_GROUND_REWARD, False
 
     def reset(self):
         pass

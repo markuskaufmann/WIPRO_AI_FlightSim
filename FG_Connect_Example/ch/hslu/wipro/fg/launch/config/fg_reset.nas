@@ -40,7 +40,7 @@ var cp1 = {
 var cp2 = {
     aileron: func { return 0.3; },
     aileron_trim: 0,
-    elevator: func { return random(-0.1, -0.3); },
+    elevator: func { return random(-0.18, -0.22); },
     elevator_trim: 0,
     rudder: 0,
     rudder_trim: 0,

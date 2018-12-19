@@ -1,6 +1,7 @@
 from ch.hslu.wipro.ddpg.reward.damage_rewards import DamageRewards
 from ch.hslu.wipro.ddpg.reward.landing_reward import LandingReward
 from ch.hslu.wipro.ddpg.reward.position_discrepancy_reset_reward import PositionDiscrepancyResetReward
+from ch.hslu.wipro.ddpg.reward.position_on_ground_pitch_reward import PositionOnGroundPitchReward
 from ch.hslu.wipro.ddpg.reward.position_over_ground_airspeed_reward import PositionOverGroundAirspeedReward
 from ch.hslu.wipro.ddpg.reward.position_over_ground_pitch_reward import PositionOverGroundPitchReward
 from ch.hslu.wipro.ddpg.reward.position_runway_reward import PositionRunwayReward
@@ -12,5 +13,5 @@ def generate_checkpoint2_reward_function():
     reward_function = RewardFunction([DamageRewards(), PositionDiscrepancyResetReward(),
                                       PositionRunwayReward(),
                                       PositionOverGroundPitchReward(), PositionOverGroundAirspeedReward(),
-                                      TouchdownReward(), LandingReward()])
+                                      TouchdownReward(), LandingReward(), PositionOnGroundPitchReward()])
     return reward_function
