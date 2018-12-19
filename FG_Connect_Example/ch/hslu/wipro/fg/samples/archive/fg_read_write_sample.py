@@ -6,7 +6,7 @@ import numpy as np
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
 from ch.hslu.wipro.fg.events.fg_observer import FGObserver
 from ch.hslu.wipro.fg.main.fg_main import FGMain
-from ch.hslu.wipro.fg.main.fg_ready_observable import FGReadyObservable
+from ch.hslu.wipro.fg.events.fg_ready_observable import FGReadyObservable
 from ch.hslu.wipro.fg.properties.fg_property_reader import FGPropertyReader
 from ch.hslu.wipro.fg.properties.fg_property_writer import FGPropertyWriter
 

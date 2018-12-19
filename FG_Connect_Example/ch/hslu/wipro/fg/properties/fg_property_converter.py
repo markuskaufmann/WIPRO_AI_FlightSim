@@ -10,14 +10,14 @@ class FGPropertyConverter:
     }
 
     _CONVERSION_MAP = {
-        'throttle': {'fact': 0.1, 'val_range_alg': [-1, 1], 'val_range_fg': [0, 1]},
-        'aileron': {'fact': 0.05, 'val_range_alg': [-1, 1], 'val_range_fg': [-0.2, 0.2]},
-        'elevator': {'fact': 0.05, 'val_range_alg': [-1, 1], 'val_range_fg': [-1, 1]}
+        'throttle': {'fact': 0, 'val_range_alg': [-1, 1], 'val_range_fg': [0, 1]},
+        'aileron': {'fact': 0.05, 'val_range_alg': [-1, 1], 'val_range_fg': [-0.3, 0.3]},
+        'elevator': {'fact': 0.15, 'val_range_alg': [-1, 1], 'val_range_fg': [-0.7, 0]}
     }
 
     @staticmethod
     def process_actions(actions) -> dict:
-        print('actions befor processed', actions)
+        print('actions before processed: {0}'.format(actions))
         result = dict()
         if actions is None or len(actions) == 0:
             return result
@@ -29,7 +29,7 @@ class FGPropertyConverter:
             converted_value = properties[action] + (conversion_map['fact'] * alg_action)
             fg_action = FGPropertyConverter._check_val_in_range(conversion_map['val_range_fg'], converted_value)
             result[action] = fg_action
-        print('actions after processed', result)
+        print('actions after processed: {0}'.format(result))
         return result
 
     @staticmethod

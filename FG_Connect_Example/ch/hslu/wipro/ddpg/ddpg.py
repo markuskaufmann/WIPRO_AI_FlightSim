@@ -72,9 +72,7 @@ def train(sess, env, args, actor, critic, actor_noise):
         ep_reward = 0
         ep_ave_max_q = 0
 
-
-
-        for j in range(5+(int(i/30))):
+        for j in range(30):
             # Added exploration noise
 
             # TODO: Predict has to return a dictionary with the action!

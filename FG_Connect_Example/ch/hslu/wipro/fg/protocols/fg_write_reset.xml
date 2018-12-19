@@ -3,7 +3,7 @@
 <PropertyList>
  <comment>
   <![CDATA[
-	Usage: [Commands] --generic=socket,in,0.5,127.0.0.1,9877,tcp,fg_write_reset
+	Usage: [Commands] --generic=socket,in,5,127.0.0.1,9877,tcp,fg_write_reset
   ]]>
  </comment>
  <generic>
@@ -14,15 +14,22 @@
    <!-- Checkpoint 1 -->
    <chunk>
     <name>checkpoint_1</name>
-	<type>double</type>
+	<type>float</type>
 	<node>/wipro/reset_cp1</node>
    </chunk>
 
    <!-- Checkpoint 2 -->
    <chunk>
     <name>checkpoint_2</name>
-	<type>double</type>
+	<type>float</type>
 	<node>/wipro/reset_cp2</node>
+   </chunk>
+
+   <!-- Exit FlightGear -->
+   <chunk>
+    <name>fg_exit</name>
+	<type>float</type>
+	<node>/wipro/fg_exit</node>
    </chunk>
 
   </input>

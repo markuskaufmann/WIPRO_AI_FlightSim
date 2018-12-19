@@ -8,6 +8,7 @@ import numpy as np
 from ch.hslu.wipro.ddpg.Environment import Env
 from ch.hslu.wipro.ddpg.reward import reward_function_generator
 from ch.hslu.wipro.ddpg.spaces import dict_space
+from ch.hslu.wipro.ddpg.spaces.Box import Box
 from ch.hslu.wipro.ddpg.utility import Seeding
 from ch.hslu.wipro.ddpg.utility import SpaceDefiner
 from ch.hslu.wipro.ddpg.utility.factories.SpaceFactory import SpaceFactory
@@ -39,15 +40,13 @@ class FlightGearEnv(Env, ABC):
         return [seed]
 
     def step(self, u):
-        FGPropertyWriter.write_action(u)
+        FGPropertyWriter.write_action(u[0])
         sleep(0.3)
         observation = self._get_obs()
         reward, terminal = self.compute_reward()
-        print("Step done")
         return observation, reward, terminal, {}
 
     def reset(self):
-        # TODO: Put plane in the specific position with the defined speed etc, RETURN OBSERVATION
         FGPropertyWriter.reset_checkpoint2()
         self.reward_function.reset()
         sleep(1)
@@ -73,7 +72,6 @@ class FlightGearEnv(Env, ABC):
             self.dist_vector,
             delta_values)
         observation = []
-        # TODO: fix observation
         for key in SpaceDefiner.DefaultObservationSpaceKeys:
             if key == 'alt_m':
                 observation.append(norm_dist_vector.alt_diff_m)
@@ -127,13 +125,14 @@ class FlightGearEnv(Env, ABC):
         raise NotImplementedError
 
     def initialize_action_space(self):
-        self.action_space = dict_space.Dict(SpaceFactory().create_space(SpaceDefiner.DefaultActionSpaces))
+        self.action_space = Box(np.array([-1, -1, -1]), np.array([+1, +1, +1]))
 
     #   self.action_space = Box(low=-self.max_torque, high=self.max_torque, shape=(1,), dtype=np.float32)
 
     def initialize_observation_space(self):
-        self.observation_space = dict_space.Dict(SpaceFactory().create_space(SpaceDefiner.DefaultObservationSpaces))
+
+        self.observation_space = SpaceFactory().create_box_space(SpaceDefiner.DefaultObservationSpaces2)
 
     # For the first stage no desired goal has to be set yet
     def compute_reward(self):
-        return self.reward_function.compute_reward(self.props)
+        return self.reward_function.compute_reward(self.props, self.dist_vector)

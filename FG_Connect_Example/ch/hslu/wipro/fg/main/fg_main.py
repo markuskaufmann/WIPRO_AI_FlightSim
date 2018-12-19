@@ -1,33 +1,36 @@
+import os
+import sys
+import time
+
 from ch.hslu.wipro.ddpg.ddpg_launcher import DDPGLauncher
-from ch.hslu.wipro.fg.events.fg_observer import FGObserver
-from ch.hslu.wipro.fg.main.fg_init import FGInit
-from ch.hslu.wipro.fg.main.fg_ready_observable import FGReadyObservable
+from ch.hslu.wipro.fg.main.fg_start_stop import FGStartStop
+from ch.hslu.wipro.fg.main.log_printer import LogPrinter
 
 
-class FGMain(FGObserver):
+class FGMain:
 
-    def __init__(self, observable: FGReadyObservable):
-        self.fg_init = FGInit()
-        self.fg_observable = observable
-        self.fg_observable.add_observer(self)
-        self.fg_observable.add_observer(DDPGLauncher())
+    _LOG_DIR_PREFIX = 'logs/'
 
-    def on_update(self, observable, event):
-        # init write socket clients
-        self.fg_init.init_write_connections()
+    log_dir = None
+
+    def __init__(self):
+        pass
 
     def start(self):
         try:
-            # init read socket server
-            self.fg_init.init_read_connection()
-            # launch FlightGear
-            # TODO FGLaunch.start_process()
-            # wait until FlightGear is ready
-            self.fg_observable.start()
+            ts = time.strftime("%Y%m%d_%H%M%S")
+            file = ts + '_main.log'
+            self.log_dir = FGMain._LOG_DIR_PREFIX + 'main_launch_' + ts
+            os.mkdir(self.log_dir)
+            f = open(self.log_dir + '/' + file, 'w')
+            log_printer = LogPrinter(sys.stdout, f)
+            sys.stdout = log_printer
+            sys.stderr = log_printer
+            FGStartStop.start_fg("initial_launch", [DDPGLauncher()], self.log_dir)
         except Exception as e:
-            print(e)
+            print("Error while launching FGMain: {0}".format(e))
 
 
 if __name__ == '__main__':
-    fg_main = FGMain(FGReadyObservable())
+    fg_main = FGMain()
     fg_main.start()

@@ -2,6 +2,7 @@ from queue import Queue
 
 
 class FGDataOutput:
+
     _data = Queue()
 
     @staticmethod
@@ -11,3 +12,7 @@ class FGDataOutput:
     @staticmethod
     def get():
         return FGDataOutput._data.get()
+
+    @staticmethod
+    def reinit():
+        FGDataOutput._data = Queue()

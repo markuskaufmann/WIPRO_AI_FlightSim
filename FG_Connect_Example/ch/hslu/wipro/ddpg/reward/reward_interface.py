@@ -4,3 +4,6 @@ class RewardInterface:
 
     def reset(self):
         raise NotImplementedError
+
+    def get_state(self) -> int:
+        raise NotImplementedError

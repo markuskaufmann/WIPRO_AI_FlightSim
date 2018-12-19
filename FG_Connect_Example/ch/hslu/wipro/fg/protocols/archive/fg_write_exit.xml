@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+ <comment>
+  <![CDATA[
+	Usage: [Commands] --generic=socket,in,0.5,127.0.0.1,9879,tcp,fg_write_exit
+  ]]>
+ </comment>
+ <generic>
+  <input>
+   <line_separator>\r\n</line_separator>
+   <var_separator>,</var_separator>
+
+   <!-- Exit -->
+   <chunk>
+    <name>fg_exit</name>
+	<type>double</type>
+	<node>/wipro/exit</node>
+   </chunk>
+
+  </input>
+ </generic>
+</PropertyList>

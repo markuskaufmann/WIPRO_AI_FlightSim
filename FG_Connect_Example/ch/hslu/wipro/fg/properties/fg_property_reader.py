@@ -20,6 +20,6 @@ class FGPropertyReader:
                 try:
                     value = float(str_value)
                 except ValueError:
-                    value = str_value
+                    value = str_value.strip('\r\n')
                 props[val_split[0]] = value
         return props

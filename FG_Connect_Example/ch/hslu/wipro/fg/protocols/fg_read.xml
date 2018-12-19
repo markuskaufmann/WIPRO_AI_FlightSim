@@ -3,7 +3,7 @@
 <PropertyList>
  <comment>
   <![CDATA[
-	Usage: [Commands] --generic=socket,out,0.5,127.0.0.1,9876,tcp,fg_read
+	Usage: [Commands] --generic=socket,out,5,127.0.0.1,9876,tcp,fg_read
   ]]>
  </comment>
  <generic>
@@ -178,6 +178,14 @@
 	<type>float</type>
     <format>reset_cp2=%f</format>
 	<node>/wipro/reset_cp2</node>
+   </chunk>
+
+   <!-- FDM Init -->
+   <chunk>
+	<name>fdm-initialized</name>
+	<type>string</type>
+	<format>fdm-initialized=%s</format>
+	<node>/sim/fdm-initialized</node>
    </chunk>
   </output>
  </generic>
