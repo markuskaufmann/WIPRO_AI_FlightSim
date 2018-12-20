@@ -76,7 +76,7 @@ def play_result():
         episode_rew = 0
         while not done:
             for i in range(30):
-                obs, rew, done, _ = env.step(model.step(obs[None])[0])
+                obs, rew, done, _ = env.step(model.step(obs[None], apply_noise=False)[0])
                 episode_rew += rew
 
                 if done:
