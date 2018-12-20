@@ -22,6 +22,7 @@ class MpiAdam(object):
         self.getflat = U.GetFlat(var_list)
         self.comm = MPI.COMM_WORLD if comm is None and MPI is not None else comm
 
+    # MpiAdam
     def update(self, localg, stepsize):
         if self.t % 100 == 0:
             self.check_synced()

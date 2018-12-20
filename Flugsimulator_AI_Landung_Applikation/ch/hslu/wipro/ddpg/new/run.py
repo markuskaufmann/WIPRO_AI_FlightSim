@@ -30,7 +30,7 @@ from ch.hslu.wipro.ddpg.new import ddpg, logger
 #
 from ch.hslu.wipro.ddpg.new.common import tf_util
 
-CURRENT_USER = "Student"
+CURRENT_USER = "Cyrille"
 LOG_PATH = "C:\\Users\\" + CURRENT_USER + "\\Documents\\FG_Logs_Graphs\\"
 
 def train(args, extra_args):

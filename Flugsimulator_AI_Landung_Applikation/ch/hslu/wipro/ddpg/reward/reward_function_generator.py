@@ -10,8 +10,9 @@ from ch.hslu.wipro.ddpg.reward.touchdown_reward import TouchdownReward
 
 
 def generate_checkpoint2_reward_function():
-    reward_function = RewardFunction([DamageRewards(), PositionDiscrepancyResetReward(),
-                                      PositionRunwayReward(),
-                                      PositionOverGroundPitchReward(), PositionOverGroundAirspeedReward(),
-                                      TouchdownReward(), LandingReward(), PositionOnGroundPitchReward()])
+    reward_function = RewardFunction(
+        [DamageRewards(), PositionDiscrepancyResetReward(), PositionRunwayReward(),
+         PositionOverGroundPitchReward(), PositionOverGroundAirspeedReward(),
+         TouchdownReward(), LandingReward(), PositionOnGroundPitchReward()])
+
     return reward_function

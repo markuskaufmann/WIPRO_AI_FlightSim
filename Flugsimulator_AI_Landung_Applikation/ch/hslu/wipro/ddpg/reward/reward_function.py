@@ -16,7 +16,8 @@ class RewardFunction(object):
         for r_function in self.reward_functions:
             if self.terminal:
                 break
-            if r_function.get_state() == self.reward_state or r_function.get_state() == RewardState.COMMON:
+            if r_function.get_state() == self.reward_state \
+                    or r_function.get_state() == RewardState.COMMON:
                 r, t = r_function.calculate_reward(props)
                 reward += r
                 self.terminal = t

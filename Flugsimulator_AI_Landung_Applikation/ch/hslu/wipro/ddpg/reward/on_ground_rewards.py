@@ -10,8 +10,8 @@ class OnGroundRewards(RewardInterface):
 
     def calculate_reward(self, props) -> (float, bool):
 
-        # Round on one decimal, so it won't return insane high reward (for example divided by 0.0002)
-        reward_to_return = np.abs(RewardMultipliers.ON_GROUND_MULTIPLIER * (props['airspeed-kt'] + 1))
+        reward_to_return = np.abs(RewardMultipliers.ON_GROUND_MULTIPLIER *
+                                  (props['airspeed-kt'] + 1))
 
         return reward_to_return, False
 
