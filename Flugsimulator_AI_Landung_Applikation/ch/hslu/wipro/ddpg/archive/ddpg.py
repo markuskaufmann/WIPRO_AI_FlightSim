@@ -16,10 +16,10 @@ import numpy as np
 import tensorflow as tf
 
 from ch.hslu.wipro.ddpg.FlightGearEnv import FlightGearEnv
-from ch.hslu.wipro.ddpg.networks.ActorNetwork import ActorNetwork
-from ch.hslu.wipro.ddpg.networks.CriticNetwork import CriticNetwork
-from ch.hslu.wipro.ddpg.utility.OrnsteinUhlenbeckActionNoise import OrnsteinUhlenbeckActionNoise
-from ch.hslu.wipro.ddpg.utility.replay_buffer import ReplayBuffer
+from ch.hslu.wipro.ddpg.archive.networks.ActorNetwork import ActorNetwork
+from ch.hslu.wipro.ddpg.archive.networks.CriticNetwork import CriticNetwork
+from ch.hslu.wipro.ddpg.archive.OrnsteinUhlenbeckActionNoise import OrnsteinUhlenbeckActionNoise
+from ch.hslu.wipro.ddpg.archive.replay_buffer import ReplayBuffer
 
 
 # ==========================

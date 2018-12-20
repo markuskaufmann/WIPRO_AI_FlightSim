@@ -1,7 +1,8 @@
-# Env-related abstractions
-from ch.hslu.wipro.ddpg.spaces.dict_space import Dict
-
-
+"""
+################################################################
+FILE FROM OPEN AI GYM https://github.com/openai/gym
+################################################################
+"""
 class Env(object):
     """The main OpenAI Gym class. It encapsulates an environment with
     arbitrary behind-the-scenes dynamics. An environment can be

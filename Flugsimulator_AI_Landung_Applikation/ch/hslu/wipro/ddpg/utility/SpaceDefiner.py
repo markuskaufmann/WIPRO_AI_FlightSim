@@ -31,7 +31,7 @@ DefaultObservationSpaces = [
     (True, 'heading_deg_delta', _normal_box)
 ]
 
-DefaultObservationSpaces2 = [
+DefaultObservationSpacesTupels = [
     _positive_range,
     _positive_range,
     _normal_range,

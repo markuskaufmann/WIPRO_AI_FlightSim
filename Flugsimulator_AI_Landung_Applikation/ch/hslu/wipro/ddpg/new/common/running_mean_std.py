@@ -1,3 +1,9 @@
+"""
+################################################################
+FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
+################################################################
+"""
+
 import tensorflow as tf
 import numpy as np
 from ch.hslu.wipro.ddpg.new.common.tf_util import get_session

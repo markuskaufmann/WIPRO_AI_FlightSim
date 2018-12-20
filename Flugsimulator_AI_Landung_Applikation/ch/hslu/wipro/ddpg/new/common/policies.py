@@ -1,3 +1,9 @@
+"""
+################################################################
+FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
+################################################################
+"""
+
 import tensorflow as tf
 from ch.hslu.wipro.ddpg.new.common import tf_util
 from ch.hslu.wipro.ddpg.new.common.a2c.utils import fc

@@ -36,21 +36,7 @@ class PositionOverGroundPitchReward(RewardInterface):
     def _set_old_values(self, pitch_deg):
         self.old_pitch_deg = pitch_deg
 
-    def calculate_pitch_reward(self, pitch_deg):
-        reward_to_return = 0
-        # delta_pitch_deg = np.abs(pitch_deg) - np.abs(self.old_pitch_deg)
-
-        # if -2 < delta_pitch_deg < 1:
-        #     rounded_pitch = np.round(np.abs(delta_pitch_deg), 1)
-        #     reward_to_return += 1000 / (rounded_pitch if rounded_pitch != 0 else 0.1)
-
-        if -5 < pitch_deg < 0:
-            reward_to_return += RewardMultipliers.OVER_GROUND_PITCH_REWARD
-
-        return reward_to_return
-
     def calc_almost_ground_pitch_reward(self, pitch_deg):
-        print("ççççççççççççççççççççççç almost ground pitch reward added")
         if pitch_deg > 0:
             return RewardMultipliers.PITCH_BEFORE_LANDING_MULTIPLIER * pitch_deg
         return 0

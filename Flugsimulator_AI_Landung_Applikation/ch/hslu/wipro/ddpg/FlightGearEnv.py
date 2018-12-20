@@ -30,12 +30,9 @@ class FlightGearEnv(Env, ABC):
         self.dist_vector = None
         self.old_dist_vector = None
         self.reward_function = reward_function_generator.generate_checkpoint2_reward_function()
-
-        # Why?
         self.seed()
 
     def seed(self, seed=None):
-        # Probably ok like this
         self.np_random, seed = Seeding.np_random(seed)
         return [seed]
 
@@ -127,12 +124,8 @@ class FlightGearEnv(Env, ABC):
     def initialize_action_space(self):
         self.action_space = Box(np.array([-1, -1, -1]), np.array([+1, +1, +1]))
 
-    #   self.action_space = Box(low=-self.max_torque, high=self.max_torque, shape=(1,), dtype=np.float32)
-
     def initialize_observation_space(self):
+        self.observation_space = SpaceFactory().create_box_space(SpaceDefiner.DefaultObservationSpacesTupels)
 
-        self.observation_space = SpaceFactory().create_box_space(SpaceDefiner.DefaultObservationSpaces2)
-
-    # For the first stage no desired goal has to be set yet
     def compute_reward(self):
         return self.reward_function.compute_reward(self.props, self.dist_vector)

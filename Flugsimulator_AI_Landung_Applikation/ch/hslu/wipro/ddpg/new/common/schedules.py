@@ -1,3 +1,9 @@
+"""
+################################################################
+FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
+################################################################
+"""
+
 """This file is used for specifying various schedules that evolve over
 time throughout the execution of the algorithm, such as:
  - learning rate for the optimizer

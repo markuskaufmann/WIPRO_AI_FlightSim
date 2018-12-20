@@ -1,3 +1,9 @@
+"""
+################################################################
+FILE FROM OPEN AI GYM https://github.com/openai/gym
+################################################################
+"""
+
 from collections import OrderedDict
 
 from ch.hslu.wipro.ddpg.spaces.Space import Space

@@ -1,3 +1,9 @@
+"""
+################################################################
+FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
+################################################################
+"""
+
 from copy import copy
 from functools import reduce
 

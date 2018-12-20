@@ -1,3 +1,9 @@
+"""
+################################################################
+FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
+################################################################
+"""
+
 import datetime
 import os
 import pickle
@@ -146,11 +152,7 @@ def learn(network, env,
                 time.sleep(0.05)
         first_epoch = False
 
-        # obs = env.reset()
-
         for cycle in range(nb_epoch_cycles):
-            # env.reset()
-            # time.sleep(0.6)
             obs = env.reset()
             # Perform rollouts.
             for t_rollout in range(nb_rollout_steps):

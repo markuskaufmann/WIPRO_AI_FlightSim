@@ -6,7 +6,7 @@ from ch.hslu.wipro.ddpg.reward.reward_state import RewardState
 from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
 
 
-class PositionDiscrepancyResetReward(RewardInterface):
+class PositionDiscrepancyResetPenalty(RewardInterface):
     def __init__(self):
         pass
 
@@ -14,7 +14,6 @@ class PositionDiscrepancyResetReward(RewardInterface):
         pass
 
     def calculate_reward(self, props) -> (float, bool):
-        # add vector to observation space
         reward_to_return = 0
         dist_vector = DistCalc.process_distance_vector(props)
 

@@ -1,7 +1,6 @@
 from ch.hslu.wipro.ddpg.reward import RewardMultipliers
 from ch.hslu.wipro.ddpg.reward.reward_interface import RewardInterface
 from ch.hslu.wipro.ddpg.reward.reward_state import RewardState
-from ch.hslu.wipro.ddpg.reward.util import Util
 
 
 class LandingReward(RewardInterface):

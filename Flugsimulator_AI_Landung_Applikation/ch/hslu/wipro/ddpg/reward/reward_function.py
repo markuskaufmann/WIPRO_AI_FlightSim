@@ -1,5 +1,4 @@
 from ch.hslu.wipro.ddpg.reward.reward_state import RewardState
-from ch.hslu.wipro.fg.calc.calc_distance import DistCalc
 
 
 class RewardFunction(object):

@@ -1,3 +1,9 @@
+"""
+################################################################
+FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
+################################################################
+"""
+
 import numpy as np
 from ch.hslu.wipro.ddpg.new.common.a2c.utils import discount_with_dones
 from ch.hslu.wipro.ddpg.new.common.runners import AbstractEnvRunner

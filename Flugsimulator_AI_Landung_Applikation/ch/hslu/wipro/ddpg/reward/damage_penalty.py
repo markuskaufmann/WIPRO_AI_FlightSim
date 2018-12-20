@@ -4,7 +4,7 @@ from ch.hslu.wipro.ddpg.reward.reward_state import RewardState
 from ch.hslu.wipro.ddpg.reward.util import Util
 
 
-class DamageRewards(RewardInterface):
+class DamagePenalty(RewardInterface):
 
     def __init__(self):
         self.boolean_damage_keys = ['collapsed-wings']

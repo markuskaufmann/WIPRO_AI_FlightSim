@@ -1,3 +1,9 @@
+"""
+################################################################
+FILE FROM OPEN AI GYM https://github.com/openai/gym
+################################################################
+"""
+
 import hashlib
 import numpy as np
 import os
@@ -5,7 +11,6 @@ import random as _random
 from six import integer_types
 import struct
 import sys
-
 
 def np_random(seed=None):
     if seed is not None and not (isinstance(seed, integer_types) and 0 <= seed):
