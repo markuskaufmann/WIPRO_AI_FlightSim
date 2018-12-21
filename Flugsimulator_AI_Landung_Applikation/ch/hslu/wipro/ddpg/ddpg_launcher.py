@@ -1,6 +1,6 @@
 from threading import Thread
 
-from ch.hslu.wipro.ddpg.new import run
+from ch.hslu.wipro.ddpg.algorithm import run
 from ch.hslu.wipro.fg.events.fg_observer import FGObserver
 
 
