@@ -52,7 +52,7 @@ class EzPickle(object):
                 EzPickle.__init__(furcolor, tailkind)
                 ...
 
-    When this object is unpickled, a new Dog will be constructed by passing the provided
+    When this object is unpickled, a algorithm Dog will be constructed by passing the provided
     furcolor and tailkind into the constructor. However, philosophers are still not sure
     whether it is still the same dog.
 
@@ -153,7 +153,7 @@ class RunningAvg(object):
         Parameters
         ----------
         new_val: float
-            new observated value of estimated quantity.
+            algorithm observated value of estimated quantity.
         """
         if self._value is None:
             self._value = new_val

@@ -6,7 +6,7 @@ FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
 
 from mpi4py import MPI
 import numpy as np
-from ch.hslu.wipro.ddpg.new.common import zipsame
+from ch.hslu.wipro.ddpg.algorithm.common import zipsame
 
 
 def mpi_mean(x, axis=0, comm=None, keepdims=False):

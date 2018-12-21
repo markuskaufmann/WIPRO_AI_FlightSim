@@ -4,7 +4,7 @@ FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
 ################################################################
 """
 
-import ch.hslu.wipro.ddpg.new.common.tf_util as U
+import ch.hslu.wipro.ddpg.algorithm.common.tf_util as U
 import tensorflow as tf
 import numpy as np
 try:

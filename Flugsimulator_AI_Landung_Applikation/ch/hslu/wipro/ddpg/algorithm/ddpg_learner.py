@@ -11,10 +11,10 @@ import numpy as np
 import tensorflow as tf
 import tensorflow.contrib as tc
 
-from ch.hslu.wipro.ddpg.new import logger
-from ch.hslu.wipro.ddpg.new.common.mpi_adam import MpiAdam
-import ch.hslu.wipro.ddpg.new.common.tf_util as U
-from ch.hslu.wipro.ddpg.new.common.mpi_running_mean_std import RunningMeanStd
+from ch.hslu.wipro.ddpg.algorithm import logger
+from ch.hslu.wipro.ddpg.algorithm.common.mpi_adam import MpiAdam
+import ch.hslu.wipro.ddpg.algorithm.common.tf_util as U
+from ch.hslu.wipro.ddpg.algorithm.common.mpi_running_mean_std import RunningMeanStd
 try:
     from mpi4py import MPI
 except ImportError:

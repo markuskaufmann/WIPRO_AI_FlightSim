@@ -11,8 +11,8 @@ import os
 import numpy as np
 import pandas
 from collections import defaultdict, namedtuple
-from ch.hslu.wipro.ddpg.new.common.bench import monitor
-from ch.hslu.wipro.ddpg.new.logger import read_json, read_csv
+from ch.hslu.wipro.ddpg.algorithm.common.bench import monitor
+from ch.hslu.wipro.ddpg.algorithm.logger import read_json, read_csv
 
 def smooth(y, radius, mode='two_sided', valid_only=False):
     '''
@@ -54,21 +54,21 @@ def one_sided_ema(xolds, yolds, low=None, high=None, n=512, decay_steps=1., low_
     xolds: array or list  - x values of data. Needs to be sorted in ascending order
     yolds: array of list  - y values of data. Has to have the same length as xolds
 
-    low: float            - min value of the new x grid. By default equals to xolds[0]
-    high: float           - max value of the new x grid. By default equals to xolds[-1]
+    low: float            - min value of the algorithm x grid. By default equals to xolds[0]
+    high: float           - max value of the algorithm x grid. By default equals to xolds[-1]
 
-    n: int                - number of points in new x grid
+    n: int                - number of points in algorithm x grid
 
-    decay_steps: float    - EMA decay factor, expressed in new x grid steps.
+    decay_steps: float    - EMA decay factor, expressed in algorithm x grid steps.
 
     low_counts_threshold: float or int
                           - y values with counts less than this value will be set to NaN
 
     Returns:
         tuple sum_ys, count_ys where
-            xs        - array with new x grid
-            ys        - array of EMA of y at each point of the new x grid
-            count_ys  - array of EMA of y counts at each point of the new x grid
+            xs        - array with algorithm x grid
+            ys        - array of EMA of y at each point of the algorithm x grid
+            count_ys  - array of EMA of y counts at each point of the algorithm x grid
 
     '''
 
@@ -126,21 +126,21 @@ def symmetric_ema(xolds, yolds, low=None, high=None, n=512, decay_steps=1., low_
     xolds: array or list  - x values of data. Needs to be sorted in ascending order
     yolds: array of list  - y values of data. Has to have the same length as xolds
 
-    low: float            - min value of the new x grid. By default equals to xolds[0]
-    high: float           - max value of the new x grid. By default equals to xolds[-1]
+    low: float            - min value of the algorithm x grid. By default equals to xolds[0]
+    high: float           - max value of the algorithm x grid. By default equals to xolds[-1]
 
-    n: int                - number of points in new x grid
+    n: int                - number of points in algorithm x grid
 
-    decay_steps: float    - EMA decay factor, expressed in new x grid steps.
+    decay_steps: float    - EMA decay factor, expressed in algorithm x grid steps.
 
     low_counts_threshold: float or int
                           - y values with counts less than this value will be set to NaN
 
     Returns:
         tuple sum_ys, count_ys where
-            xs        - array with new x grid
-            ys        - array of EMA of y at each point of the new x grid
-            count_ys  - array of EMA of y counts at each point of the new x grid
+            xs        - array with algorithm x grid
+            ys        - array of EMA of y at each point of the algorithm x grid
+            count_ys  - array of EMA of y counts at each point of the algorithm x grid
 
     '''
     xs, ys1, count_ys1 = one_sided_ema(xolds, yolds, low, high, n, decay_steps, low_counts_threshold=0)
@@ -290,7 +290,7 @@ def plot_results(
                                               Default is zero (no resampling). Note that if average_group is True, resampling is necessary; in that case, default
                                               value is 512.
 
-    smooth_step: float                      - when resampling (i.e. when resample > 0 or average_group is True), use this EMA decay parameter (in units of the new grid step).
+    smooth_step: float                      - when resampling (i.e. when resample > 0 or average_group is True), use this EMA decay parameter (in units of the algorithm grid step).
                                               See docstrings for decay_steps in symmetric_ema or one_sided_ema functions.
 
     '''

@@ -11,7 +11,7 @@ matplotlib.use('TkAgg') # Can change to 'Agg' for non-interactive mode
 import matplotlib.pyplot as plt
 plt.rcParams['svg.fonttype'] = 'none'
 
-from ch.hslu.wipro.ddpg.new.common.bench.monitor import load_results
+from ch.hslu.wipro.ddpg.algorithm.common.bench.monitor import load_results
 
 X_TIMESTEPS = 'timesteps'
 X_EPISODES = 'episodes'

@@ -8,15 +8,15 @@ import time
 import functools
 import tensorflow as tf
 
-from ch.hslu.wipro.ddpg.new import logger
+from ch.hslu.wipro.ddpg.algorithm import logger
 
-from ch.hslu.wipro.ddpg.new.common import set_global_seeds, explained_variance
-from ch.hslu.wipro.ddpg.new.common import tf_util
-from ch.hslu.wipro.ddpg.new.common.policies import build_policy
+from ch.hslu.wipro.ddpg.algorithm.common import set_global_seeds, explained_variance
+from ch.hslu.wipro.ddpg.algorithm.common import tf_util
+from ch.hslu.wipro.ddpg.algorithm.common.policies import build_policy
 
 
-from ch.hslu.wipro.ddpg.new.common.a2c.utils import Scheduler, find_trainable_variables
-from ch.hslu.wipro.ddpg.new.common.a2c.runner import Runner
+from ch.hslu.wipro.ddpg.algorithm.common.a2c.utils import Scheduler, find_trainable_variables
+from ch.hslu.wipro.ddpg.algorithm.common.a2c.runner import Runner
 
 from tensorflow import losses
 

@@ -5,13 +5,13 @@ FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
 """
 
 import tensorflow as tf
-from ch.hslu.wipro.ddpg.new.common import tf_util
-from ch.hslu.wipro.ddpg.new.common.a2c.utils import fc
-from ch.hslu.wipro.ddpg.new.common.distributions import make_pdtype
-from ch.hslu.wipro.ddpg.new.common.input import observation_placeholder, encode_observation
-from ch.hslu.wipro.ddpg.new.common.tf_util import adjust_shape
-from ch.hslu.wipro.ddpg.new.common.mpi_running_mean_std import RunningMeanStd
-from ch.hslu.wipro.ddpg.new.common.models import get_network_builder
+from ch.hslu.wipro.ddpg.algorithm.common import tf_util
+from ch.hslu.wipro.ddpg.algorithm.common.a2c.utils import fc
+from ch.hslu.wipro.ddpg.algorithm.common.distributions import make_pdtype
+from ch.hslu.wipro.ddpg.algorithm.common.input import observation_placeholder, encode_observation
+from ch.hslu.wipro.ddpg.algorithm.common.tf_util import adjust_shape
+from ch.hslu.wipro.ddpg.algorithm.common.mpi_running_mean_std import RunningMeanStd
+from ch.hslu.wipro.ddpg.algorithm.common.models import get_network_builder
 
 import gym
 

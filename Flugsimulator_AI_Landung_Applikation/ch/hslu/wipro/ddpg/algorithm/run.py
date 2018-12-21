@@ -6,7 +6,7 @@ import tensorflow as tf
 import datetime
 
 from ch.hslu.wipro.ddpg.FlightGearEnv import FlightGearEnv
-from ch.hslu.wipro.ddpg.new import ddpg, logger
+from ch.hslu.wipro.ddpg.algorithm import ddpg, logger
 
 
 #_game_envs = defaultdict(set)
@@ -28,7 +28,7 @@ from ch.hslu.wipro.ddpg.new import ddpg, logger
 #    'SpaceInvaders-Snes',
 #}
 #
-from ch.hslu.wipro.ddpg.new.common import tf_util
+from ch.hslu.wipro.ddpg.algorithm.common import tf_util
 
 CURRENT_USER = "Cyrille"
 LOG_PATH = "C:\\Users\\" + CURRENT_USER + "\\Documents\\FG_Logs_Graphs\\"

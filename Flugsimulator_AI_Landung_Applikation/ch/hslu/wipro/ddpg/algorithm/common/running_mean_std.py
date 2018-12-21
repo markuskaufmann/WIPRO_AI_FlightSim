@@ -6,7 +6,7 @@ FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
 
 import tensorflow as tf
 import numpy as np
-from ch.hslu.wipro.ddpg.new.common.tf_util import get_session
+from ch.hslu.wipro.ddpg.algorithm.common.tf_util import get_session
 
 class RunningMeanStd(object):
     # https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Parallel_algorithm

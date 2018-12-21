@@ -6,8 +6,8 @@ FILE FROM OPEN AI BASELINES https://github.com/openai/baselines
 
 import tensorflow as tf
 import numpy as np
-import ch.hslu.wipro.ddpg.new.common.tf_util as U
-from ch.hslu.wipro.ddpg.new.common.a2c.utils import fc
+import ch.hslu.wipro.ddpg.algorithm.common.tf_util as U
+from ch.hslu.wipro.ddpg.algorithm.common.a2c.utils import fc
 from tensorflow.python.ops import math_ops
 
 class Pd(object):

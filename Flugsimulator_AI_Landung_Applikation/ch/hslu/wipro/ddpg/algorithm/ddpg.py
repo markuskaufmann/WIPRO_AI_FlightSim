@@ -12,14 +12,14 @@ from collections import deque
 
 import numpy as np
 
-import ch.hslu.wipro.ddpg.new.common.tf_util as U
-from ch.hslu.wipro.ddpg.new import logger
-from ch.hslu.wipro.ddpg.new.common import set_global_seeds
-from ch.hslu.wipro.ddpg.new.ddpg_fg_restart_observer import DDPGFGRestartObserver
-from ch.hslu.wipro.ddpg.new.ddpg_learner import DDPG
-from ch.hslu.wipro.ddpg.new.memory import Memory
-from ch.hslu.wipro.ddpg.new.models import Actor, Critic
-from ch.hslu.wipro.ddpg.new.noise import AdaptiveParamNoiseSpec, NormalActionNoise, OrnsteinUhlenbeckActionNoise
+import ch.hslu.wipro.ddpg.algorithm.common.tf_util as U
+from ch.hslu.wipro.ddpg.algorithm import logger
+from ch.hslu.wipro.ddpg.algorithm.common import set_global_seeds
+from ch.hslu.wipro.ddpg.algorithm.ddpg_fg_restart_observer import DDPGFGRestartObserver
+from ch.hslu.wipro.ddpg.algorithm.ddpg_learner import DDPG
+from ch.hslu.wipro.ddpg.algorithm.memory import Memory
+from ch.hslu.wipro.ddpg.algorithm.models import Actor, Critic
+from ch.hslu.wipro.ddpg.algorithm.noise import AdaptiveParamNoiseSpec, NormalActionNoise, OrnsteinUhlenbeckActionNoise
 from ch.hslu.wipro.fg.main.fg_broker_restart import FGRestartBroker
 from ch.hslu.wipro.fg.main.fg_start_stop import FGStartStop
 

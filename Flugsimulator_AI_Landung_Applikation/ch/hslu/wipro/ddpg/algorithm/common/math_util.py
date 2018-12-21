@@ -69,7 +69,7 @@ def unflatten_vector(vec, shapes):
 def discount_with_boundaries(X, New, gamma):
     """
     X: 2d array of floats, time x features
-    New: 2d array of bools, indicating when a new episode has started
+    New: 2d array of bools, indicating when a algorithm episode has started
     """
     Y = np.zeros_like(X)
     T = X.shape[0]
